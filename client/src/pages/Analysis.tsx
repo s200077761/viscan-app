@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +8,7 @@ import { Upload, Image as ImageIcon, Brain, AlertCircle, CheckCircle2, Loader2, 
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Link } from "wouter";
+import { AI_MODELS, AIModelType, getRecommendedModel } from "@shared/ai-models";
 
 export default function Analysis() {
   const { user } = useAuth();
@@ -15,11 +16,21 @@ export default function Analysis() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [imageType, setImageType] = useState<string>("xray");
   const [bodyPart, setBodyPart] = useState<string>("");
-  const [modelType, setModelType] = useState<"basic" | "gpt4-vision">("basic");
+  const [modelType, setModelType] = useState<AIModelType>("basic");
+  const [autoSelectModel, setAutoSelectModel] = useState(true);
+  const [recommendedModel, setRecommendedModel] = useState<AIModelType | null>(null);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
 
   const uploadMutation = trpc.images.upload.useMutation();
   const analyzeMutation = trpc.analysis.analyze.useMutation();
+
+  // Update recommended model when image type or body part changes
+  useEffect(() => {
+    if (autoSelectModel && imageType) {
+      const recommended = getRecommendedModel(imageType, bodyPart);
+      setRecommendedModel(recommended);
+    }
+  }, [imageType, bodyPart, autoSelectModel]);
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,7 +99,8 @@ export default function Analysis() {
         // Analyze image
         const result = await analyzeMutation.mutateAsync({
           imageId: uploadResult.id,
-          modelType,
+          modelType: autoSelectModel ? undefined : modelType,
+          autoSelect: autoSelectModel,
         });
 
         setAnalysisResult(result);
@@ -130,7 +142,7 @@ export default function Analysis() {
           <div>
             <h1 className="text-2xl font-bold">Image Analysis</h1>
             <p className="text-sm text-muted-foreground">
-              Upload and analyze medical images with AI
+              Upload and analyze medical images with specialized AI models
             </p>
           </div>
         </div>
@@ -215,6 +227,9 @@ export default function Analysis() {
                         <SelectValue placeholder="Select body part" />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="face">Face</SelectItem>
+                        <SelectItem value="eye">Eye/Iris</SelectItem>
+                        <SelectItem value="hand">Hand/Palm</SelectItem>
                         <SelectItem value="chest">Chest</SelectItem>
                         <SelectItem value="brain">Brain</SelectItem>
                         <SelectItem value="abdomen">Abdomen</SelectItem>
@@ -226,22 +241,58 @@ export default function Analysis() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Analysis Model</Label>
-                    <Select value={modelType} onValueChange={(v) => setModelType(v as any)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="basic">Basic Analysis (Fast)</SelectItem>
-                        <SelectItem value="gpt4-vision">GPT-4 Vision (Advanced)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs text-muted-foreground">
-                      {modelType === 'gpt4-vision' 
-                        ? 'Uses advanced AI for detailed analysis'
-                        : 'Quick analysis for basic diagnostics'
-                      }
-                    </p>
+                    <div className="flex items-center justify-between">
+                      <Label>Analysis Model</Label>
+                      <label className="flex items-center gap-2 text-xs cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={autoSelectModel}
+                          onChange={(e) => setAutoSelectModel(e.target.checked)}
+                          className="rounded"
+                        />
+                        Auto-select best model
+                      </label>
+                    </div>
+                    
+                    {autoSelectModel && recommendedModel ? (
+                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                        <p className="text-sm font-medium text-primary mb-1">
+                          ✨ Recommended: {AI_MODELS[recommendedModel].name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {AI_MODELS[recommendedModel].description}
+                        </p>
+                        <div className="flex gap-4 mt-2 text-xs">
+                          <span className="text-muted-foreground">
+                            Accuracy: {AI_MODELS[recommendedModel].initialAccuracy}%
+                          </span>
+                          <span className="text-muted-foreground">
+                            Time: {AI_MODELS[recommendedModel].processingTime}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <Select value={modelType} onValueChange={(v) => setModelType(v as AIModelType)} disabled={autoSelectModel}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="basic">Basic Analysis</SelectItem>
+                          <SelectItem value="gpt4-vision">GPT-4 Vision (Advanced)</SelectItem>
+                          <SelectItem value="face-analyzer">FaceAnalyzer (CNN, ResNet)</SelectItem>
+                          <SelectItem value="iris-scanner">IrisScanner (VGG, U-Net)</SelectItem>
+                          <SelectItem value="palm-reader">PalmReader (MediaPipe)</SelectItem>
+                          <SelectItem value="report-extractor">ReportExtractor (BERT, NER)</SelectItem>
+                          <SelectItem value="health-predictor">HealthPredictor (Ensemble)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                    
+                    {!autoSelectModel && AI_MODELS[modelType] && (
+                      <p className="text-xs text-muted-foreground">
+                        {AI_MODELS[modelType].description} • Accuracy: {AI_MODELS[modelType].initialAccuracy}%
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -294,17 +345,19 @@ export default function Analysis() {
                       Analysis Complete
                     </CardTitle>
                     <CardDescription>
-                      AI-powered diagnostic results
+                      AI-powered diagnostic results using {analysisResult.modelName || 'AI Model'}
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {/* Severity */}
-                    <div>
-                      <Label className="text-sm text-muted-foreground">Severity Level</Label>
-                      <div className={`mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getSeverityColor(analysisResult.severity)}`}>
-                        {analysisResult.severity?.toUpperCase() || 'UNKNOWN'}
+                    {analysisResult.severity && (
+                      <div>
+                        <Label className="text-sm text-muted-foreground">Severity Level</Label>
+                        <div className={`mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getSeverityColor(analysisResult.severity)}`}>
+                          {analysisResult.severity?.toUpperCase() || 'UNKNOWN'}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Confidence */}
                     <div>
@@ -332,6 +385,23 @@ export default function Analysis() {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* Detailed Metrics */}
+                    {analysisResult.detailedMetrics && Object.keys(analysisResult.detailedMetrics).length > 0 && (
+                      <div>
+                        <Label className="text-sm text-muted-foreground mb-2 block">Detailed Metrics</Label>
+                        <div className="space-y-2 text-sm">
+                          {Object.entries(analysisResult.detailedMetrics).map(([key, value]: [string, any]) => (
+                            <div key={key} className="flex justify-between">
+                              <span className="text-muted-foreground capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}:</span>
+                              <span className="font-medium">
+                                {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 

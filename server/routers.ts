@@ -6,6 +6,8 @@ import { z } from "zod";
 import * as db from "./db";
 import { storagePut } from "./storage";
 import { invokeLLM } from "./_core/llm";
+import { analyzeWithModel } from "./ai-service";
+import { AIModelType, getRecommendedModel } from "@shared/ai-models";
 import { createAuditLog } from "./db";
 
 export const appRouter = router({
@@ -244,7 +246,8 @@ export const appRouter = router({
     analyze: protectedProcedure
       .input(z.object({
         imageId: z.number(),
-        modelType: z.enum(["gpt4-vision", "basic"]).default("basic"),
+        modelType: z.enum(["face-analyzer", "iris-scanner", "palm-reader", "report-extractor", "health-predictor", "gpt4-vision", "basic"]).optional(),
+        autoSelect: z.boolean().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         const image = await db.getImageById(input.imageId);
@@ -261,6 +264,14 @@ export const appRouter = router({
           }
         }
         
+        // Auto-select model if requested
+        let selectedModel: AIModelType;
+        if (input.autoSelect) {
+          selectedModel = getRecommendedModel(image.imageType || 'other', image.bodyPart || undefined);
+        } else {
+          selectedModel = (input.modelType as AIModelType) || 'basic';
+        }
+        
         // Update image status
         await db.updateImage(input.imageId, { status: "analyzing" });
         
@@ -269,7 +280,14 @@ export const appRouter = router({
         try {
           let analysisData: any;
           
-          if (input.modelType === "gpt4-vision") {
+          // Use new AI service for specialized models
+          if (['face-analyzer', 'iris-scanner', 'palm-reader', 'report-extractor', 'health-predictor'].includes(selectedModel)) {
+            analysisData = await analyzeWithModel(selectedModel, {
+              imageUrl: image.fileUrl,
+              imageType: image.imageType || 'other',
+              bodyPart: image.bodyPart || undefined,
+            });
+          } else if (selectedModel === "gpt4-vision") {
             // Use GPT-4 Vision for advanced analysis
             const response = await invokeLLM({
               messages: [
@@ -306,14 +324,21 @@ export const appRouter = router({
             });
             
             const content = response.choices[0].message.content;
-            analysisData = JSON.parse(typeof content === 'string' ? content : "{}");
+            const parsed = JSON.parse(typeof content === 'string' ? content : "{}");
+            analysisData = {
+              ...parsed,
+              modelId: 'gpt4-vision',
+              modelName: 'GPT-4 Vision'
+            };
           } else {
             // Basic analysis (placeholder)
             analysisData = {
               findings: ["Image uploaded successfully", "Awaiting detailed analysis"],
               severity: "normal",
               recommendations: ["Please consult with a medical professional"],
-              confidence: 50
+              confidence: 50,
+              modelId: 'basic',
+              modelName: 'Basic Analysis'
             };
           }
           
@@ -322,7 +347,7 @@ export const appRouter = router({
           // Save analysis result
           const analysisId = await db.createAnalysisResult({
             imageId: input.imageId,
-            modelName: input.modelType,
+            modelName: analysisData.modelName || selectedModel,
             modelVersion: "1.0",
             confidenceScore: Math.round(analysisData.confidence || 0),
             predictions: {
