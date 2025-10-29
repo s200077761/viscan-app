@@ -5,6 +5,7 @@
 
 import { invokeLLM } from "./_core/llm";
 import { AIModelType, ModelAnalysisInput, ModelAnalysisOutput, getModelById } from "@shared/ai-models";
+import { generateFacialDiagnosis, getSeverityLevel } from "./facial-diagnosis";
 
 /**
  * Main analysis function that routes to appropriate model
@@ -65,21 +66,22 @@ export async function analyzeWithModel(
 }
 
 /**
- * FaceAnalyzer - CNN & ResNet based facial analysis
+ * FaceAnalyzer - CNN & ResNet based facial analysis with traditional face reading
  */
 async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
+  // First, get AI vision analysis with detailed facial description
   const response = await invokeLLM({
     messages: [
       {
         role: "system",
-        content: `You are a FaceAnalyzer AI using CNN and ResNet technology. Analyze facial features, symmetry, skin health, and potential health markers. Provide detailed findings in JSON format.`
+        content: `You are a FaceAnalyzer AI. Analyze facial features including forehead lines (vertical/horizontal), eyebrow area, eye area (crow's feet), mouth lines, laugh lines, and lip lines. Describe all visible facial lines and features in detail.`
       },
       {
         role: "user",
         content: [
           { 
             type: "text", 
-            text: `Analyze this facial image for health markers and features. Patient: ${input.patientAge ? `Age ${input.patientAge}` : 'Unknown age'}, ${input.patientGender || 'Unknown gender'}. ${input.additionalContext || ''}`
+            text: `Analyze this facial image in detail. Describe all visible lines on forehead, eyebrows, eyes, mouth, and lips. Patient: ${input.patientAge ? `Age ${input.patientAge}` : 'Unknown age'}, ${input.patientGender || 'Unknown gender'}. ${input.additionalContext || ''}`
           },
           { type: "image_url", image_url: { url: input.imageUrl } }
         ]
@@ -88,39 +90,20 @@ async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
     response_format: {
       type: "json_schema",
       json_schema: {
-        name: "face_analysis",
+        name: "face_description",
         strict: true,
         schema: {
           type: "object",
           properties: {
-            findings: { 
-              type: "array", 
-              items: { type: "string" },
-              description: "Detailed findings about facial features and health markers"
+            facialDescription: { 
+              type: "string",
+              description: "Detailed description of all facial lines and features"
             },
-            severity: { 
-              type: "string", 
-              enum: ["normal", "mild", "moderate", "severe", "critical"] 
-            },
-            confidence: { type: "number", description: "Confidence score 0-100" },
-            recommendations: { 
-              type: "array", 
-              items: { type: "string" },
-              description: "Health recommendations based on analysis"
-            },
-            detailedMetrics: {
-              type: "object",
-              properties: {
-                symmetry: { type: "number", description: "Facial symmetry score 0-100" },
-                skinHealth: { type: "string", description: "Skin health assessment" },
-                eyeAnalysis: { type: "string", description: "Eye area analysis" },
-                facialMarkers: { type: "array", items: { type: "string" } }
-              },
-              required: ["symmetry", "skinHealth"],
-              additionalProperties: false
-            }
+            symmetry: { type: "number", description: "Facial symmetry score 0-100" },
+            skinHealth: { type: "string", description: "Skin health assessment" },
+            confidence: { type: "number", description: "Confidence score 0-100" }
           },
-          required: ["findings", "severity", "confidence", "recommendations", "detailedMetrics"],
+          required: ["facialDescription", "symmetry", "skinHealth", "confidence"],
           additionalProperties: false
         }
       }
@@ -128,7 +111,37 @@ async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
   });
 
   const content = response.choices[0].message.content;
-  return JSON.parse(typeof content === 'string' ? content : "{}");
+  const aiAnalysis = JSON.parse(typeof content === 'string' ? content : "{}");
+  
+  // Apply traditional facial diagnosis knowledge
+  const diagnosis = generateFacialDiagnosis(aiAnalysis.facialDescription || '');
+  
+  // Combine AI analysis with traditional diagnosis
+  const allFindings = [
+    `Facial symmetry: ${aiAnalysis.symmetry}%`,
+    `Skin health: ${aiAnalysis.skinHealth}`,
+    diagnosis.overallAssessment,
+    ...diagnosis.features.map(f => `${f.name} - ${f.location}: ${f.healthIndicators.slice(0, 2).join(', ')}`)
+  ];
+  
+  const allRecommendations = [
+    ...diagnosis.dietaryRecommendations.slice(0, 5),
+    ...diagnosis.lifestyleRecommendations.slice(0, 5)
+  ];
+  
+  return {
+    findings: allFindings.slice(0, 10),
+    severity: getSeverityLevel(diagnosis.features),
+    confidence: aiAnalysis.confidence || 85,
+    recommendations: allRecommendations.slice(0, 8),
+    detailedMetrics: {
+      symmetry: aiAnalysis.symmetry,
+      skinHealth: aiAnalysis.skinHealth,
+      facialFeatures: diagnosis.features.map(f => f.name),
+      primaryConcerns: diagnosis.primaryConcerns,
+      overallAssessment: diagnosis.overallAssessment
+    }
+  };
 }
 
 /**
