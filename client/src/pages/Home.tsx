@@ -2,7 +2,9 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity, Brain, FileText, Lock, Zap, Shield, ArrowRight, CheckCircle2 } from "lucide-react";
-import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
+import { APP_TITLE, getLoginUrl } from "@/const";
+
+const VISCAN_LOGO = "/viscan-logo.jpg";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -14,9 +16,9 @@ export default function Home() {
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            {APP_LOGO && <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-8" />}
+            <img src={VISCAN_LOGO} alt="ViScan" className="h-10 w-10 object-contain" />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              {APP_TITLE}
+              ViScan
             </span>
           </div>
           
@@ -338,8 +340,8 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                {APP_LOGO && <img src={APP_LOGO} alt={APP_TITLE} className="h-6 w-6" />}
-                <span className="font-bold">{APP_TITLE}</span>
+                <img src={VISCAN_LOGO} alt="ViScan" className="h-8 w-8 object-contain" />
+                <span className="font-bold">ViScan</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 AI-powered medical image analysis for healthcare professionals
