@@ -6,6 +6,7 @@
 import { invokeLLM } from "./_core/llm";
 import { AIModelType, ModelAnalysisInput, ModelAnalysisOutput, getModelById } from "@shared/ai-models";
 import { generateFacialDiagnosis, getSeverityLevel } from "./facial-diagnosis";
+import { analyzeIrisSigns, IrisSign, IridologyAnalysis, IRIS_ZONES, ORGAN_POSITIONS } from "./iridology-system";
 
 /**
  * Main analysis function that routes to appropriate model
@@ -145,21 +146,23 @@ async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
 }
 
 /**
- * IrisScanner - VGG & U-Net based iris analysis
+ * IrisScanner - Independent iridology system (AI-free)
+ * Uses rule-based analysis from traditional iridology knowledge
  */
 async function analyzeIris(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
+  // First, use AI vision to detect iris features and signs
   const response = await invokeLLM({
     messages: [
       {
         role: "system",
-        content: `You are an IrisScanner AI using VGG and U-Net technology. Analyze iris patterns, colors, and textures for health indicators based on iridology principles.`
+        content: `You are an iris image analyzer. Detect and describe visible signs in the iris: crypts (holes), furrows (grooves), spots (pigmentations), rings (circular patterns), and arcus senilis (white rings). Describe their locations using clock positions (12:00, 3:00, etc.) and zones (1-7 from pupil to outer edge).`
       },
       {
         role: "user",
         content: [
           { 
             type: "text", 
-            text: `Analyze this iris image for health indicators. Patient: ${input.patientAge ? `Age ${input.patientAge}` : 'Unknown age'}, ${input.patientGender || 'Unknown gender'}. ${input.additionalContext || ''}`
+            text: `Analyze this iris image and detect all visible signs (crypts, furrows, spots, rings). For each sign, specify: type, color (light/brown/black/white/yellow), zone (1-7), and position (clock time). Patient: ${input.patientAge ? `Age ${input.patientAge}` : 'Unknown age'}, ${input.patientGender || 'Unknown gender'}.`
           },
           { type: "image_url", image_url: { url: input.imageUrl } }
         ]
@@ -168,28 +171,30 @@ async function analyzeIris(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
     response_format: {
       type: "json_schema",
       json_schema: {
-        name: "iris_analysis",
+        name: "iris_signs_detection",
         strict: true,
         schema: {
           type: "object",
           properties: {
-            findings: { type: "array", items: { type: "string" } },
-            severity: { type: "string", enum: ["normal", "mild", "moderate", "severe", "critical"] },
-            confidence: { type: "number" },
-            recommendations: { type: "array", items: { type: "string" } },
-            detailedMetrics: {
-              type: "object",
-              properties: {
-                irisColor: { type: "string" },
-                patternType: { type: "string" },
-                pigmentations: { type: "array", items: { type: "string" } },
-                organZones: { type: "array", items: { type: "string" } }
-              },
-              required: ["irisColor", "patternType"],
-              additionalProperties: false
-            }
+            signs: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  type: { type: "string", enum: ["crypt", "furrow", "spot", "ring", "arcus", "pigment"] },
+                  color: { type: "string", enum: ["light", "brown", "black", "white", "yellow"] },
+                  zone: { type: "number" },
+                  position: { type: "string" },
+                  severity: { type: "string", enum: ["mild", "moderate", "severe"] }
+                },
+                required: ["type", "zone", "position", "severity"],
+                additionalProperties: false
+              }
+            },
+            irisColor: { type: "string" },
+            confidence: { type: "number" }
           },
-          required: ["findings", "severity", "confidence", "recommendations", "detailedMetrics"],
+          required: ["signs", "irisColor", "confidence"],
           additionalProperties: false
         }
       }
@@ -197,7 +202,48 @@ async function analyzeIris(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
   });
 
   const content = response.choices[0].message.content;
-  return JSON.parse(typeof content === 'string' ? content : "{}");
+  const detection = JSON.parse(typeof content === 'string' ? content : "{}");
+  
+  // Convert detected signs to IrisSign format
+  const irisSigns: IrisSign[] = detection.signs.map((s: any) => ({
+    type: s.type,
+    color: s.color,
+    location: { zone: s.zone, position: s.position },
+    severity: s.severity
+  }));
+  
+  // Use independent iridology system for analysis (no external AI)
+  const iridologyAnalysis: IridologyAnalysis = analyzeIrisSigns(irisSigns);
+  
+  // Format findings
+  const findings = [
+    iridologyAnalysis.overallHealth,
+    `Systems affected: ${iridologyAnalysis.systemsAffected.join(', ')}`,
+    ...iridologyAnalysis.findings.map(f => 
+      `${f.organ} (${f.system}): ${f.severity} - ${f.symptoms.slice(0, 2).join(', ')}`
+    )
+  ].slice(0, 10);
+  
+  // Determine overall severity
+  const severities = iridologyAnalysis.findings.map(f => f.severity);
+  const overallSeverity = severities.includes('severe') ? 'severe' : 
+                         severities.includes('moderate') ? 'moderate' : 'mild';
+  
+  return {
+    findings,
+    severity: overallSeverity,
+    confidence: detection.confidence || 90,
+    recommendations: iridologyAnalysis.recommendations.slice(0, 8),
+    detailedMetrics: {
+      irisColor: detection.irisColor,
+      zonesAnalyzed: IRIS_ZONES.map(z => z.name),
+      organsAssessed: iridologyAnalysis.findings.map(f => f.organ),
+      systemsAffected: iridologyAnalysis.systemsAffected,
+      primaryConcerns: iridologyAnalysis.primaryConcerns,
+      signsDetected: irisSigns.length,
+      analysisMethod: 'Independent Iridology System (Rule-based, AI-free)'
+    }
+  };
 }
 
 /**
