@@ -1,6 +1,13 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, users,
+  documents, InsertDocument,
+  images, InsertImage,
+  analysisResults, InsertAnalysisResult,
+  auditLogs, InsertAuditLog,
+  subscriptions, InsertSubscription
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -35,7 +42,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     };
     const updateSet: Record<string, unknown> = {};
 
-    const textFields = ["name", "email", "loginMethod"] as const;
+    const textFields = ["name", "email", "loginMethod", "organization", "specialty", "licenseNumber"] as const;
     type TextField = (typeof textFields)[number];
 
     const assignNullable = (field: TextField) => {
@@ -58,6 +65,10 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     } else if (user.openId === ENV.ownerOpenId) {
       values.role = 'admin';
       updateSet.role = 'admin';
+    }
+    if (user.isVerified !== undefined) {
+      values.isVerified = user.isVerified;
+      updateSet.isVerified = user.isVerified;
     }
 
     if (!values.lastSignedIn) {
@@ -89,4 +100,208 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+// Document queries
+export async function getUserDocuments(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(documents).where(eq(documents.userId, userId)).orderBy(desc(documents.createdAt));
+}
+
+export async function getDocumentById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(documents).where(eq(documents.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createDocument(doc: InsertDocument) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(documents).values(doc);
+  return Number(result[0].insertId);
+}
+
+export async function updateDocument(id: number, updates: Partial<InsertDocument>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(documents).set(updates).where(eq(documents.id, id));
+}
+
+export async function deleteDocument(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.delete(documents).where(eq(documents.id, id));
+}
+
+// Image queries
+export async function getDocumentImages(documentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(images).where(eq(images.documentId, documentId)).orderBy(desc(images.uploadedAt));
+}
+
+export async function getUserImages(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(images).where(eq(images.userId, userId)).orderBy(desc(images.uploadedAt));
+}
+
+export async function getImageById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(images).where(eq(images.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createImage(image: InsertImage) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(images).values(image);
+  return Number(result[0].insertId);
+}
+
+export async function updateImage(id: number, updates: Partial<InsertImage>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(images).set(updates).where(eq(images.id, id));
+}
+
+// Analysis results queries
+export async function getImageAnalysis(imageId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(analysisResults).where(eq(analysisResults.imageId, imageId)).orderBy(desc(analysisResults.analyzedAt));
+}
+
+export async function createAnalysisResult(analysis: InsertAnalysisResult) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(analysisResults).values(analysis);
+  return Number(result[0].insertId);
+}
+
+export async function updateAnalysisResult(id: number, updates: Partial<InsertAnalysisResult>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(analysisResults).set(updates).where(eq(analysisResults.id, id));
+}
+
+// Audit log
+export async function createAuditLog(log: InsertAuditLog) {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    await db.insert(auditLogs).values(log);
+  } catch (error) {
+    console.error("[Database] Failed to create audit log:", error);
+  }
+}
+
+export async function getUserAuditLogs(userId: number, limit: number = 100) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(auditLogs).where(eq(auditLogs.userId, userId)).orderBy(desc(auditLogs.createdAt)).limit(limit);
+}
+
+// Subscription queries
+export async function getUserSubscription(userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(subscriptions)
+    .where(and(
+      eq(subscriptions.userId, userId),
+      eq(subscriptions.status, 'active')
+    ))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createSubscription(sub: InsertSubscription) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(subscriptions).values(sub);
+  return Number(result[0].insertId);
+}
+
+export async function updateSubscription(id: number, updates: Partial<InsertSubscription>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(subscriptions).set(updates).where(eq(subscriptions.id, id));
+}
+
+export async function incrementAnalysisUsage(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(subscriptions)
+    .set({ analysesUsed: sql`${subscriptions.analysesUsed} + 1` })
+    .where(and(
+      eq(subscriptions.userId, userId),
+      eq(subscriptions.status, 'active')
+    ));
+}
+
+// Dashboard statistics
+export async function getUserStats(userId: number) {
+  const db = await getDb();
+  if (!db) return {
+    totalDocuments: 0,
+    totalImages: 0,
+    totalAnalyses: 0,
+    pendingAnalyses: 0
+  };
+  
+  const [docsCount] = await db.select({ count: sql<number>`count(*)` })
+    .from(documents)
+    .where(eq(documents.userId, userId));
+  
+  const [imagesCount] = await db.select({ count: sql<number>`count(*)` })
+    .from(images)
+    .where(eq(images.userId, userId));
+  
+  const [analysesCount] = await db.select({ count: sql<number>`count(*)` })
+    .from(analysisResults)
+    .innerJoin(images, eq(analysisResults.imageId, images.id))
+    .where(eq(images.userId, userId));
+  
+  const [pendingCount] = await db.select({ count: sql<number>`count(*)` })
+    .from(images)
+    .where(and(
+      eq(images.userId, userId),
+      eq(images.status, 'pending')
+    ));
+  
+  return {
+    totalDocuments: Number(docsCount?.count || 0),
+    totalImages: Number(imagesCount?.count || 0),
+    totalAnalyses: Number(analysesCount?.count || 0),
+    pendingAnalyses: Number(pendingCount?.count || 0)
+  };
+}

@@ -1,33 +1,384 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Activity, Brain, FileText, Lock, Zap, Shield, ArrowRight, CheckCircle2 } from "lucide-react";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Streamdown } from 'streamdown';
+import { Link } from "wouter";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
-
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
-  // Use APP_LOGO (as image src) and APP_TITLE if needed
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+      {/* Header */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            {APP_LOGO && <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-8" />}
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              {APP_TITLE}
+            </span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Features
+            </a>
+            <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </a>
+            <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </a>
+          </nav>
+
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? (
+              <Link href="/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <a href={getLoginUrl()}>
+                  <Button variant="ghost">Sign In</Button>
+                </a>
+                <a href={getLoginUrl()}>
+                  <Button>Get Started</Button>
+                </a>
+              </>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-teal-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
+        <div className="absolute inset-0 bg-grid-slate-200/50 dark:bg-grid-slate-700/25 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
+        
+        <div className="container relative">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
+              <Brain className="h-4 w-4" />
+              <span>AI-Powered Medical Image Analysis</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+              Transform Medical Images into
+              <span className="bg-gradient-to-r from-primary via-blue-600 to-teal-500 bg-clip-text text-transparent"> Actionable Insights</span>
+            </h1>
+            
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Advanced AI technology for rapid, accurate analysis of X-rays, MRIs, CT scans, and more. 
+              Trusted by healthcare professionals worldwide.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href={getLoginUrl()}>
+                <Button size="lg" className="gap-2">
+                  Start Free Trial
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </a>
+              <a href="#features">
+                <Button size="lg" variant="outline">
+                  Learn More
+                </Button>
+              </a>
+            </div>
+            
+            <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                <span>HIPAA Compliant</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                <span>95%+ Accuracy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                <span>Instant Results</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-background">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Powerful Features for Modern Healthcare
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Everything you need to analyze, manage, and share medical imaging data securely
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Brain className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>AI-Powered Analysis</CardTitle>
+                <CardDescription>
+                  Advanced machine learning models trained on millions of medical images for accurate diagnostics
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-4">
+                  <Zap className="h-6 w-6 text-secondary" />
+                </div>
+                <CardTitle>Instant Results</CardTitle>
+                <CardDescription>
+                  Get comprehensive analysis reports in seconds, not hours. Speed up your diagnostic workflow
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                  <FileText className="h-6 w-6 text-accent" />
+                </div>
+                <CardTitle>Document Management</CardTitle>
+                <CardDescription>
+                  Organize patient records, images, and reports in one secure, searchable platform
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Lock className="h-6 w-6 text-primary" />
+                </div>
+                <CardTitle>HIPAA Compliant</CardTitle>
+                <CardDescription>
+                  Enterprise-grade security with end-to-end encryption and complete audit trails
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-4">
+                  <Activity className="h-6 w-6 text-secondary" />
+                </div>
+                <CardTitle>Multiple Modalities</CardTitle>
+                <CardDescription>
+                  Support for X-Ray, MRI, CT, Ultrasound, and other medical imaging formats
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="card-hover border-2">
+              <CardHeader>
+                <div className="h-12 w-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                  <Shield className="h-6 w-6 text-accent" />
+                </div>
+                <CardTitle>Professional Review</CardTitle>
+                <CardDescription>
+                  AI-assisted analysis with option for expert medical professional review
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Choose the plan that fits your practice. Upgrade or downgrade anytime.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Free Plan */}
+            <Card className="relative">
+              <CardHeader>
+                <CardTitle>Free</CardTitle>
+                <CardDescription>Perfect for trying out</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">$0</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>10 analyses per month</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Basic AI models</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Standard support</span>
+                  </li>
+                </ul>
+                <a href={getLoginUrl()} className="block">
+                  <Button variant="outline" className="w-full">Get Started</Button>
+                </a>
+              </CardContent>
+            </Card>
+
+            {/* Pro Plan */}
+            <Card className="relative border-primary border-2 shadow-lg">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                  Most Popular
+                </span>
+              </div>
+              <CardHeader>
+                <CardTitle>Pro</CardTitle>
+                <CardDescription>For active practitioners</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">$29</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>1,000 analyses per month</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Advanced AI models</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Priority support</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Export reports</span>
+                  </li>
+                </ul>
+                <a href={getLoginUrl()} className="block">
+                  <Button className="w-full">Start Free Trial</Button>
+                </a>
+              </CardContent>
+            </Card>
+
+            {/* Enterprise Plan */}
+            <Card className="relative">
+              <CardHeader>
+                <CardTitle>Enterprise</CardTitle>
+                <CardDescription>For hospitals & clinics</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">Custom</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Unlimited analyses</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Custom AI training</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>Dedicated support</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>On-premise deployment</span>
+                  </li>
+                </ul>
+                <Button variant="outline" className="w-full">Contact Sales</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary to-blue-600">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to Transform Your Practice?
+            </h2>
+            <p className="text-xl mb-8 text-blue-50">
+              Join thousands of healthcare professionals using AI to deliver better patient care
+            </p>
+            <a href={getLoginUrl()}>
+              <Button size="lg" variant="secondary" className="gap-2">
+                Start Free Trial
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t py-12 bg-muted/30">
+        <div className="container">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                {APP_LOGO && <img src={APP_LOGO} alt={APP_TITLE} className="h-6 w-6" />}
+                <span className="font-bold">{APP_TITLE}</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                AI-powered medical image analysis for healthcare professionals
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Product</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#features" className="hover:text-foreground">Features</a></li>
+                <li><a href="#pricing" className="hover:text-foreground">Pricing</a></li>
+                <li><a href="#" className="hover:text-foreground">Documentation</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#about" className="hover:text-foreground">About</a></li>
+                <li><a href="#" className="hover:text-foreground">Blog</a></li>
+                <li><a href="#" className="hover:text-foreground">Contact</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-foreground">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-foreground">HIPAA Compliance</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
+            <p>&copy; 2025 {APP_TITLE}. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
