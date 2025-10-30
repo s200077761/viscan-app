@@ -1,7 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Brain, FileText, Lock, Zap, Shield, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Activity, Brain, FileText, Lock, Zap, Shield, ArrowRight, CheckCircle2, Eye, Scan } from "lucide-react";
+import SocialLoginButtons from "@/components/SocialLoginButtons";
 import { APP_TITLE, getLoginUrl } from "@/const";
 
 const VISCAN_LOGO = "/viscan-logo.jpg";
@@ -12,6 +13,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Floating Action Button */}
+      <Link href="/analysis">
+        <button 
+          className="fixed bottom-8 right-8 z-50 group"
+          aria-label="Start Iris Analysis"
+        >
+          <div className="relative">
+            {/* Pulse animation rings */}
+            <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
+            <div className="absolute inset-0 rounded-full bg-primary animate-pulse opacity-30" />
+            
+            {/* Main button */}
+            <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-full shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 group-hover:rotate-12">
+              <Eye className="h-8 w-8 text-white" />
+            </div>
+            
+            {/* Tooltip */}
+            <div className="absolute right-20 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <div className="bg-slate-900 text-white px-4 py-2 rounded-lg shadow-xl whitespace-nowrap text-sm font-medium">
+                Start Iris Analysis
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-slate-900" />
+              </div>
+            </div>
+          </div>
+        </button>
+      </Link>
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between">
@@ -55,35 +82,64 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-teal-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
-        <div className="absolute inset-0 bg-grid-slate-200/50 dark:bg-grid-slate-700/25 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src="/viscan-bg.png" 
+            alt="ViScan Background" 
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/85 to-blue-900/90" />
+        </div>
+        <div className="absolute inset-0 bg-grid-slate-200/10 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
         
         <div className="container relative">
           <div className="mx-auto max-w-4xl text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 animate-fadeIn">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-white border border-primary/30 text-sm font-medium mb-8 animate-fadeIn">
               <Brain className="h-4 w-4" />
               <span>AI-Powered Medical Image Analysis</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 animate-fadeIn animate-stagger-1">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 animate-fadeIn animate-stagger-1 text-white">
               Transform Medical Images into
-              <span className="bg-gradient-to-r from-primary via-blue-600 to-teal-500 bg-clip-text text-transparent"> Actionable Insights</span>
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-teal-400 bg-clip-text text-transparent"> Actionable Insights</span>
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fadeIn animate-stagger-2">
+            <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto animate-fadeIn animate-stagger-2">
               Advanced AI technology for rapid, accurate analysis of X-rays, MRIs, CT scans, and more. 
               Trusted by healthcare professionals worldwide.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn animate-stagger-3">
-              <a href={getLoginUrl()}>
-                <Button size="lg" className="gap-2 hover-lift">
-                  Start Free Trial
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </a>
+            {!isAuthenticated && (
+              <div className="max-w-md mx-auto mb-8 animate-fadeIn animate-stagger-3">
+                <SocialLoginButtons 
+                  onSuccess={(user) => {
+                    console.log('User signed in:', user);
+                    window.location.href = '/dashboard';
+                  }}
+                />
+              </div>
+            )}
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn animate-stagger-4">
+              {isAuthenticated ? (
+                <Link href="/dashboard">
+                  <Button size="lg" className="gap-2 hover-lift">
+                    Go to Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              ) : (
+                <a href={getLoginUrl()}>
+                  <Button size="lg" variant="outline" className="gap-2 hover-lift border-white text-white hover:bg-white/10">
+                    Or use Email
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </a>
+              )}
               <a href="#features">
-                <Button size="lg" variant="outline" className="hover-lift">
+                <Button size="lg" variant="outline" className="hover-lift border-white text-white hover:bg-white/10">
                   Learn More
                 </Button>
               </a>

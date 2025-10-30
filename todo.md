@@ -306,3 +306,199 @@
 - [x] Add timestamp to all exports
 - [ ] Include charts and visualizations in PDF (future)
 - [ ] Create table of contents for long reports (future)
+
+## Phase 21: Custom Background Image
+- [x] Copy ViScan.png to project assets (public/viscan-bg.png)
+- [x] Add background image to Home page hero section
+- [x] Implement dark gradient overlay for text readability
+- [x] Add responsive background sizing (object-cover)
+- [x] Update text colors to white/light for visibility
+- [x] Update heading gradient to cyan/blue/teal
+- [x] Add border to badge for better contrast
+
+## Phase 22: Floating Action Button for Quick Analysis
+- [x] Create floating action button component
+- [x] Add Eye icon for iris scanning
+- [x] Implement smooth animations (scale, rotate on hover)
+- [x] Add tooltip on hover with arrow
+- [x] Link to analysis page
+- [x] Add pulse and ping animations to attract attention
+- [x] Make it fixed and always visible (bottom-right)
+- [x] Add gradient background (primary to blue)
+- [x] Add shadow effects
+- [x] Position at bottom-right with z-50
+
+## Phase 23: PWA & App Store Deployment (iOS Ready!)
+- [x] Install PWA dependencies (vite-plugin-pwa, workbox-window)
+- [x] Create Web App Manifest (manifest.json)
+- [x] Define app icons (multiple sizes 72-512px)
+- [x] Create Firebase setup guide (FIREBASE_SETUP.md)
+- [x] Create App Store deployment guide (APP_STORE_DEPLOYMENT.md)
+- [x] Document Apple Sign-In configuration
+- [x] Document Google Sign-In configuration
+- [x] Create Capacitor setup instructions
+- [x] Document iOS build process
+- [x] Document Android build process
+- [x] Add screenshots requirements
+- [x] Add app description templates
+- [x] Document submission process
+- [ ] Generate actual app icons
+- [x] Configure Service Worker (via Vite PWA plugin)
+- [x] Add offline support (Workbox caching)
+- [x] Create PWAInstallPrompt component
+- [x] Add install button for Android/Desktop
+- [x] Add iOS install instructions
+- [x] Integrate PWA prompt in App.tsx
+- [x] Configure runtime caching for API calls
+- [x] Configure image caching
+- [x] Create PWA_DEPLOYMENT_GUIDE.md
+- [ ] Install Firebase SDK
+- [ ] Implement Firebase Authentication
+- [x] Install and configure Capacitor
+- [x] Create capacitor.config.ts
+- [x] Create iOS setup script (ios-setup.sh)
+- [x] Create comprehensive iOS deployment guide (IOS_DEPLOYMENT_GUIDE.md)
+- [ ] Create iOS build (requires Mac)
+- [ ] Create Android build (future)
+
+## Phase 24: Social Login UI (Apple & Google)
+- [x] Install Firebase SDK (firebase 12.4.0)
+- [x] Create Firebase configuration file (lib/firebase.ts)
+- [x] Add Apple Sign-In button component
+- [x] Add Google Sign-In button component
+- [x] Create SocialLoginButtons component
+- [x] Update Home page with social buttons
+- [x] Implement sign-in with Apple (signInWithApple)
+- [x] Implement sign-in with Google (signInWithGoogle)
+- [x] Add error handling with toast notifications
+- [x] Add loading states with spinners
+- [x] Style buttons according to brand guidelines (Google & Apple)
+- [x] Add success callbacks
+- [x] Add divider "Or continue with email"
+- [x] Show buttons only when not authenticated
+- [x] Redirect to dashboard on success
+- [ ] Configure Firebase project (manual - see FIREBASE_SETUP.md)
+- [ ] Test authentication flow with real Firebase config
+
+## Phase 25: User Profile Page
+- [x] Create Profile page component
+- [x] Display user avatar/photo (gradient circle with initial)
+- [x] Show user name and email
+- [x] Display account creation date
+- [x] Show subscription plan badge
+- [x] Add usage statistics (total, monthly, accuracy)
+- [x] Create edit profile form with save/cancel
+- [x] Add change password option
+- [x] Add profile photo upload button
+- [x] Show recent activity timeline
+- [x] Add account settings tab
+- [x] Add delete account option (danger zone)
+- [x] Style with cards and sections
+- [x] Add 3 tabs (Information, Activity, Settings)
+- [x] Add two-factor authentication option
+- [x] Add route to /profile
+- [x] Add profile avatar button in Dashboard header
+- [x] Add back to dashboard button
+
+## Phase 26: Activity Charts in Profile
+- [x] Add usage trend line chart (30 days)
+- [x] Add analysis type distribution pie chart
+- [x] Add monthly activity bar chart (6 months)
+- [x] Integrate Recharts library
+- [x] Add responsive chart containers
+- [x] Add chart colors array
+- [x] Generate mock data for charts
+- [x] Add CartesianGrid and tooltips
+- [x] Add legends to charts
+- [x] Create 2-column grid layout for charts
+- [ ] Add time-based activity heatmap (future)
+- [ ] Show peak usage hours (future)
+- [ ] Add date range selector (future)
+- [ ] Add comparison with previous period (future)
+
+## Phase 27: Medical Library & Research System
+- [x] Create Medical Library page (MedicalLibrary.tsx)
+- [x] Add drug database with search (3 drugs with details)
+- [x] Add disease information database (2 diseases)
+- [x] Create herbal medicine library (3 herbs)
+- [x] Add chemical composition data for herbs
+- [x] Integrate web search for diseases (PubMed, MedlinePlus)
+- [x] Integrate web search for drugs
+- [x] Add research papers search (ClinicalTrials.gov)
+- [x] Create treatment options in disease database
+- [x] Add drug interactions checker in drug database
+- [x] Create 3 tabs (Diseases, Drugs, Herbs)
+- [x] Add search functionality with external links
+- [x] Add star/bookmark buttons (UI ready)
+- [x] Add route to /library
+- [x] Add Medical Library button in Dashboard
+- [x] Add color-coded borders (red=disease, blue=drug, green=herb)
+- [x] Add badges for categories and properties
+- [ ] Create favorites/bookmarks system (backend)
+- [ ] Add notes and annotations (future)
+- [ ] Implement advanced filters (future)
+- [ ] Add export to PDF functionality (future)
+
+## Phase 28: Communication & Messaging System
+- [ ] Create messaging page
+- [ ] Add doctor-patient messaging
+- [ ] Add patient-patient messaging
+- [ ] Add doctor-doctor messaging
+- [ ] Implement real-time chat
+- [ ] Add file sharing in messages
+- [ ] Add image sharing in messages
+- [ ] Create message notifications
+- [ ] Add message search
+- [ ] Add conversation list
+
+## Phase 29: Appointment Management System
+- [ ] Create appointments page
+- [ ] Add appointment booking
+- [ ] Add calendar view
+- [ ] Add appointment reminders
+- [ ] Add appointment status tracking
+- [ ] Create doctor availability system
+- [ ] Add appointment cancellation
+- [ ] Add appointment rescheduling
+- [ ] Send appointment notifications
+
+## Phase 30: Blood Test & Report Analysis
+- [ ] Add blood test upload
+- [ ] Parse blood test results
+- [ ] Analyze blood test values
+- [ ] Generate blood test report
+- [ ] Add normal ranges comparison
+- [ ] Highlight abnormal values
+- [ ] Provide health recommendations
+- [ ] Support multiple test formats
+
+## Phase 31: Multi-language Support (Arabic/English)
+- [ ] Install i18n library
+- [ ] Create translation files (ar/en)
+- [ ] Add language switcher
+- [ ] Translate all UI text
+- [ ] Translate medical terms
+- [ ] Add RTL support for Arabic
+- [ ] Translate reports and exports
+- [ ] Save language preference
+
+## Phase 33: Deployment Preparation
+- [x] Create app icons from logo
+- [x] Update vercel.json for pnpm
+- [x] Create DEPLOY_NOW.md guide
+- [x] Verify all files ready for deployment
+- [x] Test build process
+
+## Phase 34: Advanced Medical Library Search & Filters (Future)
+- [ ] Add advanced search with autocomplete
+- [ ] Add category filters (dropdown)
+- [ ] Add symptoms filters (multi-select)
+- [ ] Add severity filters
+- [ ] Add alphabetical sorting
+- [ ] Add relevance sorting
+- [ ] Add filter chips display
+- [ ] Add clear all filters button
+- [ ] Implement real-time search
+- [ ] Add search history
+- [ ] Add popular searches
+- [ ] Highlight search terms in results

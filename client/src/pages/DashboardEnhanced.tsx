@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History, Download } from "lucide-react";
+import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History, Download, User, BookOpen } from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import AnalysisHistory from "@/components/AnalysisHistory";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
@@ -124,6 +124,13 @@ export default function DashboardEnhanced() {
           </div>
           
           <div className="flex items-center gap-4">
+            <Link href="/profile">
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-sm font-bold">
+                  {user?.name?.charAt(0).toUpperCase() || "U"}
+                </div>
+              </Button>
+            </Link>
             <Button variant="outline" size="sm" onClick={handleExportCompleteReport}>
               <Download className="h-4 w-4 mr-2" />
               Export Report
@@ -294,6 +301,13 @@ export default function DashboardEnhanced() {
                     <Button variant="outline" className="w-full justify-start gap-2">
                       <Image className="h-4 w-4" />
                       Browse Images
+                    </Button>
+                  </Link>
+                  
+                  <Link href="/library">
+                    <Button variant="outline" className="w-full justify-start gap-2">
+                      <BookOpen className="h-4 w-4" />
+                      Medical Library
                     </Button>
                   </Link>
                 </CardContent>

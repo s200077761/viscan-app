@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/DashboardEnhanced";
 import Analysis from "./pages/Analysis";
 import AIChat from "./pages/AIChat";
+import Profile from "./pages/Profile";
+import MedicalLibrary from "./pages/MedicalLibrary";
+import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 
 function Router() {
   return (
@@ -16,6 +19,8 @@ function Router() {
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/analysis"} component={Analysis} />
       <Route path={"/chat"} component={AIChat} />
+      <Route path={"/profile"} component={Profile} />
+      <Route path={"/library"} component={MedicalLibrary} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -30,6 +35,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <PWAInstallPrompt />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

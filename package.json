@@ -15,6 +15,9 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",
     "@aws-sdk/s3-request-presigner": "^3.693.0",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -57,8 +60,10 @@
     "drizzle-orm": "^0.44.5",
     "embla-carousel-react": "^8.6.0",
     "express": "^4.21.2",
+    "firebase": "^12.4.0",
     "framer-motion": "^12.23.22",
     "html2canvas": "^1.4.1",
+    "i18next": "^25.6.0",
     "input-otp": "^1.4.2",
     "jose": "6.1.0",
     "jspdf": "^3.0.3",
@@ -70,6 +75,7 @@
     "react-day-picker": "^9.11.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.64.0",
+    "react-i18next": "^16.2.1",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^3.0.6",
     "react-syntax-highlighter": "^16.1.0",
@@ -105,7 +111,9 @@
     "typescript": "5.9.3",
     "vite": "^7.1.7",
     "vite-plugin-manus-runtime": "^0.0.52",
-    "vitest": "^2.1.4"
+    "vite-plugin-pwa": "^1.1.0",
+    "vitest": "^2.1.4",
+    "workbox-window": "^7.3.0"
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "pnpm": {
