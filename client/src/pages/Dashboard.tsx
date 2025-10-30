@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, FileText, Image, TrendingUp, Upload, Brain } from "lucide-react";
+import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare } from "lucide-react";
 import { LoadingSpinner, SkeletonLoader } from "@/components/LoadingSpinner";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
@@ -31,6 +31,12 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-4">
+            <Link href="/chat">
+              <Button variant="outline" className="gap-2">
+                <MessageSquare className="h-4 w-4" />
+                AI Chat
+              </Button>
+            </Link>
             <Link href="/analysis">
               <Button className="gap-2">
                 <Upload className="h-4 w-4" />

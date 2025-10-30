@@ -157,3 +157,75 @@
 - [x] Add hover effects and micro-interactions
 - [x] Add stagger animations for dashboard cards
 - [x] Integrate animations in Home, Dashboard, and Analysis pages
+
+## Phase 11: Advanced AI Libraries Integration
+- [ ] Integrate IrisNet for iris analysis
+- [ ] Add OpenCV iris recognition modules
+- [ ] Integrate MONAI for medical image analysis
+- [ ] Add NiftyNet for CT/MRI analysis
+- [ ] Integrate MedPy for medical image processing
+- [ ] Add TongueNet for tongue analysis
+- [ ] Integrate FacialDiagnosis-AI for TCM face reading
+- [ ] Add AyurAI for Ayurvedic analysis
+- [ ] Integrate HumoralAI for Greek/Arabic medicine
+- [ ] Add PROVIT analysis system
+- [ ] Create unified AI analysis pipeline
+
+## Phase 12: ChatGPT-like Interface
+- [x] Design chat-based interface
+- [x] Create message bubbles (user/AI)
+- [x] Add streaming text responses
+- [x] Implement conversation history
+- [x] Add file upload in chat
+- [x] Create sidebar with conversations
+- [x] Add new chat button
+- [x] Implement markdown rendering
+- [x] Add code syntax highlighting
+- [x] Create typing indicator animation
+- [x] Add route to /chat
+- [x] Integrate with Dashboard
+
+## Phase 13: Custom MCP Server (Deferred)
+- [ ] Design MCP protocol specification
+- [ ] Create MCP server implementation
+- [ ] Add authentication for MCP
+- [ ] Implement analysis endpoints
+- [ ] Add image processing tools
+- [ ] Create medical data tools
+- [ ] Add archival tools
+- [ ] Implement storage management tools
+- [ ] Create documentation for MCP
+
+## Phase 14: Advanced Archival System
+- [ ] Create archive database schema
+- [ ] Implement folder structure
+- [ ] Add tagging system
+- [ ] Create search functionality
+- [ ] Add filters (date, type, patient)
+- [ ] Implement bulk operations
+- [ ] Add export functionality
+- [ ] Create archive viewer
+- [ ] Add version history
+
+## Phase 15: Storage Management & Billing
+- [ ] Create storage quota system
+- [ ] Add usage tracking
+- [ ] Implement storage plans (1GB, 10GB, 100GB, 1TB)
+- [ ] Create pricing tiers
+- [ ] Add payment integration (Stripe)
+- [ ] Implement upgrade/downgrade flow
+- [ ] Add storage usage dashboard
+- [ ] Create billing history
+- [ ] Add invoice generation
+- [ ] Implement storage warnings
+
+## Phase 16: Unified Upload Platform
+- [ ] Create drag-and-drop upload zone
+- [ ] Add multi-file upload support
+- [ ] Implement progress tracking
+- [ ] Add file type detection
+- [ ] Create preview system
+- [ ] Add batch processing
+- [ ] Implement queue management
+- [ ] Add upload history
+- [ ] Create file organization tools
