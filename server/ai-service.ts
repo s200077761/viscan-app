@@ -7,6 +7,7 @@ import { invokeLLM } from "./_core/llm";
 import { AIModelType, ModelAnalysisInput, ModelAnalysisOutput, getModelById } from "@shared/ai-models";
 import { generateFacialDiagnosis, getSeverityLevel } from "./facial-diagnosis";
 import { analyzeIrisSigns, IrisSign, IridologyAnalysis, IRIS_ZONES, ORGAN_POSITIONS } from "./iridology-system";
+import { analyzePalmSigns, PalmSign } from "./palm-reading-system";
 
 /**
  * Main analysis function that routes to appropriate model
