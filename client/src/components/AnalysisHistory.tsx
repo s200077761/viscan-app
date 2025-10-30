@@ -30,6 +30,7 @@ import {
   Activity
 } from "lucide-react";
 import { format } from "date-fns";
+import { PDFExportService } from "@/lib/pdfExport";
 
 interface Analysis {
   id: number;
@@ -107,9 +108,9 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
       date: format(new Date(a.date), "MMM dd")
     }));
 
-  const handleExportPDF = () => {
-    // TODO: Implement PDF export
-    alert("PDF export will be implemented");
+  const handleExportPDF = async () => {
+    const pdfService = new PDFExportService();
+    await pdfService.exportAnalysisHistory(analyses, "Patient Name");
   };
 
   const handleExportCSV = () => {

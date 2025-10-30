@@ -15,8 +15,10 @@ import {
   Bookmark,
   BookmarkCheck,
   TrendingUp,
-  Lightbulb
+  Lightbulb,
+  Download
 } from "lucide-react";
+import { PDFExportService } from "@/lib/pdfExport";
 
 interface Recommendation {
   id: string;
@@ -86,6 +88,11 @@ export default function PersonalizedRecommendations({
 
   const highPriorityCount = recommendations.filter(r => r.priority === "high" && !r.completed).length;
 
+  const handleExportPDF = async () => {
+    const pdfService = new PDFExportService();
+    await pdfService.exportRecommendations(recommendations, severity, "Patient Name");
+  };
+
   return (
     <div className="space-y-6">
       {/* Header with Progress */}
@@ -101,12 +108,18 @@ export default function PersonalizedRecommendations({
                 Based on your recent analysis results
               </CardDescription>
             </div>
-            {highPriorityCount > 0 && (
-              <Badge variant="destructive" className="gap-1">
-                <AlertCircle className="h-3 w-3" />
-                {highPriorityCount} High Priority
-              </Badge>
-            )}
+            <div className="flex items-center gap-2">
+              {highPriorityCount > 0 && (
+                <Badge variant="destructive" className="gap-1">
+                  <AlertCircle className="h-3 w-3" />
+                  {highPriorityCount} High Priority
+                </Badge>
+              )}
+              <Button variant="outline" size="sm" onClick={handleExportPDF}>
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

@@ -2,16 +2,37 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History } from "lucide-react";
+import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History, Download } from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import AnalysisHistory from "@/components/AnalysisHistory";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
+import { PDFExportService } from "@/lib/pdfExport";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 
 export default function DashboardEnhanced() {
   const { user } = useAuth();
   const { data: stats, isLoading } = trpc.dashboard.stats.useQuery();
+
+  const handleExportCompleteReport = async () => {
+    const pdfService = new PDFExportService();
+    await pdfService.exportCombinedReport(
+      mockAnalyses,
+      [
+        {
+          id: "1",
+          category: "medical",
+          priority: "high",
+          title: "Schedule Medical Consultation",
+          description: "Your analysis indicates concerns that require professional evaluation.",
+          actionItems: ["Contact healthcare provider", "Prepare summary of symptoms"],
+          completed: false
+        }
+      ],
+      "moderate",
+      user?.name || "Patient"
+    );
+  };
   
   // Mock data for analysis history (replace with real data from API)
   const mockAnalyses = [
@@ -103,6 +124,10 @@ export default function DashboardEnhanced() {
           </div>
           
           <div className="flex items-center gap-4">
+            <Button variant="outline" size="sm" onClick={handleExportCompleteReport}>
+              <Download className="h-4 w-4 mr-2" />
+              Export Report
+            </Button>
             <Link href="/chat">
               <Button variant="outline" className="gap-2">
                 <MessageSquare className="h-4 w-4" />
