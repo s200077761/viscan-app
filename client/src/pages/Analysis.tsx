@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Upload, Image as ImageIcon, Brain, AlertCircle, CheckCircle2, Loader2, ArrowLeft } from "lucide-react";
+import { ScanningLoader, LoadingSpinner } from "@/components/LoadingSpinner";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Link } from "wouter";
@@ -127,6 +128,8 @@ export default function Analysis() {
   };
 
   const isAnalyzing = uploadMutation.isPending || analyzeMutation.isPending;
+  const isUploading = uploadMutation.isPending;
+  const isProcessing = analyzeMutation.isPending;
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -447,10 +450,22 @@ export default function Analysis() {
                   </Button>
                 </div>
               </div>
+            ) : isAnalyzing ? (
+              <Card className="h-full flex items-center justify-center min-h-[400px]">
+                <CardContent className="text-center">
+                  {isUploading ? (
+                    <LoadingSpinner size="lg" text="جاري رفع الصورة..." />
+                  ) : isProcessing ? (
+                    <ScanningLoader text="جاري تحليل الصورة بواسطة الذكاء الاصطناعي..." />
+                  ) : (
+                    <LoadingSpinner size="lg" text="جاري المعالجة..." />
+                  )}
+                </CardContent>
+              </Card>
             ) : (
               <Card className="h-full flex items-center justify-center min-h-[400px]">
                 <CardContent className="text-center">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4 animate-pulse">
                     <ImageIcon className="h-8 w-8 text-muted-foreground" />
                   </div>
                   <h3 className="font-medium mb-2">No Analysis Yet</h3>

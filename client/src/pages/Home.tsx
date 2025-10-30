@@ -60,30 +60,30 @@ export default function Home() {
         
         <div className="container relative">
           <div className="mx-auto max-w-4xl text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 animate-fadeIn">
               <Brain className="h-4 w-4" />
               <span>AI-Powered Medical Image Analysis</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 animate-fadeIn animate-stagger-1">
               Transform Medical Images into
               <span className="bg-gradient-to-r from-primary via-blue-600 to-teal-500 bg-clip-text text-transparent"> Actionable Insights</span>
             </h1>
             
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fadeIn animate-stagger-2">
               Advanced AI technology for rapid, accurate analysis of X-rays, MRIs, CT scans, and more. 
               Trusted by healthcare professionals worldwide.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn animate-stagger-3">
               <a href={getLoginUrl()}>
-                <Button size="lg" className="gap-2">
+                <Button size="lg" className="gap-2 hover-lift">
                   Start Free Trial
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
               <a href="#features">
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="hover-lift">
                   Learn More
                 </Button>
               </a>
