@@ -7,6 +7,7 @@ import { invokeLLM } from "./_core/llm";
 import { AIModelType, ModelAnalysisInput, ModelAnalysisOutput, getModelById } from "@shared/ai-models";
 import { generateFacialDiagnosis, getSeverityLevel } from "./facial-diagnosis";
 import { analyzeIrisSigns, IrisSign, IridologyAnalysis, IRIS_ZONES, ORGAN_POSITIONS } from "./iridology-system";
+import { analyzeIrisAdvanced, formatIrisAnalysis } from "./advanced-iris-analysis";
 import { analyzePalmSigns, PalmSign } from "./palm-reading-system";
 
 /**
@@ -97,6 +98,91 @@ async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
         schema: {
           type: "object",
           properties: {
+            facialDescription: { type: "string" },
+            confidence: { type: "number" }
+          },
+          required: ["facialDescription", "confidence"],
+          additionalProperties: false
+        }
+      }
+    }
+  });
+
+  const content = response.choices[0].message.content;
+  const detection = JSON.parse(typeof content === 'string' ? content : "{}");
+  
+  // Use independent facial diagnosis system
+  const facialAnalysis = generateFacialDiagnosis(detection.facialDescription);
+  
+  const findings = [
+    facialAnalysis.overallAssessment,
+    ...facialAnalysis.features.map(f => `${f.name} (${f.location}): ${f.healthIndicators.slice(0, 2).join(', ')}`)
+  ].slice(0, 10);
+  
+  const recommendations = [
+    ...facialAnalysis.dietaryRecommendations.slice(0, 4),
+    ...facialAnalysis.lifestyleRecommendations.slice(0, 4)
+  ];
+  
+  return {
+    findings,
+    severity: getSeverityLevel(facialAnalysis.features),
+    confidence: detection.confidence || 85,
+    recommendations,
+    detailedMetrics: {
+      featuresDetected: facialAnalysis.features.map(f => f.name),
+      primaryConcerns: facialAnalysis.primaryConcerns,
+      analysisMethod: 'Traditional Chinese Medicine Face Reading + AI Vision'
+    }
+  };
+}
+
+/**
+ * IrisScanner - Advanced Deep Learning based iris analysis with 7-zone iridology mapping
+ * Uses AI vision for feature detection + rule-based iridology system
+ */
+async function analyzeIris(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
+  // Use advanced iris analysis system
+  const advancedResult = await analyzeIrisAdvanced({
+    imageUrl: input.imageUrl,
+    eye: "left", // Default to left, can be enhanced with detection
+    patientAge: input.patientAge,
+    patientGender: input.patientGender
+  });
+  
+  return formatIrisAnalysis(advancedResult);
+}
+
+/**
+ * Legacy iris analysis (kept for reference)
+ */
+async function analyzeIrisLegacy(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
+  // First, get AI vision analysis with detailed facial description
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: `You are a FaceAnalyzer AI. Analyze facial features including forehead lines (vertical/horizontal), eyebrow area, eye area (crow's feet), mouth lines, laugh lines, and lip lines. Describe all visible facial lines and features in detail.`
+      },
+      {
+        role: "user",
+        content: [
+          { 
+            type: "text", 
+            text: `Analyze this facial image in detail. Describe all visible lines on forehead, eyebrows, eyes, mouth, and lips. Patient: ${input.patientAge ? `Age ${input.patientAge}` : 'Unknown age'}, ${input.patientGender || 'Unknown gender'}. ${input.additionalContext || ''}`
+          },
+          { type: "image_url", image_url: { url: input.imageUrl } }
+        ]
+      }
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: {
+        name: "face_description",
+        strict: true,
+        schema: {
+          type: "object",
+          properties: {
             facialDescription: { 
               type: "string",
               description: "Detailed description of all facial lines and features"
@@ -147,10 +233,10 @@ async function analyzeFace(input: ModelAnalysisInput): Promise<Omit<ModelAnalysi
 }
 
 /**
- * IrisScanner - Independent iridology system (AI-free)
- * Uses rule-based analysis from traditional iridology knowledge
+ * Legacy IrisScanner - Independent iridology system (AI-free) - DEPRECATED
+ * Replaced by analyzeIris() which uses advanced-iris-analysis.ts
  */
-async function analyzeIris(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
+async function analyzeIrisOld(input: ModelAnalysisInput): Promise<Omit<ModelAnalysisOutput, 'modelId' | 'modelName' | 'processingTime'>> {
   // First, use AI vision to detect iris features and signs
   const response = await invokeLLM({
     messages: [

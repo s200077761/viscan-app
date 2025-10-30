@@ -229,3 +229,19 @@
 - [ ] Implement queue management
 - [ ] Add upload history
 - [ ] Create file organization tools
+
+## Phase 17: Advanced Iris Analysis with Deep Learning
+- [x] Create advanced iris analysis module (advanced-iris-analysis.ts)
+- [x] Implement 7-zone iridology mapping (IRIS_ZONES)
+- [x] Add iris signs detection (crypts, furrows, spots, rings, lacunae, pigmentation)
+- [x] Create iris color analysis (blue, brown, mixed, green)
+- [x] Implement constitution types (Lymphatic, Hematogenic, Biliary, Mixed)
+- [x] Add health correlation database (IRIS_SIGNS, IRIS_COLORS)
+- [x] Create detailed iris report generator (formatIrisAnalysis)
+- [x] Integrate with AI vision for feature detection
+- [x] Add zone-specific health implications
+- [x] Implement severity assessment per zone
+- [x] Create comprehensive recommendations system
+- [x] Replace basic iris scanner with advanced version
+- [ ] Add iris comparison functionality (future)
+- [ ] Implement iris quality assessment (future)
