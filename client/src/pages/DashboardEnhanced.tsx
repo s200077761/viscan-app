@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History } from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import AnalysisHistory from "@/components/AnalysisHistory";
+import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 
@@ -124,7 +125,11 @@ export default function DashboardEnhanced() {
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="history">
               <History className="h-4 w-4 mr-2" />
-              Analysis History
+              History
+            </TabsTrigger>
+            <TabsTrigger value="recommendations">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Recommendations
             </TabsTrigger>
           </TabsList>
 
@@ -273,6 +278,18 @@ export default function DashboardEnhanced() {
 
           <TabsContent value="history">
             <AnalysisHistory analyses={mockAnalyses} />
+          </TabsContent>
+
+          <TabsContent value="recommendations">
+            <PersonalizedRecommendations
+              severity="moderate"
+              findings={[
+                "Stomach Zone: 2 sign(s) detected",
+                "Stress indicators present",
+                "Liver function concerns"
+              ]}
+              affectedSystems={["Digestive", "Liver", "Nervous System"]}
+            />
           </TabsContent>
         </Tabs>
       </div>
