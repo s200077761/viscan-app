@@ -245,3 +245,21 @@
 - [x] Replace basic iris scanner with advanced version
 - [ ] Add iris comparison functionality (future)
 - [ ] Implement iris quality assessment (future)
+
+## Phase 18: Advanced Dashboard with Analytics
+- [x] Create analysis history component (AnalysisHistory.tsx)
+- [x] Add timeline view for past analyses
+- [x] Implement filtering by date, type, severity
+- [x] Create interactive charts (line, bar, pie) with Recharts
+- [x] Add severity trend chart (Pie chart)
+- [x] Create analysis type distribution chart (Bar chart)
+- [x] Add confidence trend chart (Line chart)
+- [x] Add export to CSV functionality
+- [x] Create detailed analysis cards with hover effects
+- [x] Implement search functionality
+- [x] Add tabs to Dashboard (Overview/History)
+- [x] Install date-fns for date formatting
+- [x] Install recharts for data visualization
+- [ ] Add export to PDF functionality (future)
+- [ ] Add comparison between analyses (future)
+- [ ] Create pagination for large datasets (future)
