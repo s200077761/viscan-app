@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "local-fs": {
+      "command": "node",
+      "args": ["./mcp/local-fs-server.js"]
+    },
+    "viscan-ai": {
+      "command": "python3",
+      "args": ["./mcp/viscan_ai_server.py"]
+    },
+    "orchestrator": {
+      "command": "python3",
+      "args": ["./mcp/orchestrator.py"]
+    }
+  }
+}
