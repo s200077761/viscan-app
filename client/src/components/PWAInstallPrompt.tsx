@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { X, Download, Smartphone } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { X, Download, Smartphone } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
 export function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
     // Check if running as PWA
-    const standalone = window.matchMedia('(display-mode: standalone)').matches;
+    const standalone = window.matchMedia("(display-mode: standalone)").matches;
     setIsStandalone(standalone);
 
     // Check if iOS
-    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const ios =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     setIsIOS(ios);
 
     // Listen for beforeinstallprompt event (Android/Desktop)
@@ -29,7 +31,7 @@ export function PWAInstallPrompt() {
       setShowPrompt(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handler);
+    window.addEventListener("beforeinstallprompt", handler);
 
     // Show iOS install prompt if not standalone
     if (ios && !standalone) {
@@ -37,7 +39,7 @@ export function PWAInstallPrompt() {
     }
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
+      window.removeEventListener("beforeinstallprompt", handler);
     };
   }, []);
 
@@ -48,8 +50,8 @@ export function PWAInstallPrompt() {
 
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
+
+    if (outcome === "accepted") {
       setDeferredPrompt(null);
       setShowPrompt(false);
     }
@@ -57,7 +59,7 @@ export function PWAInstallPrompt() {
 
   const handleDismiss = () => {
     setShowPrompt(false);
-    localStorage.setItem('pwa-install-dismissed', 'true');
+    localStorage.setItem("pwa-install-dismissed", "true");
   };
 
   // Don't show if already installed or dismissed
@@ -66,7 +68,7 @@ export function PWAInstallPrompt() {
   }
 
   // Check if dismissed before
-  if (localStorage.getItem('pwa-install-dismissed')) {
+  if (localStorage.getItem("pwa-install-dismissed")) {
     return null;
   }
 
@@ -84,13 +86,13 @@ export function PWAInstallPrompt() {
           <div className="bg-white/20 p-2 rounded-lg">
             <Smartphone className="h-6 w-6" />
           </div>
-          
+
           <div className="flex-1">
             <h3 className="font-bold text-lg mb-1">Install ViScan</h3>
             <p className="text-sm text-white/90 mb-3">
               {isIOS
                 ? 'Install this app on your iPhone: tap Share then "Add to Home Screen"'
-                : 'Install ViScan on your device for quick access and offline use'}
+                : "Install ViScan on your device for quick access and offline use"}
             </p>
 
             {!isIOS && deferredPrompt && (
@@ -107,7 +109,10 @@ export function PWAInstallPrompt() {
 
             {isIOS && (
               <div className="text-xs text-white/80 space-y-1">
-                <p>1. Tap the Share button <span className="inline-block">📤</span></p>
+                <p>
+                  1. Tap the Share button{" "}
+                  <span className="inline-block">📤</span>
+                </p>
                 <p>2. Scroll and tap "Add to Home Screen"</p>
                 <p>3. Tap "Add" to install</p>
               </div>

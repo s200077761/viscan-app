@@ -8,7 +8,7 @@ export interface FacialFeature {
   location: string;
   healthIndicators: string[];
   recommendations: string[];
-  severity: 'normal' | 'mild' | 'moderate' | 'severe';
+  severity: "normal" | "mild" | "moderate" | "severe";
 }
 
 export interface FacialDiagnosisResult {
@@ -27,80 +27,89 @@ export function analyzeForehead(description: string): FacialFeature[] {
   const lowerDesc = description.toLowerCase();
 
   // Vertical lines between eyebrows
-  if (lowerDesc.includes('vertical line') || lowerDesc.includes('crease between eyebrows')) {
-    if (lowerDesc.includes('single') || lowerDesc.includes('one')) {
+  if (
+    lowerDesc.includes("vertical line") ||
+    lowerDesc.includes("crease between eyebrows")
+  ) {
+    if (lowerDesc.includes("single") || lowerDesc.includes("one")) {
       features.push({
-        name: 'Single Vertical Line',
-        location: 'Between eyebrows',
+        name: "Single Vertical Line",
+        location: "Between eyebrows",
         healthIndicators: [
-          'Persistent and determined personality',
-          'Possible stress accumulation',
-          'May indicate liver function concerns'
+          "Persistent and determined personality",
+          "Possible stress accumulation",
+          "May indicate liver function concerns",
         ],
         recommendations: [
-          'Practice stress management techniques',
-          'Add green vegetables and whole grains to diet',
-          'Avoid spicy foods and excessive coffee',
-          'Consider meditation or yoga'
+          "Practice stress management techniques",
+          "Add green vegetables and whole grains to diet",
+          "Avoid spicy foods and excessive coffee",
+          "Consider meditation or yoga",
         ],
-        severity: 'mild'
+        severity: "mild",
       });
-    } else if (lowerDesc.includes('two') || lowerDesc.includes('double')) {
+    } else if (lowerDesc.includes("two") || lowerDesc.includes("double")) {
       features.push({
-        name: 'Two Vertical Lines',
-        location: 'Between eyebrows',
+        name: "Two Vertical Lines",
+        location: "Between eyebrows",
         healthIndicators: [
-          'Empathetic and caring personality',
-          'Good interpersonal skills',
-          'Balanced emotional state'
+          "Empathetic and caring personality",
+          "Good interpersonal skills",
+          "Balanced emotional state",
         ],
         recommendations: [
-          'Maintain current healthy lifestyle',
-          'Continue social activities',
-          'Regular exercise for stress relief'
+          "Maintain current healthy lifestyle",
+          "Continue social activities",
+          "Regular exercise for stress relief",
         ],
-        severity: 'normal'
+        severity: "normal",
       });
-    } else if (lowerDesc.includes('multiple') || lowerDesc.includes('several')) {
+    } else if (
+      lowerDesc.includes("multiple") ||
+      lowerDesc.includes("several")
+    ) {
       features.push({
-        name: 'Multiple Vertical Lines',
-        location: 'Between eyebrows',
+        name: "Multiple Vertical Lines",
+        location: "Between eyebrows",
         healthIndicators: [
-          'Perfectionist tendencies',
-          'Analytical mindset',
-          'Possible overthinking and stress'
+          "Perfectionist tendencies",
+          "Analytical mindset",
+          "Possible overthinking and stress",
         ],
         recommendations: [
-          'Practice mindfulness and relaxation',
-          'Set realistic goals',
-          'Ensure adequate rest and sleep',
-          'Consider stress-reduction activities'
+          "Practice mindfulness and relaxation",
+          "Set realistic goals",
+          "Ensure adequate rest and sleep",
+          "Consider stress-reduction activities",
         ],
-        severity: 'moderate'
+        severity: "moderate",
       });
     }
   }
 
   // Horizontal lines on forehead
-  if (lowerDesc.includes('horizontal line') || lowerDesc.includes('worry line')) {
+  if (
+    lowerDesc.includes("horizontal line") ||
+    lowerDesc.includes("worry line")
+  ) {
     features.push({
-      name: 'Horizontal Forehead Lines',
-      location: 'Across forehead',
+      name: "Horizontal Forehead Lines",
+      location: "Across forehead",
       healthIndicators: [
-        'Built-up stress and worry',
-        'Possible digestive issues',
-        'May indicate excessive fat/sugar consumption',
-        'Potential dehydration'
+        "Built-up stress and worry",
+        "Possible digestive issues",
+        "May indicate excessive fat/sugar consumption",
+        "Potential dehydration",
       ],
       recommendations: [
-        'Reduce stress through relaxation techniques',
-        'Decrease fat and sugar intake',
-        'Drink more water (8+ glasses daily)',
-        'Add fiber-rich foods to diet',
-        'Practice facial exercises',
-        'Get adequate sleep (7-8 hours)'
+        "Reduce stress through relaxation techniques",
+        "Decrease fat and sugar intake",
+        "Drink more water (8+ glasses daily)",
+        "Add fiber-rich foods to diet",
+        "Practice facial exercises",
+        "Get adequate sleep (7-8 hours)",
       ],
-      severity: 'moderate'
+      severity: "moderate",
     });
   }
 
@@ -115,47 +124,53 @@ export function analyzeEyebrows(description: string): FacialFeature[] {
   const lowerDesc = description.toLowerCase();
 
   // Right eyebrow line - Liver
-  if (lowerDesc.includes('right eyebrow') || lowerDesc.includes('line slants right')) {
+  if (
+    lowerDesc.includes("right eyebrow") ||
+    lowerDesc.includes("line slants right")
+  ) {
     features.push({
-      name: 'Right Eyebrow Line',
-      location: 'Right eyebrow area',
+      name: "Right Eyebrow Line",
+      location: "Right eyebrow area",
       healthIndicators: [
-        'Possible liver function concerns',
-        'May indicate need for liver support',
-        'Toxin accumulation possible'
+        "Possible liver function concerns",
+        "May indicate need for liver support",
+        "Toxin accumulation possible",
       ],
       recommendations: [
-        'Add more fruits to diet',
-        'Increase green vegetable consumption',
-        'Eat whole grains',
-        'Avoid spicy foods',
-        'Reduce coffee and salt intake',
-        'Consider liver-supporting supplements (milk thistle)',
-        'Consult doctor if symptoms present'
+        "Add more fruits to diet",
+        "Increase green vegetable consumption",
+        "Eat whole grains",
+        "Avoid spicy foods",
+        "Reduce coffee and salt intake",
+        "Consider liver-supporting supplements (milk thistle)",
+        "Consult doctor if symptoms present",
       ],
-      severity: 'moderate'
+      severity: "moderate",
     });
   }
 
   // Left eyebrow line - Spleen
-  if (lowerDesc.includes('left eyebrow') || lowerDesc.includes('line slants left')) {
+  if (
+    lowerDesc.includes("left eyebrow") ||
+    lowerDesc.includes("line slants left")
+  ) {
     features.push({
-      name: 'Left Eyebrow Line',
-      location: 'Left eyebrow area',
+      name: "Left Eyebrow Line",
+      location: "Left eyebrow area",
       healthIndicators: [
-        'Possible spleen weakness',
-        'Digestive system concerns',
-        'May need better nutrition'
+        "Possible spleen weakness",
+        "Digestive system concerns",
+        "May need better nutrition",
       ],
       recommendations: [
-        'Add natural sweets (dried fruits)',
-        'Avoid refined sugar',
-        'Eat small, frequent meals',
-        'Include root vegetables',
-        'Add warming spices (ginger, cinnamon)',
-        'Stay hydrated'
+        "Add natural sweets (dried fruits)",
+        "Avoid refined sugar",
+        "Eat small, frequent meals",
+        "Include root vegetables",
+        "Add warming spices (ginger, cinnamon)",
+        "Stay hydrated",
       ],
-      severity: 'mild'
+      severity: "mild",
     });
   }
 
@@ -169,29 +184,36 @@ export function analyzeEyeArea(description: string): FacialFeature[] {
   const features: FacialFeature[] = [];
   const lowerDesc = description.toLowerCase();
 
-  if (lowerDesc.includes("crow's feet") || lowerDesc.includes('eye wrinkles') || lowerDesc.includes('lines around eyes')) {
-    const severity = lowerDesc.includes('deep') || lowerDesc.includes('prominent') ? 'moderate' : 'mild';
-    
+  if (
+    lowerDesc.includes("crow's feet") ||
+    lowerDesc.includes("eye wrinkles") ||
+    lowerDesc.includes("lines around eyes")
+  ) {
+    const severity =
+      lowerDesc.includes("deep") || lowerDesc.includes("prominent")
+        ? "moderate"
+        : "mild";
+
     features.push({
       name: "Crow's Feet",
-      location: 'Outer eye corners',
+      location: "Outer eye corners",
       healthIndicators: [
-        'Possible eyesight concerns (squinting)',
-        'May indicate liver health',
-        'Could relate to stomach function',
-        'Possible kidney health indicator'
+        "Possible eyesight concerns (squinting)",
+        "May indicate liver health",
+        "Could relate to stomach function",
+        "Possible kidney health indicator",
       ],
       recommendations: [
-        'Get eye examination',
-        'Wear sunglasses outdoors',
-        'Use eye moisturizer',
-        'Eat healthier diet',
-        'Increase exercise',
-        'Add omega-3 fatty acids',
-        'Stay hydrated',
-        'Get adequate sleep'
+        "Get eye examination",
+        "Wear sunglasses outdoors",
+        "Use eye moisturizer",
+        "Eat healthier diet",
+        "Increase exercise",
+        "Add omega-3 fatty acids",
+        "Stay hydrated",
+        "Get adequate sleep",
       ],
-      severity
+      severity,
     });
   }
 
@@ -206,103 +228,118 @@ export function analyzeMouthArea(description: string): FacialFeature[] {
   const lowerDesc = description.toLowerCase();
 
   // Vertical mouth lines - Colon
-  if (lowerDesc.includes('mouth line') || lowerDesc.includes('lines around mouth') || lowerDesc.includes('vertical lines near mouth')) {
-    const severity = lowerDesc.includes('deep') ? 'moderate' : 'mild';
-    
+  if (
+    lowerDesc.includes("mouth line") ||
+    lowerDesc.includes("lines around mouth") ||
+    lowerDesc.includes("vertical lines near mouth")
+  ) {
+    const severity = lowerDesc.includes("deep") ? "moderate" : "mild";
+
     features.push({
-      name: 'Mouth Lines',
-      location: 'Sides of mouth',
+      name: "Mouth Lines",
+      location: "Sides of mouth",
       healthIndicators: [
-        'Colon health indicator',
-        'Possible digestive issues',
-        'May need more fiber'
+        "Colon health indicator",
+        "Possible digestive issues",
+        "May need more fiber",
       ],
       recommendations: [
-        'Add vitamin D to diet',
-        'Increase fiber intake',
-        'Eat more vegetables',
-        'Exercise regularly',
-        'Drink more fluids',
-        'Consider probiotics',
-        'Reduce processed foods'
+        "Add vitamin D to diet",
+        "Increase fiber intake",
+        "Eat more vegetables",
+        "Exercise regularly",
+        "Drink more fluids",
+        "Consider probiotics",
+        "Reduce processed foods",
       ],
-      severity
+      severity,
     });
   }
 
   // Laugh lines - Pancreas
-  if (lowerDesc.includes('laugh line') || lowerDesc.includes('smile line') || lowerDesc.includes('nasolabial')) {
-    const hasLaughter = lowerDesc.includes('laughs a lot') || lowerDesc.includes('happy');
-    
+  if (
+    lowerDesc.includes("laugh line") ||
+    lowerDesc.includes("smile line") ||
+    lowerDesc.includes("nasolabial")
+  ) {
+    const hasLaughter =
+      lowerDesc.includes("laughs a lot") || lowerDesc.includes("happy");
+
     if (!hasLaughter) {
       features.push({
-        name: 'Laugh Lines (without frequent laughter)',
-        location: 'From nose to mouth corners',
+        name: "Laugh Lines (without frequent laughter)",
+        location: "From nose to mouth corners",
         healthIndicators: [
-          'Possible weak pancreas',
-          'Blood sugar regulation concerns',
-          'May need pancreatic support'
+          "Possible weak pancreas",
+          "Blood sugar regulation concerns",
+          "May need pancreatic support",
         ],
         recommendations: [
-          'Add cherries to diet',
-          'Eat blueberries regularly',
-          'Include spinach',
-          'Add grapes',
-          'Eat garlic',
-          'Reduce refined sugars',
-          'Maintain stable blood sugar',
-          'Consider pancreatic enzymes'
+          "Add cherries to diet",
+          "Eat blueberries regularly",
+          "Include spinach",
+          "Add grapes",
+          "Eat garlic",
+          "Reduce refined sugars",
+          "Maintain stable blood sugar",
+          "Consider pancreatic enzymes",
         ],
-        severity: 'moderate'
+        severity: "moderate",
       });
     }
   }
 
   // Upper lip lines - Spleen
-  if (lowerDesc.includes('upper lip line') || lowerDesc.includes('vertical lines above lip')) {
+  if (
+    lowerDesc.includes("upper lip line") ||
+    lowerDesc.includes("vertical lines above lip")
+  ) {
     features.push({
-      name: 'Upper Lip Lines',
-      location: 'Above upper lip',
+      name: "Upper Lip Lines",
+      location: "Above upper lip",
       healthIndicators: [
-        'Possible spleen weakness',
-        'Digestive concerns',
-        'May indicate smoking history'
+        "Possible spleen weakness",
+        "Digestive concerns",
+        "May indicate smoking history",
       ],
       recommendations: [
-        'Eat small, frequent meals',
-        'Add root vegetables',
-        'Include sweet potatoes',
-        'Eat carrots and beets',
-        'Avoid cold, raw foods',
-        'Add warming spices',
-        'Quit smoking if applicable'
+        "Eat small, frequent meals",
+        "Add root vegetables",
+        "Include sweet potatoes",
+        "Eat carrots and beets",
+        "Avoid cold, raw foods",
+        "Add warming spices",
+        "Quit smoking if applicable",
       ],
-      severity: 'mild'
+      severity: "mild",
     });
   }
 
   // Lower lip line - Emotional
-  if (lowerDesc.includes('lower lip line') || lowerDesc.includes('chin crease')) {
-    const severity = lowerDesc.includes('deep') ? 'moderate' : 'mild';
-    
+  if (
+    lowerDesc.includes("lower lip line") ||
+    lowerDesc.includes("chin crease")
+  ) {
+    const severity = lowerDesc.includes("deep") ? "moderate" : "mild";
+
     features.push({
-      name: 'Lower Lip Line',
-      location: 'Below lower lip/chin',
+      name: "Lower Lip Line",
+      location: "Below lower lip/chin",
       healthIndicators: [
-        'Bottled up negative emotions',
-        'Emotional stress',
-        'Need for emotional release'
+        "Bottled up negative emotions",
+        "Emotional stress",
+        "Need for emotional release",
       ],
       recommendations: [
-        'Find positive emotional outlets',
-        'Practice journaling',
-        'Consider counseling or therapy',
-        'Engage in creative activities',
-        'Exercise for stress relief',
-        'Practice meditation',
-        'Talk to trusted friends/family'
+        "Find positive emotional outlets",
+        "Practice journaling",
+        "Consider counseling or therapy",
+        "Engage in creative activities",
+        "Exercise for stress relief",
+        "Practice meditation",
+        "Talk to trusted friends/family",
       ],
-      severity
+      severity,
     });
   }
 
@@ -312,32 +349,36 @@ export function analyzeMouthArea(description: string): FacialFeature[] {
 /**
  * Generate comprehensive facial diagnosis
  */
-export function generateFacialDiagnosis(facialDescription: string): FacialDiagnosisResult {
+export function generateFacialDiagnosis(
+  facialDescription: string
+): FacialDiagnosisResult {
   const allFeatures: FacialFeature[] = [
     ...analyzeForehead(facialDescription),
     ...analyzeEyebrows(facialDescription),
     ...analyzeEyeArea(facialDescription),
-    ...analyzeMouthArea(facialDescription)
+    ...analyzeMouthArea(facialDescription),
   ];
 
   // Collect all health indicators
   const allHealthIndicators = allFeatures.flatMap(f => f.healthIndicators);
-  
+
   // Identify primary concerns (moderate or severe)
   const primaryConcerns = allFeatures
-    .filter(f => f.severity === 'moderate' || f.severity === 'severe')
+    .filter(f => f.severity === "moderate" || f.severity === "severe")
     .map(f => f.name);
 
   // Collect dietary recommendations
   const dietaryRecs = new Set<string>();
   const lifestyleRecs = new Set<string>();
-  
+
   allFeatures.forEach(feature => {
     feature.recommendations.forEach(rec => {
-      if (rec.toLowerCase().includes('diet') || 
-          rec.toLowerCase().includes('eat') || 
-          rec.toLowerCase().includes('food') ||
-          rec.toLowerCase().includes('drink')) {
+      if (
+        rec.toLowerCase().includes("diet") ||
+        rec.toLowerCase().includes("eat") ||
+        rec.toLowerCase().includes("food") ||
+        rec.toLowerCase().includes("drink")
+      ) {
         dietaryRecs.add(rec);
       } else {
         lifestyleRecs.add(rec);
@@ -346,9 +387,10 @@ export function generateFacialDiagnosis(facialDescription: string): FacialDiagno
   });
 
   // Generate overall assessment
-  let overallAssessment = '';
+  let overallAssessment = "";
   if (primaryConcerns.length === 0) {
-    overallAssessment = 'Overall facial analysis shows good health indicators with minor areas for improvement.';
+    overallAssessment =
+      "Overall facial analysis shows good health indicators with minor areas for improvement.";
   } else if (primaryConcerns.length <= 2) {
     overallAssessment = `Facial analysis reveals ${primaryConcerns.length} area(s) requiring attention. Focus on the recommended lifestyle and dietary changes.`;
   } else {
@@ -360,19 +402,21 @@ export function generateFacialDiagnosis(facialDescription: string): FacialDiagno
     overallAssessment,
     primaryConcerns,
     dietaryRecommendations: Array.from(dietaryRecs),
-    lifestyleRecommendations: Array.from(lifestyleRecs)
+    lifestyleRecommendations: Array.from(lifestyleRecs),
   };
 }
 
 /**
  * Get severity color for UI
  */
-export function getSeverityLevel(features: FacialFeature[]): 'normal' | 'mild' | 'moderate' | 'severe' | 'critical' {
+export function getSeverityLevel(
+  features: FacialFeature[]
+): "normal" | "mild" | "moderate" | "severe" | "critical" {
   const severities = features.map(f => f.severity);
-  
-  if (severities.includes('severe')) return 'severe';
-  if (severities.filter(s => s === 'moderate').length >= 3) return 'severe';
-  if (severities.includes('moderate')) return 'moderate';
-  if (severities.includes('mild')) return 'mild';
-  return 'normal';
+
+  if (severities.includes("severe")) return "severe";
+  if (severities.filter(s => s === "moderate").length >= 3) return "severe";
+  if (severities.includes("moderate")) return "moderate";
+  if (severities.includes("mild")) return "mild";
+  return "normal";
 }

@@ -3,6 +3,7 @@
 ## الطريقة 1: من واجهة Vercel (الأسهل)
 
 ### الخطوة 1: رفع المشروع على GitHub
+
 ```bash
 # على جهاز Mac، في Terminal:
 cd /path/to/viscan-app
@@ -28,6 +29,7 @@ git push -u origin main
 ```
 
 ### الخطوة 2: النشر على Vercel
+
 ```
 1. اذهب إلى: https://vercel.com
 2. سجل دخول بـ GitHub
@@ -49,22 +51,26 @@ git push -u origin main
 ## الطريقة 2: من Terminal (أسرع)
 
 ### الخطوة 1: تثبيت Vercel CLI
+
 ```bash
 npm install -g vercel
 ```
 
 ### الخطوة 2: تسجيل الدخول
+
 ```bash
 vercel login
 ```
 
 ### الخطوة 3: النشر
+
 ```bash
 cd /path/to/viscan-app
 vercel --prod
 ```
 
 ### الخطوة 4: اتبع التعليمات
+
 ```
 ? Set up and deploy "~/viscan-app"? [Y/n] Y
 ? Which scope do you want to deploy to? [اختر حسابك]
@@ -75,6 +81,7 @@ vercel --prod
 ```
 
 ### الخطوة 5: انتظر
+
 ```
 Building...
 Deploying...
@@ -86,6 +93,7 @@ Deploying...
 ## بعد النشر
 
 ### 1. اختبر التطبيق
+
 ```
 افتح الرابط الذي ظهر:
 https://viscan-app-xxx.vercel.app
@@ -98,6 +106,7 @@ https://viscan-app-xxx.vercel.app
 ```
 
 ### 2. ثبّت كـ PWA
+
 ```
 على iPhone:
 1. افتح الرابط في Safari
@@ -115,6 +124,7 @@ https://viscan-app-xxx.vercel.app
 ```
 
 ### 3. إعداد النطاق المخصص (اختياري)
+
 ```
 1. في Vercel Dashboard > Settings > Domains
 2. أضف: viscan.app (أو أي نطاق تملكه)
@@ -123,6 +133,7 @@ https://viscan-app-xxx.vercel.app
 ```
 
 ### 4. إعداد Firebase (للمصادقة)
+
 ```
 1. اتبع: FIREBASE_SETUP.md
 2. في Vercel Dashboard > Settings > Environment Variables
@@ -139,6 +150,7 @@ https://viscan-app-xxx.vercel.app
 ## التحديثات المستقبلية
 
 ### نشر تحديث
+
 ```bash
 # عدّل الكود
 git add .
@@ -155,6 +167,7 @@ vercel --prod
 ## المشاكل الشائعة
 
 ### مشكلة: "Build failed"
+
 ```
 الحل:
 1. تحقق من Logs في Vercel Dashboard
@@ -163,6 +176,7 @@ vercel --prod
 ```
 
 ### مشكلة: "404 Not Found"
+
 ```
 الحل:
 1. تحقق من vercel.json
@@ -170,6 +184,7 @@ vercel --prod
 ```
 
 ### مشكلة: "PWA not installing"
+
 ```
 الحل:
 1. تحقق من manifest.json
@@ -186,6 +201,7 @@ vercel --prod
 **الرابط**: https://viscan-app-xxx.vercel.app
 
 شاركه مع:
+
 - الأطباء
 - المرضى
 - الأصدقاء

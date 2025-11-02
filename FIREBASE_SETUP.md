@@ -1,6 +1,7 @@
 # Firebase Setup Guide for ViScan
 
 ## Prerequisites
+
 - Firebase account (free)
 - Google Cloud Console access
 - Apple Developer account (for Apple Sign-In)
@@ -48,6 +49,7 @@
 3. Go to Certificates, Identifiers & Profiles
 
 **Create App ID:**
+
 1. Click Identifiers → App IDs
 2. Register new App ID
 3. Description: `ViScan App`
@@ -56,6 +58,7 @@
 6. Save
 
 **Create Services ID:**
+
 1. Click Identifiers → Services IDs
 2. Register new Services ID
 3. Description: `ViScan Web`
@@ -68,6 +71,7 @@
 7. Save
 
 **Create Key:**
+
 1. Go to Keys
 2. Register a new key
 3. Key Name: `ViScan Apple Sign In Key`
@@ -77,6 +81,7 @@
 7. Note the Key ID
 
 **Get Team ID:**
+
 1. In Apple Developer, go to Membership
 2. Copy your Team ID
 
@@ -112,10 +117,10 @@ pnpm add firebase
 Create `client/src/lib/firebase.ts`:
 
 ```typescript
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, OAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -124,7 +129,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -137,15 +142,15 @@ export const storage = getStorage(app);
 
 // Auth providers
 export const googleProvider = new GoogleAuthProvider();
-export const appleProvider = new OAuthProvider('apple.com');
+export const appleProvider = new OAuthProvider("apple.com");
 
 // Configure providers
 googleProvider.setCustomParameters({
-  prompt: 'select_account'
+  prompt: "select_account",
 });
 
-appleProvider.addScope('email');
-appleProvider.addScope('name');
+appleProvider.addScope("email");
+appleProvider.addScope("name");
 ```
 
 ## Step 7: Deploy to Firebase Hosting
@@ -196,16 +201,16 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
+
     // Analyses collection
     match /analyses/{analysisId} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
         resource.data.userId == request.auth.uid;
     }
-    
+
     // Recommendations collection
     match /recommendations/{recId} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
         resource.data.userId == request.auth.uid;
     }
   }

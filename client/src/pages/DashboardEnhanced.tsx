@@ -1,8 +1,26 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, FileText, Image, TrendingUp, Upload, Brain, MessageSquare, History, Download, User, BookOpen } from "lucide-react";
+import {
+  Activity,
+  FileText,
+  Image,
+  TrendingUp,
+  Upload,
+  Brain,
+  MessageSquare,
+  History,
+  Download,
+  User,
+  BookOpen,
+} from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import AnalysisHistory from "@/components/AnalysisHistory";
 import PersonalizedRecommendations from "@/components/PersonalizedRecommendations";
@@ -24,16 +42,20 @@ export default function DashboardEnhanced() {
           category: "medical",
           priority: "high",
           title: "Schedule Medical Consultation",
-          description: "Your analysis indicates concerns that require professional evaluation.",
-          actionItems: ["Contact healthcare provider", "Prepare summary of symptoms"],
-          completed: false
-        }
+          description:
+            "Your analysis indicates concerns that require professional evaluation.",
+          actionItems: [
+            "Contact healthcare provider",
+            "Prepare summary of symptoms",
+          ],
+          completed: false,
+        },
       ],
       "moderate",
       user?.name || "Patient"
     );
   };
-  
+
   // Mock data for analysis history (replace with real data from API)
   const mockAnalyses = [
     {
@@ -46,8 +68,8 @@ export default function DashboardEnhanced() {
       findings: [
         "Constitution: Lymphatic (Blue iris)",
         "Stomach Zone: 2 sign(s) detected (crypts, spots) - mild concern",
-        "Kidney/Bladder Zone: 1 sign(s) detected (furrows) - mild concern"
-      ]
+        "Kidney/Bladder Zone: 1 sign(s) detected (furrows) - mild concern",
+      ],
     },
     {
       id: 2,
@@ -59,8 +81,8 @@ export default function DashboardEnhanced() {
       findings: [
         "Facial symmetry: 85%",
         "Single Vertical Line (Between eyebrows): Persistent and determined personality, Possible stress accumulation",
-        "Horizontal Forehead Lines (Forehead): Digestive system concerns, Possible stomach issues"
-      ]
+        "Horizontal Forehead Lines (Forehead): Digestive system concerns, Possible stomach issues",
+      ],
     },
     {
       id: 3,
@@ -72,8 +94,8 @@ export default function DashboardEnhanced() {
       findings: [
         "Overall palm health: Good",
         "Life line: Strong and clear",
-        "Heart line: Balanced emotional health"
-      ]
+        "Heart line: Balanced emotional health",
+      ],
     },
     {
       id: 4,
@@ -85,8 +107,8 @@ export default function DashboardEnhanced() {
       findings: [
         "Chest X-ray analysis shows potential abnormality",
         "Recommend immediate consultation with specialist",
-        "Further imaging may be required"
-      ]
+        "Further imaging may be required",
+      ],
     },
     {
       id: 5,
@@ -98,9 +120,9 @@ export default function DashboardEnhanced() {
       findings: [
         "Constitution: Hematogenic (Brown iris)",
         "Liver/Gallbladder Zone: 1 sign(s) detected (spots) - mild concern",
-        "Overall health status: Good"
-      ]
-    }
+        "Overall health status: Good",
+      ],
+    },
   ];
 
   if (isLoading) {
@@ -119,10 +141,10 @@ export default function DashboardEnhanced() {
           <div>
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <p className="text-sm text-muted-foreground">
-              Welcome back, {user?.name || 'User'}
+              Welcome back, {user?.name || "User"}
             </p>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Link href="/profile">
               <Button variant="ghost" size="icon" className="rounded-full">
@@ -131,7 +153,11 @@ export default function DashboardEnhanced() {
                 </div>
               </Button>
             </Link>
-            <Button variant="outline" size="sm" onClick={handleExportCompleteReport}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportCompleteReport}
+            >
               <Download className="h-4 w-4 mr-2" />
               Export Report
             </Button>
@@ -176,7 +202,9 @@ export default function DashboardEnhanced() {
                   <FileText className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats?.totalDocuments || 0}</div>
+                  <div className="text-2xl font-bold">
+                    {stats?.totalDocuments || 0}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     Medical records and cases
                   </p>
@@ -191,7 +219,9 @@ export default function DashboardEnhanced() {
                   <Image className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats?.totalImages || 0}</div>
+                  <div className="text-2xl font-bold">
+                    {stats?.totalImages || 0}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     Uploaded medical images
                   </p>
@@ -206,7 +236,9 @@ export default function DashboardEnhanced() {
                   <Brain className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats?.totalAnalyses || 0}</div>
+                  <div className="text-2xl font-bold">
+                    {stats?.totalAnalyses || 0}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     AI-powered diagnostics
                   </p>
@@ -221,7 +253,9 @@ export default function DashboardEnhanced() {
                   <Activity className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{stats?.pendingAnalyses || 0}</div>
+                  <div className="text-2xl font-bold">
+                    {stats?.pendingAnalyses || 0}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     Awaiting processing
                   </p>
@@ -240,30 +274,36 @@ export default function DashboardEnhanced() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium">Plan</p>
-                      <p className="text-2xl font-bold capitalize">{stats?.subscription?.plan || 'Free'}</p>
+                      <p className="text-2xl font-bold capitalize">
+                        {stats?.subscription?.plan || "Free"}
+                      </p>
                     </div>
                     <Link href="/settings">
-                      <Button variant="outline" size="sm">Upgrade</Button>
+                      <Button variant="outline" size="sm">
+                        Upgrade
+                      </Button>
                     </Link>
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium">Analyses Used</span>
                       <span className="text-sm text-muted-foreground">
-                        {stats?.subscription?.analysesUsed || 0} / {stats?.subscription?.analysesLimit || 10}
+                        {stats?.subscription?.analysesUsed || 0} /{" "}
+                        {stats?.subscription?.analysesLimit || 10}
                       </span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2">
-                      <div 
+                      <div
                         className="bg-primary h-2 rounded-full transition-all"
-                        style={{ 
-                          width: `${Math.min(100, ((stats?.subscription?.analysesUsed || 0) / (stats?.subscription?.analysesLimit || 10)) * 100)}%` 
+                        style={{
+                          width: `${Math.min(100, ((stats?.subscription?.analysesUsed || 0) / (stats?.subscription?.analysesLimit || 10)) * 100)}%`,
                         }}
                       />
                     </div>
                     <p className="text-xs text-muted-foreground mt-2">
-                      {stats?.subscription?.analysesRemaining || 10} analyses remaining this month
+                      {stats?.subscription?.analysesRemaining || 10} analyses
+                      remaining this month
                     </p>
                   </div>
                 </CardContent>
@@ -277,35 +317,50 @@ export default function DashboardEnhanced() {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <Link href="/analysis">
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <Upload className="h-4 w-4" />
                       Upload & Analyze Image
                     </Button>
                   </Link>
-                  
+
                   <Link href="/chat">
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <MessageSquare className="h-4 w-4" />
                       Start AI Chat
                     </Button>
                   </Link>
-                  
+
                   <Link href="/documents">
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <FileText className="h-4 w-4" />
                       View All Documents
                     </Button>
                   </Link>
-                  
+
                   <Link href="/images">
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <Image className="h-4 w-4" />
                       Browse Images
                     </Button>
                   </Link>
-                  
+
                   <Link href="/library">
-                    <Button variant="outline" className="w-full justify-start gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2"
+                    >
                       <BookOpen className="h-4 w-4" />
                       Medical Library
                     </Button>
@@ -325,7 +380,7 @@ export default function DashboardEnhanced() {
               findings={[
                 "Stomach Zone: 2 sign(s) detected",
                 "Stress indicators present",
-                "Liver function concerns"
+                "Liver function concerns",
               ]}
               affectedSystems={["Digestive", "Liver", "Nervous System"]}
             />

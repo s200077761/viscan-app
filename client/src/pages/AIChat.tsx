@@ -4,18 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Send, 
-  Plus, 
-  Paperclip, 
-  Image as ImageIcon, 
-  FileText, 
+import {
+  Send,
+  Plus,
+  Paperclip,
+  Image as ImageIcon,
+  FileText,
   Trash2,
   Menu,
   X,
   Bot,
   User as UserIcon,
-  Download
+  Download,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -50,7 +50,9 @@ export default function AIChat() {
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [currentConversationId, setCurrentConversationId] = useState<
+    string | null
+  >(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -74,8 +76,8 @@ export default function AIChat() {
       attachments: selectedFiles.map(file => ({
         type: file.type.startsWith("image/") ? "image" : "file",
         url: URL.createObjectURL(file),
-        name: file.name
-      }))
+        name: file.name,
+      })),
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -89,7 +91,7 @@ export default function AIChat() {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: generateAIResponse(input),
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       setMessages(prev => [...prev, aiMessage]);
       setIsTyping(false);
@@ -101,7 +103,7 @@ export default function AIChat() {
     const responses = [
       `I understand you're asking about: "${userInput}". Based on the medical image analysis, I can provide detailed insights about the condition.`,
       `Thank you for your question. Let me analyze the medical data you've provided. The results show...`,
-      `I've processed your request regarding "${userInput}". Here are the findings from the AI analysis...`
+      `I've processed your request regarding "${userInput}". Here are the findings from the AI analysis...`,
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   };
@@ -149,7 +151,7 @@ export default function AIChat() {
 
         <ScrollArea className="flex-1 p-2">
           <div className="space-y-2">
-            {conversations.map((conv) => (
+            {conversations.map(conv => (
               <Card
                 key={conv.id}
                 className={`p-3 cursor-pointer hover:bg-accent transition-colors ${
@@ -184,7 +186,11 @@ export default function AIChat() {
               size="icon"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             >
-              {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {sidebarOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
             <img src={APP_LOGO} alt="ViScan" className="h-8 w-8" />
             <div>
@@ -204,9 +210,12 @@ export default function AIChat() {
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
                   <Bot className="h-10 w-10 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold mb-2">Welcome to ViScan AI</h2>
+                <h2 className="text-2xl font-bold mb-2">
+                  Welcome to ViScan AI
+                </h2>
                 <p className="text-muted-foreground mb-8">
-                  Upload medical images and ask questions for AI-powered analysis
+                  Upload medical images and ask questions for AI-powered
+                  analysis
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
                   <Card className="p-4 hover:bg-accent transition-colors cursor-pointer">
@@ -236,7 +245,7 @@ export default function AIChat() {
                 </div>
               </div>
             ) : (
-              messages.map((message) => (
+              messages.map(message => (
                 <div
                   key={message.id}
                   className={`flex gap-4 ${
@@ -248,7 +257,7 @@ export default function AIChat() {
                       <Bot className="h-5 w-5 text-primary" />
                     </div>
                   )}
-                  
+
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                       message.role === "user"
@@ -269,40 +278,47 @@ export default function AIChat() {
                             ) : (
                               <div className="flex items-center gap-2 p-2 bg-background/50 rounded">
                                 <FileText className="h-4 w-4" />
-                                <span className="text-sm">{attachment.name}</span>
+                                <span className="text-sm">
+                                  {attachment.name}
+                                </span>
                               </div>
                             )}
                           </div>
                         ))}
                       </div>
                     )}
-                    
+
                     <div className="prose prose-sm dark:prose-invert max-w-none">
                       <ReactMarkdown
                         components={{
-                        code({ node, inline, className, children, ...props }: any) {
-                          const match = /language-(\w+)/.exec(className || "");
-                          return !inline && match ? (
-                            <SyntaxHighlighter
-                              style={vscDarkPlus as any}
-                              language={match[1]}
-                              PreTag="div"
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
-                          ) : (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
+                          code({ className, children, ...props }) {
+                            const match = /language-(\w+)/.exec(
+                              className || ""
+                            );
+                            const inline =
+                              !props.node ||
+                              props.node.position?.start.line ===
+                                props.node.position?.end.line;
+                            return !inline && match ? (
+                              <SyntaxHighlighter
+                                style={vscDarkPlus}
+                                language={match[1]}
+                                PreTag="div"
+                              >
+                                {String(children).replace(/\n$/, "")}
+                              </SyntaxHighlighter>
+                            ) : (
+                              <code className={className} {...props}>
+                                {children}
+                              </code>
+                            );
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
                     </div>
-                    
+
                     <div className="text-xs opacity-70 mt-2">
                       {message.timestamp.toLocaleTimeString()}
                     </div>
@@ -325,8 +341,14 @@ export default function AIChat() {
                 <div className="bg-muted rounded-2xl px-4 py-3">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
-                    <div className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }} />
+                    <div
+                      className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    />
+                    <div
+                      className="w-2 h-2 bg-primary/60 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.4s" }}
+                    />
                   </div>
                 </div>
               </div>
@@ -374,7 +396,7 @@ export default function AIChat() {
                 className="hidden"
                 onChange={handleFileSelect}
               />
-              
+
               <Button
                 variant="outline"
                 size="icon"
@@ -385,7 +407,7 @@ export default function AIChat() {
 
               <Input
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={e => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask anything about medical images..."
                 className="flex-1"

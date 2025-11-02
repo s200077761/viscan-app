@@ -3,6 +3,7 @@
 ## 📋 المتطلبات الأساسية
 
 قبل البدء، تأكد من تثبيت:
+
 - ✅ Node.js (v18 أو أحدث)
 - ✅ Git
 - ✅ Vercel CLI
@@ -12,6 +13,7 @@
 ## 🔧 الخطوة 1: تثبيت الأدوات المطلوبة
 
 ### تثبيت Node.js (إذا لم يكن مثبتاً)
+
 ```bash
 # تحقق من التثبيت
 node --version
@@ -21,6 +23,7 @@ node --version
 ```
 
 ### تثبيت pnpm
+
 ```bash
 npm install -g pnpm
 
@@ -29,6 +32,7 @@ pnpm --version
 ```
 
 ### تثبيت Vercel CLI
+
 ```bash
 npm install -g vercel
 
@@ -55,6 +59,7 @@ ls -la
 ```
 
 يجب أن ترى:
+
 - ✅ `package.json`
 - ✅ `vercel.json`
 - ✅ `client/` folder
@@ -85,6 +90,7 @@ vercel login
 ```
 
 سيفتح متصفح للتسجيل:
+
 1. اختر **Continue with Email**
 2. أدخل: `msmbm2003@gmail.com`
 3. افتح البريد وانقر على رابط التأكيد
@@ -105,7 +111,7 @@ vercel --prod
 ### الأسئلة المتوقعة:
 
 ```
-? Set up and deploy "~/Desktop/viscan-app"? 
+? Set up and deploy "~/Desktop/viscan-app"?
 → اضغط Y ثم Enter
 
 ? Which scope do you want to deploy to?
@@ -129,6 +135,7 @@ vercel --prod
 ## ⏱️ الخطوة 6: انتظر اكتمال النشر
 
 سترى:
+
 ```
 🔨 Building...
 📦 Uploading...
@@ -196,16 +203,19 @@ vercel --prod
 ## 🆘 حل المشاكل الشائعة
 
 ### مشكلة: `command not found: pnpm`
+
 ```bash
 npm install -g pnpm
 ```
 
 ### مشكلة: `command not found: vercel`
+
 ```bash
 npm install -g vercel
 ```
 
 ### مشكلة: `Build failed`
+
 ```bash
 # تحقق من الأخطاء في Terminal
 # تأكد من تثبيت جميع التبعيات
@@ -216,6 +226,7 @@ pnpm build
 ```
 
 ### مشكلة: `Permission denied`
+
 ```bash
 # أضف sudo قبل الأمر
 sudo npm install -g pnpm
@@ -227,6 +238,7 @@ sudo npm install -g vercel
 ## 📱 الخطوة التالية: نشر على App Store
 
 بعد نجاح النشر على Vercel، يمكنك:
+
 1. تحويل المشروع لتطبيق iOS باستخدام Capacitor
 2. رفعه على App Store
 
@@ -237,6 +249,7 @@ sudo npm install -g vercel
 ## 📞 الدعم
 
 إذا واجهت أي مشكلة:
+
 - تحقق من Terminal للأخطاء
 - تأكد من اتصال الإنترنت
 - تأكد من تسجيل الدخول لـ Vercel

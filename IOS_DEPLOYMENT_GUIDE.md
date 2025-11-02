@@ -1,6 +1,7 @@
 # 📱 دليل نشر ViScan على App Store
 
 ## المتطلبات الأساسية
+
 - ✅ جهاز Mac مع macOS
 - ✅ Xcode مثبت
 - ✅ حساب Apple Developer ($99/سنة)
@@ -11,6 +12,7 @@
 ## الخطوة 1: إعداد حساب Apple Developer
 
 ### 1.1 التسجيل في Apple Developer Program
+
 ```
 1. اذهب إلى: https://developer.apple.com/programs/
 2. سجل دخول بـ: msmbm2003@gmail.com
@@ -20,6 +22,7 @@
 ```
 
 ### 1.2 إنشاء App ID
+
 ```
 1. اذهب إلى: https://developer.apple.com/account/resources/identifiers/list
 2. اضغط "+" لإنشاء App ID جديد
@@ -36,6 +39,7 @@
 ## الخطوة 2: تجهيز المشروع
 
 ### 2.1 تحميل المشروع على جهاز Mac
+
 ```bash
 # استنسخ المشروع من GitHub أو حمله كـ ZIP
 git clone https://github.com/YOUR_USERNAME/viscan-app.git
@@ -47,6 +51,7 @@ cd viscan-app
 ```
 
 ### 2.2 تثبيت التبعيات
+
 ```bash
 # تثبيت pnpm إذا لم يكن مثبتاً
 npm install -g pnpm
@@ -56,6 +61,7 @@ pnpm install
 ```
 
 ### 2.3 بناء التطبيق للإنتاج
+
 ```bash
 # بناء النسخة النهائية
 pnpm build
@@ -66,6 +72,7 @@ pnpm build
 ## الخطوة 3: إعداد Capacitor
 
 ### 3.1 تهيئة Capacitor
+
 ```bash
 # تهيئة Capacitor
 npx cap init
@@ -76,6 +83,7 @@ npx cap init
 ```
 
 ### 3.2 إضافة منصة iOS
+
 ```bash
 # إضافة iOS
 npx cap add ios
@@ -92,6 +100,7 @@ npx cap sync ios
 ## الخطوة 4: فتح المشروع في Xcode
 
 ### 4.1 فتح Xcode
+
 ```bash
 # فتح مشروع iOS في Xcode
 npx cap open ios
@@ -114,6 +123,7 @@ npx cap open ios
 ```
 
 ### 4.3 تحديث معلومات التطبيق
+
 ```
 1. اختر "Info.plist" من القائمة اليسرى
 2. عدّل:
@@ -129,6 +139,7 @@ npx cap open ios
 ## الخطوة 5: إنشاء التطبيق على App Store Connect
 
 ### 5.1 تسجيل الدخول إلى App Store Connect
+
 ```
 1. اذهب إلى: https://appstoreconnect.apple.com
 2. سجل دخول بـ: msmbm2003@gmail.com
@@ -137,6 +148,7 @@ npx cap open ios
 ```
 
 ### 5.2 ملء معلومات التطبيق
+
 ```
 Platform: iOS
 Name: ViScan - Medical Image Analysis
@@ -149,6 +161,7 @@ User Access: Full Access
 ### 5.3 ملء معلومات الإصدار (Version Information)
 
 #### App Information
+
 ```
 Name: ViScan
 Subtitle: AI-Powered Medical Analysis
@@ -157,12 +170,14 @@ Category: Medical
 ```
 
 #### Pricing and Availability
+
 ```
 Price: Free (أو حدد سعر)
 Availability: All countries
 ```
 
 #### App Privacy
+
 ```
 سيُطلب منك الإجابة على أسئلة حول:
 - جمع البيانات
@@ -180,6 +195,7 @@ Availability: All countries
 ## الخطوة 6: إنشاء Screenshots
 
 ### 6.1 المقاسات المطلوبة
+
 ```
 iPhone:
 - 6.7" Display (1290 x 2796 pixels) - iPhone 15 Pro Max
@@ -192,6 +208,7 @@ iPad:
 ```
 
 ### 6.2 كيفية أخذ Screenshots
+
 ```
 1. شغّل التطبيق في Simulator
 2. افتح الصفحات المهمة (Home, Dashboard, Analysis)
@@ -201,6 +218,7 @@ iPad:
 ```
 
 ### 6.3 تحسين Screenshots (اختياري)
+
 ```
 استخدم أدوات مثل:
 - Figma
@@ -218,6 +236,7 @@ iPad:
 ## الخطوة 7: رفع Build إلى App Store Connect
 
 ### 7.1 إعداد Archive في Xcode
+
 ```
 1. في Xcode، اختر:
    Product > Destination > Any iOS Device (arm64)
@@ -227,6 +246,7 @@ iPad:
 ```
 
 ### 7.2 رفع Archive
+
 ```
 1. بعد اكتمال Archive، ستفتح نافذة "Organizer"
 2. اختر الـ Archive الذي أنشأته
@@ -242,6 +262,7 @@ iPad:
 ```
 
 ### 7.3 التحقق من الرفع
+
 ```
 1. اذهب إلى App Store Connect
 2. My Apps > ViScan
@@ -255,6 +276,7 @@ iPad:
 ## الخطوة 8: إعداد الإصدار للمراجعة
 
 ### 8.1 ربط Build بالإصدار
+
 ```
 1. في App Store Connect > ViScan
 2. اذهب إلى "App Store" tab
@@ -264,6 +286,7 @@ iPad:
 ```
 
 ### 8.2 رفع Screenshots
+
 ```
 1. في نفس الصفحة، اذهب إلى "App Preview and Screenshots"
 2. لكل مقاس شاشة:
@@ -275,6 +298,7 @@ iPad:
 ### 8.3 كتابة الوصف
 
 #### Description (الوصف)
+
 ```
 ViScan - منصة التحليل الطبي بالذكاء الاصطناعي
 
@@ -295,21 +319,25 @@ ViScan يستخدم أحدث تقنيات الذكاء الاصطناعي لتو
 ```
 
 #### Keywords (الكلمات المفتاحية)
+
 ```
 medical,health,ai,analysis,diagnosis,iris,xray,mri,doctor,patient
 ```
 
 #### Support URL
+
 ```
 https://viscan.app/support
 ```
 
 #### Marketing URL (اختياري)
+
 ```
 https://viscan.app
 ```
 
 ### 8.4 معلومات التواصل
+
 ```
 First Name: [اسمك]
 Last Name: [اسم عائلتك]
@@ -318,16 +346,17 @@ Email: msmbm2003@gmail.com
 ```
 
 ### 8.5 App Review Information
+
 ```
 Sign-in required: No (أو Yes إذا كان مطلوب)
 
 Notes for Reviewer:
-"ViScan is a medical image analysis platform powered by AI. 
+"ViScan is a medical image analysis platform powered by AI.
 Test account (if needed):
 Email: test@viscan.app
 Password: Test123456
 
-The app analyzes medical images including iris scans, X-rays, MRI, 
+The app analyzes medical images including iris scans, X-rays, MRI,
 and provides health recommendations based on AI analysis."
 ```
 
@@ -336,6 +365,7 @@ and provides health recommendations based on AI analysis."
 ## الخطوة 9: إرسال للمراجعة
 
 ### 9.1 المراجعة النهائية
+
 ```
 تأكد من:
 - ✅ Build محدد
@@ -348,6 +378,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### 9.2 إرسال للمراجعة
+
 ```
 1. اضغط "Save" لحفظ التغييرات
 2. اضغط "Add for Review" في الأعلى
@@ -357,6 +388,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### 9.3 حالة المراجعة
+
 ```
 ستمر بالحالات التالية:
 1. Waiting for Review (انتظار المراجعة)
@@ -372,6 +404,7 @@ and provides health recommendations based on AI analysis."
 ## الخطوة 10: بعد الموافقة
 
 ### 10.1 النشر
+
 ```
 عند الموافقة، لديك خياران:
 1. Automatic Release: ينشر تلقائياً
@@ -379,6 +412,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### 10.2 مراقبة الأداء
+
 ```
 في App Store Connect، راقب:
 - عدد التحميلات
@@ -388,6 +422,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### 10.3 التحديثات المستقبلية
+
 ```
 لإصدار تحديث:
 1. عدّل الكود
@@ -403,6 +438,7 @@ and provides health recommendations based on AI analysis."
 ## 🚨 مشاكل شائعة وحلولها
 
 ### مشكلة: "No Provisioning Profile found"
+
 ```
 الحل:
 1. في Xcode > Preferences > Accounts
@@ -412,6 +448,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### مشكلة: "Bundle Identifier already exists"
+
 ```
 الحل:
 1. غيّر Bundle ID في:
@@ -421,6 +458,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### مشكلة: "Build failed"
+
 ```
 الحل:
 1. نظف المشروع: Product > Clean Build Folder
@@ -429,6 +467,7 @@ and provides health recommendations based on AI analysis."
 ```
 
 ### مشكلة: "App Rejected"
+
 ```
 الأسباب الشائعة:
 - معلومات ناقصة
@@ -449,6 +488,7 @@ and provides health recommendations based on AI analysis."
 قبل الإرسال، تأكد من:
 
 ### التقني
+
 - [ ] التطبيق يعمل بدون أخطاء
 - [ ] جميع الميزات تعمل
 - [ ] لا توجد Crashes
@@ -456,6 +496,7 @@ and provides health recommendations based on AI analysis."
 - [ ] يدعم أحجام الشاشات المختلفة
 
 ### المحتوى
+
 - [ ] App Name محدد
 - [ ] Description مكتوب (عربي/إنجليزي)
 - [ ] Keywords محددة
@@ -463,12 +504,14 @@ and provides health recommendations based on AI analysis."
 - [ ] App Icon جاهز (1024x1024)
 
 ### القانوني
+
 - [ ] Privacy Policy جاهزة
 - [ ] Terms of Service جاهزة
 - [ ] حقوق الملكية واضحة
 - [ ] لا انتهاك لحقوق الملكية
 
 ### الحساب
+
 - [ ] Apple Developer Account نشط
 - [ ] الدفع ($99) تم
 - [ ] App ID مُنشأ
@@ -481,13 +524,16 @@ and provides health recommendations based on AI analysis."
 بعد اتباع هذه الخطوات، سيكون تطبيق ViScan على App Store!
 
 ### روابط مفيدة
+
 - App Store Connect: https://appstoreconnect.apple.com
 - Developer Portal: https://developer.apple.com/account
 - App Store Guidelines: https://developer.apple.com/app-store/review/guidelines/
 - Human Interface Guidelines: https://developer.apple.com/design/human-interface-guidelines/
 
 ### الدعم
+
 إذا واجهت أي مشاكل:
+
 1. راجع هذا الدليل
 2. ابحث في Apple Developer Forums
 3. تواصل مع Apple Developer Support
@@ -495,6 +541,7 @@ and provides health recommendations based on AI analysis."
 ---
 
 **ملاحظة مهمة**: هذا التطبيق طبي، تأكد من:
+
 - الامتثال لقوانين الصحة المحلية
 - إضافة تحذير بأن التطبيق لا يغني عن الطبيب
 - الحصول على موافقات طبية إذا لزم الأمر

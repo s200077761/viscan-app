@@ -1,31 +1,58 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { 
-  User, 
-  Mail, 
-  Calendar, 
-  Shield, 
-  Activity, 
+import {
+  User,
+  Mail,
+  Calendar,
+  Shield,
+  Activity,
   Settings,
   Camera,
   Edit,
   Save,
   X,
   LogOut,
-  Trash2
+  Trash2,
 } from "lucide-react";
 import { useState } from "react";
 import { format, subDays } from "date-fns";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { Link } from "wouter";
 
 // Chart colors
-const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+const COLORS = [
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+];
 
 export default function Profile() {
   const { user } = useAuth();
@@ -34,12 +61,11 @@ export default function Profile() {
     name: user?.name || "",
     email: user?.email || "",
     phone: "",
-    bio: ""
+    bio: "",
   });
 
   const handleSave = () => {
-    // TODO: Implement save functionality
-    console.log("Saving profile:", formData);
+    // Save functionality would be implemented here with actual API calls
     setIsEditing(false);
   };
 
@@ -48,7 +74,7 @@ export default function Profile() {
       name: user?.name || "",
       email: user?.email || "",
       phone: "",
-      bio: ""
+      bio: "",
     });
     setIsEditing(false);
   };
@@ -58,13 +84,28 @@ export default function Profile() {
     totalAnalyses: 24,
     thisMonth: 8,
     accuracy: 96,
-    subscriptionPlan: "Professional"
+    subscriptionPlan: "Professional",
   };
 
   const recentActivity = [
-    { id: 1, action: "Iris Analysis", date: new Date(2025, 0, 28), result: "Completed" },
-    { id: 2, action: "X-Ray Analysis", date: new Date(2025, 0, 27), result: "Completed" },
-    { id: 3, action: "Facial Diagnosis", date: new Date(2025, 0, 25), result: "Completed" }
+    {
+      id: 1,
+      action: "Iris Analysis",
+      date: new Date(2025, 0, 28),
+      result: "Completed",
+    },
+    {
+      id: 2,
+      action: "X-Ray Analysis",
+      date: new Date(2025, 0, 27),
+      result: "Completed",
+    },
+    {
+      id: 3,
+      action: "Facial Diagnosis",
+      date: new Date(2025, 0, 25),
+      result: "Completed",
+    },
   ];
 
   // Usage trend data (last 30 days)
@@ -72,7 +113,7 @@ export default function Profile() {
     const date = subDays(new Date(), 29 - i);
     return {
       date: format(date, "MMM dd"),
-      analyses: Math.floor(Math.random() * 5) + 1
+      analyses: Math.floor(Math.random() * 5) + 1,
     };
   });
 
@@ -82,7 +123,7 @@ export default function Profile() {
     { name: "X-Ray", value: 6 },
     { name: "MRI", value: 4 },
     { name: "Facial", value: 3 },
-    { name: "Palm", value: 1 }
+    { name: "Palm", value: 1 },
   ];
 
   // Monthly activity
@@ -92,7 +133,7 @@ export default function Profile() {
     { month: "Oct", count: 24 },
     { month: "Nov", count: 20 },
     { month: "Dec", count: 16 },
-    { month: "Jan", count: 24 }
+    { month: "Jan", count: 24 },
   ];
 
   return (
@@ -133,9 +174,11 @@ export default function Profile() {
                   </div>
 
                   {/* User Info */}
-                  <h2 className="mt-4 text-2xl font-bold">{user?.name || "User"}</h2>
+                  <h2 className="mt-4 text-2xl font-bold">
+                    {user?.name || "User"}
+                  </h2>
                   <p className="text-sm text-muted-foreground">{user?.email}</p>
-                  
+
                   <Badge className="mt-3" variant="default">
                     {stats.subscriptionPlan}
                   </Badge>
@@ -143,15 +186,23 @@ export default function Profile() {
                   {/* Stats */}
                   <div className="mt-6 w-full space-y-3">
                     <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                      <span className="text-sm text-muted-foreground">Total Analyses</span>
-                      <span className="font-semibold">{stats.totalAnalyses}</span>
+                      <span className="text-sm text-muted-foreground">
+                        Total Analyses
+                      </span>
+                      <span className="font-semibold">
+                        {stats.totalAnalyses}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                      <span className="text-sm text-muted-foreground">This Month</span>
+                      <span className="text-sm text-muted-foreground">
+                        This Month
+                      </span>
                       <span className="font-semibold">{stats.thisMonth}</span>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                      <span className="text-sm text-muted-foreground">Avg. Accuracy</span>
+                      <span className="text-sm text-muted-foreground">
+                        Avg. Accuracy
+                      </span>
                       <span className="font-semibold">{stats.accuracy}%</span>
                     </div>
                   </div>
@@ -198,7 +249,11 @@ export default function Profile() {
                         </CardDescription>
                       </div>
                       {!isEditing ? (
-                        <Button onClick={() => setIsEditing(true)} variant="outline" size="sm">
+                        <Button
+                          onClick={() => setIsEditing(true)}
+                          variant="outline"
+                          size="sm"
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -208,7 +263,11 @@ export default function Profile() {
                             <Save className="h-4 w-4 mr-2" />
                             Save
                           </Button>
-                          <Button onClick={handleCancel} variant="outline" size="sm">
+                          <Button
+                            onClick={handleCancel}
+                            variant="outline"
+                            size="sm"
+                          >
                             <X className="h-4 w-4 mr-2" />
                             Cancel
                           </Button>
@@ -225,7 +284,9 @@ export default function Profile() {
                           <Input
                             id="name"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            onChange={e =>
+                              setFormData({ ...formData, name: e.target.value })
+                            }
                             disabled={!isEditing}
                           />
                         </div>
@@ -239,7 +300,12 @@ export default function Profile() {
                             id="email"
                             type="email"
                             value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            onChange={e =>
+                              setFormData({
+                                ...formData,
+                                email: e.target.value,
+                              })
+                            }
                             disabled={!isEditing}
                           />
                         </div>
@@ -251,7 +317,9 @@ export default function Profile() {
                           id="phone"
                           type="tel"
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          onChange={e =>
+                            setFormData({ ...formData, phone: e.target.value })
+                          }
                           disabled={!isEditing}
                           placeholder="+1 (555) 000-0000"
                         />
@@ -263,7 +331,9 @@ export default function Profile() {
                           id="bio"
                           className="min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                           value={formData.bio}
-                          onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                          onChange={e =>
+                            setFormData({ ...formData, bio: e.target.value })
+                          }
                           disabled={!isEditing}
                           placeholder="Tell us about yourself..."
                         />
@@ -299,7 +369,12 @@ export default function Profile() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="analyses" stroke="#3b82f6" strokeWidth={2} />
+                        <Line
+                          type="monotone"
+                          dataKey="analyses"
+                          stroke="#3b82f6"
+                          strokeWidth={2}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </CardContent>
@@ -323,13 +398,18 @@ export default function Profile() {
                             cx="50%"
                             cy="50%"
                             labelLine={false}
-                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            label={({ name, percent }) =>
+                              `${name} ${(percent * 100).toFixed(0)}%`
+                            }
                             outerRadius={80}
                             fill="#8884d8"
                             dataKey="value"
                           >
                             {analysisTypeData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                              <Cell
+                                key={`cell-${index}`}
+                                fill={COLORS[index % COLORS.length]}
+                              />
                             ))}
                           </Pie>
                           <Tooltip />
@@ -342,9 +422,7 @@ export default function Profile() {
                   <Card>
                     <CardHeader>
                       <CardTitle>Monthly Activity</CardTitle>
-                      <CardDescription>
-                        Analyses per month
-                      </CardDescription>
+                      <CardDescription>Analyses per month</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={250}>
@@ -370,7 +448,7 @@ export default function Profile() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {recentActivity.map((activity) => (
+                      {recentActivity.map(activity => (
                         <div
                           key={activity.id}
                           className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 transition-colors"
@@ -421,7 +499,9 @@ export default function Profile() {
                       <div className="border-t pt-4">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium">Two-Factor Authentication</p>
+                            <p className="font-medium">
+                              Two-Factor Authentication
+                            </p>
                             <p className="text-sm text-muted-foreground">
                               Add an extra layer of security
                             </p>
@@ -434,7 +514,9 @@ export default function Profile() {
 
                   <Card className="border-destructive">
                     <CardHeader>
-                      <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                      <CardTitle className="text-destructive">
+                        Danger Zone
+                      </CardTitle>
                       <CardDescription>
                         Irreversible actions for your account
                       </CardDescription>

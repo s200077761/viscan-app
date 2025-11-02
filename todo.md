@@ -1,6 +1,7 @@
 # Viscan Project TODO
 
 ## Phase 1: Database Schema & Backend Foundation
+
 - [x] Update database schema for medical image analysis
 - [x] Create documents table with patient info
 - [x] Create images table with medical metadata
@@ -11,6 +12,7 @@
 - [x] Create backend procedures for all entities
 
 ## Phase 2: Frontend UI/UX
+
 - [x] Design professional landing page
 - [x] Create dashboard layout for authenticated users
 - [x] Build image upload interface with drag & drop
@@ -21,6 +23,7 @@
 - [ ] Add responsive design for mobile
 
 ## Phase 3: AI/ML Integration
+
 - [ ] Set up AI service endpoint
 - [ ] Integrate OpenAI GPT-4 Vision API
 - [ ] Add image classification capabilities
@@ -30,6 +33,7 @@
 - [ ] Implement medical findings extraction
 
 ## Phase 4: MCP Protocol
+
 - [ ] Design MCP server interface
 - [ ] Implement MCP client in backend
 - [ ] Add model switching capabilities
@@ -37,6 +41,7 @@
 - [ ] Test MCP integration
 
 ## Phase 5: Legal & Compliance
+
 - [ ] Create Terms of Service page
 - [ ] Create Privacy Policy page
 - [ ] Add HIPAA compliance documentation
@@ -45,6 +50,7 @@
 - [ ] Create consent forms
 
 ## Phase 6: Business Features
+
 - [ ] Implement subscription plans
 - [ ] Add payment integration
 - [ ] Create usage tracking
@@ -53,6 +59,7 @@
 - [ ] Create billing system
 
 ## Phase 7: Testing & Deployment
+
 - [ ] Write unit tests
 - [ ] Write integration tests
 - [ ] Security audit
@@ -61,13 +68,14 @@
 - [ ] Set up monitoring
 
 ## Phase 8: Documentation
+
 - [ ] API documentation
 - [ ] User guide
 - [ ] Developer documentation
 - [ ] Deployment guide
 
-
 ## Phase 3: Specialized AI Models Integration
+
 - [x] Integrate FaceAnalyzer model (CNN, ResNet)
 - [x] Integrate IrisScanner model (VGG, U-Net)
 - [x] Integrate PalmReader model (MediaPipe, CNNs)
@@ -80,6 +88,7 @@
 - [ ] Add training data upload capability
 
 ## Phase 4: Advanced Facial Diagnosis System
+
 - [x] Integrate forehead lines analysis (vertical and horizontal)
 - [x] Add eyebrow lines diagnosis (right/left spleen/liver indicators)
 - [x] Implement crow's feet analysis (eyesight and organ health)
@@ -92,6 +101,7 @@
 - [x] Integrate traditional face reading knowledge
 
 ## Phase 5: Independent Iridology System (AI-Free)
+
 - [x] Create iridology chart mapping system (7 zones)
 - [x] Implement organ position mapping on iris
 - [x] Add iris sign detection (crypts, furrows, spots, rings)
@@ -108,6 +118,7 @@
 - [x] Implement health recommendations engine
 
 ## Phase 6: Branding and UI Polish
+
 - [x] Integrate ViScan logo in navigation
 - [x] Update landing page with logo
 - [x] Add logo to dashboard header
@@ -115,6 +126,7 @@
 - [x] Ensure consistent branding across all pages
 
 ## Phase 7: Enhanced Knowledge Integration
+
 - [x] Integrate Face Mapping knowledge (organ zones on face)
 - [x] Add Arabic Palm Reading knowledge system
 - [x] Create Palm Reading diagnosis engine
@@ -123,6 +135,7 @@
 - [x] Add Atlassian domain verification file
 
 ## Phase 8: GitHub Repository Setup
+
 - [ ] Create professional README.md
 - [ ] Add comprehensive documentation
 - [ ] Set up repository structure
@@ -133,6 +146,7 @@
 - [ ] Configure GitHub Pages for docs
 
 ## Phase 9: Vercel Deployment
+
 - [x] Configure vercel.json for deployment
 - [x] Create comprehensive README.md
 - [x] Create VERCEL_DEPLOYMENT.md guide
@@ -145,6 +159,7 @@
 - [ ] Set up automatic deployments from GitHub
 
 ## Phase 10: UI/UX Enhancements
+
 - [x] Create animated loading spinner component
 - [x] Add skeleton loaders for content
 - [x] Implement page transition animations
@@ -159,6 +174,7 @@
 - [x] Integrate animations in Home, Dashboard, and Analysis pages
 
 ## Phase 11: Advanced AI Libraries Integration
+
 - [ ] Integrate IrisNet for iris analysis
 - [ ] Add OpenCV iris recognition modules
 - [ ] Integrate MONAI for medical image analysis
@@ -172,6 +188,7 @@
 - [ ] Create unified AI analysis pipeline
 
 ## Phase 12: ChatGPT-like Interface
+
 - [x] Design chat-based interface
 - [x] Create message bubbles (user/AI)
 - [x] Add streaming text responses
@@ -186,6 +203,7 @@
 - [x] Integrate with Dashboard
 
 ## Phase 13: Custom MCP Server (Deferred)
+
 - [ ] Design MCP protocol specification
 - [ ] Create MCP server implementation
 - [ ] Add authentication for MCP
@@ -197,6 +215,7 @@
 - [ ] Create documentation for MCP
 
 ## Phase 14: Advanced Archival System
+
 - [ ] Create archive database schema
 - [ ] Implement folder structure
 - [ ] Add tagging system
@@ -208,6 +227,7 @@
 - [ ] Add version history
 
 ## Phase 15: Storage Management & Billing
+
 - [ ] Create storage quota system
 - [ ] Add usage tracking
 - [ ] Implement storage plans (1GB, 10GB, 100GB, 1TB)
@@ -220,6 +240,7 @@
 - [ ] Implement storage warnings
 
 ## Phase 16: Unified Upload Platform
+
 - [ ] Create drag-and-drop upload zone
 - [ ] Add multi-file upload support
 - [ ] Implement progress tracking
@@ -231,6 +252,7 @@
 - [ ] Create file organization tools
 
 ## Phase 17: Advanced Iris Analysis with Deep Learning
+
 - [x] Create advanced iris analysis module (advanced-iris-analysis.ts)
 - [x] Implement 7-zone iridology mapping (IRIS_ZONES)
 - [x] Add iris signs detection (crypts, furrows, spots, rings, lacunae, pigmentation)
@@ -247,6 +269,7 @@
 - [ ] Implement iris quality assessment (future)
 
 ## Phase 18: Advanced Dashboard with Analytics
+
 - [x] Create analysis history component (AnalysisHistory.tsx)
 - [x] Add timeline view for past analyses
 - [x] Implement filtering by date, type, severity
@@ -265,6 +288,7 @@
 - [ ] Create pagination for large datasets (future)
 
 ## Phase 19: Personalized Recommendations System
+
 - [x] Create PersonalizedRecommendations component
 - [x] Implement intelligent recommendation engine
 - [x] Add health tips based on severity levels
@@ -286,6 +310,7 @@
 - [ ] Add reminder system for uncompleted items (future)
 
 ## Phase 20: PDF Export System
+
 - [x] Install jsPDF and html2canvas libraries
 - [x] Create PDFExportService utility class
 - [x] Design professional PDF template with branding
@@ -308,6 +333,7 @@
 - [ ] Create table of contents for long reports (future)
 
 ## Phase 21: Custom Background Image
+
 - [x] Copy ViScan.png to project assets (public/viscan-bg.png)
 - [x] Add background image to Home page hero section
 - [x] Implement dark gradient overlay for text readability
@@ -317,6 +343,7 @@
 - [x] Add border to badge for better contrast
 
 ## Phase 22: Floating Action Button for Quick Analysis
+
 - [x] Create floating action button component
 - [x] Add Eye icon for iris scanning
 - [x] Implement smooth animations (scale, rotate on hover)
@@ -329,6 +356,7 @@
 - [x] Position at bottom-right with z-50
 
 ## Phase 23: PWA & App Store Deployment (iOS Ready!)
+
 - [x] Install PWA dependencies (vite-plugin-pwa, workbox-window)
 - [x] Create Web App Manifest (manifest.json)
 - [x] Define app icons (multiple sizes 72-512px)
@@ -362,6 +390,7 @@
 - [ ] Create Android build (future)
 
 ## Phase 24: Social Login UI (Apple & Google)
+
 - [x] Install Firebase SDK (firebase 12.4.0)
 - [x] Create Firebase configuration file (lib/firebase.ts)
 - [x] Add Apple Sign-In button component
@@ -381,6 +410,7 @@
 - [ ] Test authentication flow with real Firebase config
 
 ## Phase 25: User Profile Page
+
 - [x] Create Profile page component
 - [x] Display user avatar/photo (gradient circle with initial)
 - [x] Show user name and email
@@ -401,6 +431,7 @@
 - [x] Add back to dashboard button
 
 ## Phase 26: Activity Charts in Profile
+
 - [x] Add usage trend line chart (30 days)
 - [x] Add analysis type distribution pie chart
 - [x] Add monthly activity bar chart (6 months)
@@ -417,6 +448,7 @@
 - [ ] Add comparison with previous period (future)
 
 ## Phase 27: Medical Library & Research System
+
 - [x] Create Medical Library page (MedicalLibrary.tsx)
 - [x] Add drug database with search (3 drugs with details)
 - [x] Add disease information database (2 diseases)
@@ -440,6 +472,7 @@
 - [ ] Add export to PDF functionality (future)
 
 ## Phase 28: Communication & Messaging System
+
 - [ ] Create messaging page
 - [ ] Add doctor-patient messaging
 - [ ] Add patient-patient messaging
@@ -452,6 +485,7 @@
 - [ ] Add conversation list
 
 ## Phase 29: Appointment Management System
+
 - [ ] Create appointments page
 - [ ] Add appointment booking
 - [ ] Add calendar view
@@ -463,6 +497,7 @@
 - [ ] Send appointment notifications
 
 ## Phase 30: Blood Test & Report Analysis
+
 - [ ] Add blood test upload
 - [ ] Parse blood test results
 - [ ] Analyze blood test values
@@ -473,6 +508,7 @@
 - [ ] Support multiple test formats
 
 ## Phase 31: Multi-language Support (Arabic/English)
+
 - [ ] Install i18n library
 - [ ] Create translation files (ar/en)
 - [ ] Add language switcher
@@ -483,6 +519,7 @@
 - [ ] Save language preference
 
 ## Phase 33: Deployment Preparation
+
 - [x] Create app icons from logo
 - [x] Update vercel.json for pnpm
 - [x] Create DEPLOY_NOW.md guide
@@ -490,6 +527,7 @@
 - [x] Test build process
 
 ## Phase 34: Advanced Medical Library Search & Filters (Future)
+
 - [ ] Add advanced search with autocomplete
 - [ ] Add category filters (dropdown)
 - [ ] Add symptoms filters (multi-select)
