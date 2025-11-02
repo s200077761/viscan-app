@@ -3,9 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { signInWithGoogle, signInWithApple } from "@/lib/firebase";
 // Note: Replace with your actual toast implementation
+interface ToastOptions {
+  title: string;
+  description: string;
+  variant?: 'default' | 'destructive';
+}
+
 const useToast = () => {
   return {
-    toast: ({ title, description, variant }: any) => {
+    toast: ({ title, description, variant }: ToastOptions) => {
       if (variant === 'destructive') {
         alert(`Error: ${title}\n${description}`);
       } else {
@@ -15,8 +21,14 @@ const useToast = () => {
   };
 };
 
+interface User {
+  displayName?: string | null;
+  email?: string | null;
+  uid: string;
+}
+
 interface SocialLoginButtonsProps {
-  onSuccess?: (user: any) => void;
+  onSuccess?: (user: User) => void;
   onError?: (error: string) => void;
 }
 
@@ -43,13 +55,14 @@ export default function SocialLoginButtons({ onSuccess, onError }: SocialLoginBu
         });
         onError?.(result.error || "Unknown error");
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to sign in with Google";
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in with Google",
+        description: errorMessage,
         variant: "destructive",
       });
-      onError?.(error.message);
+      onError?.(errorMessage);
     } finally {
       setGoogleLoading(false);
     }
@@ -73,13 +86,14 @@ export default function SocialLoginButtons({ onSuccess, onError }: SocialLoginBu
         });
         onError?.(result.error || "Unknown error");
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to sign in with Apple";
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in with Apple",
+        description: errorMessage,
         variant: "destructive",
       });
-      onError?.(error.message);
+      onError?.(errorMessage);
     } finally {
       setAppleLoading(false);
     }

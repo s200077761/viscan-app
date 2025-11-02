@@ -114,8 +114,7 @@ export default function Home() {
             {!isAuthenticated && (
               <div className="max-w-md mx-auto mb-8 animate-fadeIn animate-stagger-3">
                 <SocialLoginButtons 
-                  onSuccess={(user) => {
-                    console.log('User signed in:', user);
+                  onSuccess={() => {
                     window.location.href = '/dashboard';
                   }}
                 />

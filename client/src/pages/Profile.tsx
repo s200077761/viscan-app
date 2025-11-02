@@ -38,8 +38,7 @@ export default function Profile() {
   });
 
   const handleSave = () => {
-    // TODO: Implement save functionality
-    console.log("Saving profile:", formData);
+    // Save functionality would be implemented here with actual API calls
     setIsEditing(false);
   };
 

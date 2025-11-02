@@ -111,8 +111,8 @@ export default function Analysis() {
       reader.onerror = () => {
         toast.error('Failed to read file');
       };
-    } catch (error: any) {
-      toast.error(error.message || 'Analysis failed');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Analysis failed');
     }
   };
 

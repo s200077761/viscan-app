@@ -41,9 +41,9 @@ export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     return { success: true, user: result.user };
-  } catch (error: any) {
-    console.error('Google sign-in error:', error);
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return { success: false, error: errorMessage };
   }
 };
 
@@ -52,9 +52,9 @@ export const signInWithApple = async () => {
   try {
     const result = await signInWithPopup(auth, appleProvider);
     return { success: true, user: result.user };
-  } catch (error: any) {
-    console.error('Apple sign-in error:', error);
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return { success: false, error: errorMessage };
   }
 };
 
@@ -63,9 +63,9 @@ export const signOut = async () => {
   try {
     await firebaseSignOut(auth);
     return { success: true };
-  } catch (error: any) {
-    console.error('Sign-out error:', error);
-    return { success: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return { success: false, error: errorMessage };
   }
 };
 
