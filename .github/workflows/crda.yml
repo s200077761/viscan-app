@@ -65,8 +65,8 @@ on:
   # pull_request_target is used to securely share secret to the PR's workflow run.
   # For more info visit: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
   pull_request_target:
-    branches: [ "main" ]
-    types: [ assigned, opened, synchronize, reopened, labeled, edited ]
+    branches: ["main"]
+    types: [assigned, opened, synchronize, reopened, labeled, edited]
 
 permissions:
   contents: read
@@ -74,12 +74,11 @@ permissions:
 jobs:
   crda-scan:
     permissions:
-      contents: read            # for actions/checkout to fetch code
-      security-events: write    # for redhat-actions/crda to upload SARIF results
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for redhat-actions/crda to upload SARIF results
     name: Scan project vulnerabilities with CRDA
     runs-on: ubuntu-latest
     steps:
-
       - name: Check out repository
         uses: actions/checkout@v4
 
@@ -121,6 +120,6 @@ jobs:
         id: scan
         uses: redhat-actions/crda@v1
         with:
-          crda_key: ${{ secrets.CRDA_KEY }}           # Either use crda_key or snyk_token
+          crda_key: ${{ secrets.CRDA_KEY }} # Either use crda_key or snyk_token
           # snyk_token: ${{ secrets.SNYK_TOKEN }}
           # upload_artifact: false                    # Set this to false to skip artifact upload

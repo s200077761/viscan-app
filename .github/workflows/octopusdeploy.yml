@@ -26,8 +26,7 @@
 #      OCTOPUS_PROJECT: update to the name of your Octopus project
 #      OCTOPUS_ENVIRONMENT: update to the name of the environment to recieve the first deployment
 
-
-name: 'Build and Deploy to Octopus Deploy'
+name: "Build and Deploy to Octopus Deploy"
 
 on:
   push:
@@ -42,9 +41,9 @@ jobs:
       packages: write
       contents: read
     env:
-      DOCKER_REGISTRY: ghcr.io                                # TODO: Update to your docker registry uri
-      DOCKER_REGISTRY_USERNAME: ${{ github.actor }}           # TODO: Update to your docker registry username
-      DOCKER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}   # TODO: Update to your docker registry password
+      DOCKER_REGISTRY: ghcr.io # TODO: Update to your docker registry uri
+      DOCKER_REGISTRY_USERNAME: ${{ github.actor }} # TODO: Update to your docker registry username
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }} # TODO: Update to your docker registry password
     outputs:
       image_tag: ${{ steps.meta.outputs.version }}
     steps:
@@ -80,33 +79,33 @@ jobs:
     permissions:
       id-token: write
     runs-on: ubuntu-latest
-    needs: [ build ]
+    needs: [build]
     env:
-      OCTOPUS_URL: 'https://your-octopus-url'             # TODO: update to your Octopus Instance url
-      OCTOPUS_SERVICE_ACCOUNT: 'your-service-account-id'  # TODO: update to your service account Id
-      OCTOPUS_SPACE: 'your-space'                         # TODO: update to the name of the space your project is configured in
-      OCTOPUS_PROJECT: 'your-project'                     # TODO: update to the name of your Octopus project
-      OCTOPUS_ENVIRONMENT: 'your-environment'             # TODO: update to the name of the environment to recieve the first deployment
+      OCTOPUS_URL: "https://your-octopus-url" # TODO: update to your Octopus Instance url
+      OCTOPUS_SERVICE_ACCOUNT: "your-service-account-id" # TODO: update to your service account Id
+      OCTOPUS_SPACE: "your-space" # TODO: update to the name of the space your project is configured in
+      OCTOPUS_PROJECT: "your-project" # TODO: update to the name of your Octopus project
+      OCTOPUS_ENVIRONMENT: "your-environment" # TODO: update to the name of the environment to recieve the first deployment
 
     steps:
       - name: Log in to Octopus Deploy
-        uses: OctopusDeploy/login@34b6dcc1e86fa373c14e6a28c5507d221e4de629  #v1.0.2
+        uses: OctopusDeploy/login@34b6dcc1e86fa373c14e6a28c5507d221e4de629 #v1.0.2
         with:
-          server: '${{ env.OCTOPUS_URL }}'
-          service_account_id: '${{ env.OCTOPUS_SERVICE_ACCOUNT }}'
+          server: "${{ env.OCTOPUS_URL }}"
+          service_account_id: "${{ env.OCTOPUS_SERVICE_ACCOUNT }}"
 
       - name: Create Release
         id: create_release
         uses: OctopusDeploy/create-release-action@fea7e7b45c38c021b6bc5a14bd7eaa2ed5269214 #v3.2.2
         with:
-          project: '${{ env.OCTOPUS_PROJECT }}'
-          space: '${{ env.OCTOPUS_SPACE }}'
-          packages: '*:${{ needs.build.outputs.image_tag }}'
+          project: "${{ env.OCTOPUS_PROJECT }}"
+          space: "${{ env.OCTOPUS_SPACE }}"
+          packages: "*:${{ needs.build.outputs.image_tag }}"
 
       - name: Deploy Release
         uses: OctopusDeploy/deploy-release-action@b10a606c903b0a5bce24102af9d066638ab429ac #v3.2.1
         with:
-          project: '${{ env.OCTOPUS_PROJECT }}'
-          space: '${{ env.OCTOPUS_SPACE }}'
-          release_number: '${{ steps.create_release.outputs.release_number  }}'
+          project: "${{ env.OCTOPUS_PROJECT }}"
+          space: "${{ env.OCTOPUS_SPACE }}"
+          release_number: "${{ steps.create_release.outputs.release_number  }}"
           environments: ${{ env.OCTOPUS_ENVIRONMENT }}
