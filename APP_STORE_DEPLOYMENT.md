@@ -28,6 +28,7 @@ npx cap init
 ```
 
 When prompted:
+
 - **App name**: ViScan
 - **App ID**: com.viscan.app
 - **Web asset directory**: client/dist
@@ -68,6 +69,7 @@ Edit `ios/App/App/Info.plist`:
 ### Configure Signing
 
 1. Open Xcode:
+
 ```bash
 npx cap open ios
 ```
@@ -81,6 +83,7 @@ npx cap open ios
 ### Add Capabilities
 
 In Xcode, click "+ Capability":
+
 - Sign In with Apple
 - Push Notifications (optional)
 - Background Modes (if needed)
@@ -126,6 +129,7 @@ Save the keystore file and passwords securely!
 ## Step 7: Create App Icons
 
 ### iOS Icons (Required sizes):
+
 - 20x20 (2x, 3x)
 - 29x29 (2x, 3x)
 - 40x40 (2x, 3x)
@@ -135,6 +139,7 @@ Save the keystore file and passwords securely!
 - 1024x1024 (1x, App Store)
 
 ### Android Icons (Required sizes):
+
 - mdpi: 48x48
 - hdpi: 72x72
 - xhdpi: 96x96
@@ -195,6 +200,7 @@ npx cap open ios
 3. Click "My Apps" → "+" → "New App"
 
 Fill in:
+
 - **Platform**: iOS
 - **Name**: ViScan - AI Medical Analysis
 - **Primary Language**: English
@@ -217,6 +223,7 @@ Fill in:
 ### App Privacy:
 
 Answer questions about data collection:
+
 - Health data: Yes
 - User content: Yes
 - Contact info: Yes
@@ -333,6 +340,7 @@ cd android
 ```
 
 Output:
+
 - APK: `android/app/build/outputs/apk/release/app-release.apk`
 - AAB: `android/app/build/outputs/bundle/release/app-release.aab`
 
@@ -367,6 +375,7 @@ android {
 3. Click "Create app"
 
 Fill in:
+
 - **App name**: ViScan - AI Medical Analysis
 - **Default language**: English (United States)
 - **App or game**: App
@@ -375,11 +384,13 @@ Fill in:
 ### Store Listing:
 
 - **Short description** (80 chars):
+
 ```
 AI-powered medical image analysis for iris scanning, X-rays, MRIs, and more
 ```
 
 - **Full description** (4000 chars):
+
 ```
 [Same as iOS description above]
 ```
@@ -391,6 +402,7 @@ AI-powered medical image analysis for iris scanning, X-rays, MRIs, and more
 ### Content Rating:
 
 Complete questionnaire:
+
 - Medical reference app
 - No violence, sexual content, etc.
 
@@ -418,22 +430,26 @@ URL: https://viscan.app/privacy
 ## Step 13: Post-Submission
 
 ### iOS Review Time:
+
 - Usually 24-48 hours
 - Can take up to 7 days
 
 ### Android Review Time:
+
 - Usually few hours
 - Can take up to 7 days
 
 ### Common Rejection Reasons:
 
 **iOS:**
+
 - Missing privacy policy
 - Incomplete app information
 - Crashes or bugs
 - Misleading medical claims
 
 **Android:**
+
 - Missing content rating
 - Privacy policy issues
 - Permissions not justified
@@ -490,5 +506,6 @@ npx cap sync
 ## Support
 
 For issues or questions:
+
 - Email: msmbm2003@gmail.com
 - Website: https://viscan.app

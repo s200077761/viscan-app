@@ -12,7 +12,7 @@ import { createAuditLog } from "./db";
 
 export const appRouter = router({
   system: systemRouter,
-  
+
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -29,20 +29,23 @@ export const appRouter = router({
     stats: protectedProcedure.query(async ({ ctx }) => {
       const stats = await db.getUserStats(ctx.user.id);
       const subscription = await db.getUserSubscription(ctx.user.id);
-      
+
       return {
         ...stats,
-        subscription: subscription ? {
-          plan: subscription.planType,
-          analysesLimit: subscription.analysesLimit,
-          analysesUsed: subscription.analysesUsed,
-          analysesRemaining: subscription.analysesLimit - subscription.analysesUsed,
-        } : {
-          plan: 'free',
-          analysesLimit: 10,
-          analysesUsed: 0,
-          analysesRemaining: 10,
-        }
+        subscription: subscription
+          ? {
+              plan: subscription.planType,
+              analysesLimit: subscription.analysesLimit,
+              analysesUsed: subscription.analysesUsed,
+              analysesRemaining:
+                subscription.analysesLimit - subscription.analysesUsed,
+            }
+          : {
+              plan: "free",
+              analysesLimit: 10,
+              analysesUsed: 0,
+              analysesRemaining: 10,
+            },
       };
     }),
   }),
@@ -52,7 +55,7 @@ export const appRouter = router({
     list: protectedProcedure.query(async ({ ctx }) => {
       return db.getUserDocuments(ctx.user.id);
     }),
-    
+
     get: protectedProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input, ctx }) => {
@@ -62,25 +65,29 @@ export const appRouter = router({
         }
         return doc;
       }),
-    
+
     create: protectedProcedure
-      .input(z.object({
-        title: z.string().min(1),
-        description: z.string().optional(),
-        documentType: z.enum(["medical", "report", "scan", "other"]).default("medical"),
-        patientName: z.string().optional(),
-        patientAge: z.number().optional(),
-        patientGender: z.enum(["male", "female", "other"]).optional(),
-        patientId: z.string().optional(),
-        metadata: z.any().optional(),
-      }))
+      .input(
+        z.object({
+          title: z.string().min(1),
+          description: z.string().optional(),
+          documentType: z
+            .enum(["medical", "report", "scan", "other"])
+            .default("medical"),
+          patientName: z.string().optional(),
+          patientAge: z.number().optional(),
+          patientGender: z.enum(["male", "female", "other"]).optional(),
+          patientId: z.string().optional(),
+          metadata: z.any().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         const id = await db.createDocument({
           ...input,
           userId: ctx.user.id,
           status: "draft",
         });
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "document.create",
@@ -88,31 +95,35 @@ export const appRouter = router({
           resourceId: id,
           details: { title: input.title },
         });
-        
+
         return { id };
       }),
-    
+
     update: protectedProcedure
-      .input(z.object({
-        id: z.number(),
-        title: z.string().optional(),
-        description: z.string().optional(),
-        status: z.enum(["draft", "pending", "analyzed", "reviewed", "archived"]).optional(),
-        patientName: z.string().optional(),
-        patientAge: z.number().optional(),
-        patientGender: z.enum(["male", "female", "other"]).optional(),
-        metadata: z.any().optional(),
-      }))
+      .input(
+        z.object({
+          id: z.number(),
+          title: z.string().optional(),
+          description: z.string().optional(),
+          status: z
+            .enum(["draft", "pending", "analyzed", "reviewed", "archived"])
+            .optional(),
+          patientName: z.string().optional(),
+          patientAge: z.number().optional(),
+          patientGender: z.enum(["male", "female", "other"]).optional(),
+          metadata: z.any().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         const { id, ...updates } = input;
         const doc = await db.getDocumentById(id);
-        
+
         if (!doc || doc.userId !== ctx.user.id) {
           throw new Error("Document not found");
         }
-        
+
         await db.updateDocument(id, updates);
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "document.update",
@@ -120,28 +131,28 @@ export const appRouter = router({
           resourceId: id,
           details: updates,
         });
-        
+
         return { success: true };
       }),
-    
+
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const doc = await db.getDocumentById(input.id);
-        
+
         if (!doc || doc.userId !== ctx.user.id) {
           throw new Error("Document not found");
         }
-        
+
         await db.deleteDocument(input.id);
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "document.delete",
           resourceType: "document",
           resourceId: input.id,
         });
-        
+
         return { success: true };
       }),
   }),
@@ -151,13 +162,13 @@ export const appRouter = router({
     list: protectedProcedure.query(async ({ ctx }) => {
       return db.getUserImages(ctx.user.id);
     }),
-    
+
     listByDocument: protectedProcedure
       .input(z.object({ documentId: z.number() }))
       .query(async ({ input }) => {
         return db.getDocumentImages(input.documentId);
       }),
-    
+
     get: protectedProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input, ctx }) => {
@@ -167,30 +178,42 @@ export const appRouter = router({
         }
         return image;
       }),
-    
+
     upload: protectedProcedure
-      .input(z.object({
-        documentId: z.number().optional(),
-        originalName: z.string(),
-        fileData: z.string(), // base64 encoded
-        mimeType: z.string(),
-        imageType: z.enum(["xray", "mri", "ct", "ultrasound", "photo", "document", "other"]).optional(),
-        bodyPart: z.string().optional(),
-        metadata: z.any().optional(),
-      }))
+      .input(
+        z.object({
+          documentId: z.number().optional(),
+          originalName: z.string(),
+          fileData: z.string(), // base64 encoded
+          mimeType: z.string(),
+          imageType: z
+            .enum([
+              "xray",
+              "mri",
+              "ct",
+              "ultrasound",
+              "photo",
+              "document",
+              "other",
+            ])
+            .optional(),
+          bodyPart: z.string().optional(),
+          metadata: z.any().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         // Decode base64
-        const buffer = Buffer.from(input.fileData, 'base64');
+        const buffer = Buffer.from(input.fileData, "base64");
         const fileSize = buffer.length;
-        
+
         // Generate unique file key
         const timestamp = Date.now();
         const randomSuffix = Math.random().toString(36).substring(7);
         const fileKey = `users/${ctx.user.id}/images/${timestamp}-${randomSuffix}`;
-        
+
         // Upload to S3
         const { url } = await storagePut(fileKey, buffer, input.mimeType);
-        
+
         // Save to database
         const imageId = await db.createImage({
           documentId: input.documentId || null,
@@ -205,7 +228,7 @@ export const appRouter = router({
           status: "pending",
           metadata: input.metadata || null,
         });
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "image.upload",
@@ -213,30 +236,30 @@ export const appRouter = router({
           resourceId: imageId,
           details: { originalName: input.originalName, fileSize },
         });
-        
+
         return { id: imageId, url };
       }),
-    
+
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         const image = await db.getImageById(input.id);
-        
+
         if (!image || image.userId !== ctx.user.id) {
           throw new Error("Image not found");
         }
-        
+
         // Note: In production, you might want to delete from S3 as well
         // For now, we just delete the database record
         await db.updateImage(input.id, { status: "failed" }); // Soft delete
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "image.delete",
           resourceType: "image",
           resourceId: input.id,
         });
-        
+
         return { success: true };
       }),
   }),
@@ -244,47 +267,72 @@ export const appRouter = router({
   // AI Analysis
   analysis: router({
     analyze: protectedProcedure
-      .input(z.object({
-        imageId: z.number(),
-        modelType: z.enum(["face-analyzer", "iris-scanner", "palm-reader", "report-extractor", "health-predictor", "gpt4-vision", "basic"]).optional(),
-        autoSelect: z.boolean().optional(),
-      }))
+      .input(
+        z.object({
+          imageId: z.number(),
+          modelType: z
+            .enum([
+              "face-analyzer",
+              "iris-scanner",
+              "palm-reader",
+              "report-extractor",
+              "health-predictor",
+              "gpt4-vision",
+              "basic",
+            ])
+            .optional(),
+          autoSelect: z.boolean().optional(),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         const image = await db.getImageById(input.imageId);
-        
+
         if (!image || image.userId !== ctx.user.id) {
           throw new Error("Image not found");
         }
-        
+
         // Check subscription limits
         const subscription = await db.getUserSubscription(ctx.user.id);
         if (subscription) {
           if (subscription.analysesUsed >= subscription.analysesLimit) {
-            throw new Error("Analysis limit reached. Please upgrade your plan.");
+            throw new Error(
+              "Analysis limit reached. Please upgrade your plan."
+            );
           }
         }
-        
+
         // Auto-select model if requested
         let selectedModel: AIModelType;
         if (input.autoSelect) {
-          selectedModel = getRecommendedModel(image.imageType || 'other', image.bodyPart || undefined);
+          selectedModel = getRecommendedModel(
+            image.imageType || "other",
+            image.bodyPart || undefined
+          );
         } else {
-          selectedModel = (input.modelType as AIModelType) || 'basic';
+          selectedModel = (input.modelType as AIModelType) || "basic";
         }
-        
+
         // Update image status
         await db.updateImage(input.imageId, { status: "analyzing" });
-        
+
         const startTime = Date.now();
-        
+
         try {
           let analysisData: any;
-          
+
           // Use new AI service for specialized models
-          if (['face-analyzer', 'iris-scanner', 'palm-reader', 'report-extractor', 'health-predictor'].includes(selectedModel)) {
+          if (
+            [
+              "face-analyzer",
+              "iris-scanner",
+              "palm-reader",
+              "report-extractor",
+              "health-predictor",
+            ].includes(selectedModel)
+          ) {
             analysisData = await analyzeWithModel(selectedModel, {
               imageUrl: image.fileUrl,
-              imageType: image.imageType || 'other',
+              imageType: image.imageType || "other",
               bodyPart: image.bodyPart || undefined,
             });
           } else if (selectedModel === "gpt4-vision") {
@@ -293,15 +341,19 @@ export const appRouter = router({
               messages: [
                 {
                   role: "system",
-                  content: "You are a medical image analysis assistant. Analyze the image and provide findings in JSON format with: findings (array of strings), severity (normal/mild/moderate/severe/critical), recommendations (array of strings), confidence (0-100)."
+                  content:
+                    "You are a medical image analysis assistant. Analyze the image and provide findings in JSON format with: findings (array of strings), severity (normal/mild/moderate/severe/critical), recommendations (array of strings), confidence (0-100).",
                 },
                 {
                   role: "user",
                   content: [
-                    { type: "text", text: `Analyze this medical image. Type: ${image.imageType || 'unknown'}, Body part: ${image.bodyPart || 'unknown'}` },
-                    { type: "image_url", image_url: { url: image.fileUrl } }
-                  ]
-                }
+                    {
+                      type: "text",
+                      text: `Analyze this medical image. Type: ${image.imageType || "unknown"}, Body part: ${image.bodyPart || "unknown"}`,
+                    },
+                    { type: "image_url", image_url: { url: image.fileUrl } },
+                  ],
+                },
               ],
               response_format: {
                 type: "json_schema",
@@ -312,38 +364,60 @@ export const appRouter = router({
                     type: "object",
                     properties: {
                       findings: { type: "array", items: { type: "string" } },
-                      severity: { type: "string", enum: ["normal", "mild", "moderate", "severe", "critical"] },
-                      recommendations: { type: "array", items: { type: "string" } },
-                      confidence: { type: "number" }
+                      severity: {
+                        type: "string",
+                        enum: [
+                          "normal",
+                          "mild",
+                          "moderate",
+                          "severe",
+                          "critical",
+                        ],
+                      },
+                      recommendations: {
+                        type: "array",
+                        items: { type: "string" },
+                      },
+                      confidence: { type: "number" },
                     },
-                    required: ["findings", "severity", "recommendations", "confidence"],
-                    additionalProperties: false
-                  }
-                }
-              }
+                    required: [
+                      "findings",
+                      "severity",
+                      "recommendations",
+                      "confidence",
+                    ],
+                    additionalProperties: false,
+                  },
+                },
+              },
             });
-            
+
             const content = response.choices[0].message.content;
-            const parsed = JSON.parse(typeof content === 'string' ? content : "{}");
+            const parsed = JSON.parse(
+              typeof content === "string" ? content : "{}"
+            );
             analysisData = {
               ...parsed,
-              modelId: 'gpt4-vision',
-              modelName: 'GPT-4 Vision'
+              modelId: "gpt4-vision",
+              modelName: "GPT-4 Vision",
             };
           } else {
             // Basic analysis (placeholder)
             analysisData = {
-              findings: ["Image uploaded successfully", "Awaiting detailed analysis"],
+              findings: [
+                "Image uploaded successfully",
+                "Awaiting detailed analysis",
+              ],
               severity: "normal",
               recommendations: ["Please consult with a medical professional"],
               confidence: 50,
-              modelId: 'basic',
-              modelName: 'Basic Analysis'
+              modelId: "basic",
+              modelName: "Basic Analysis",
             };
           }
-          
+
           const processingTime = Date.now() - startTime;
-          
+
           // Save analysis result
           const analysisId = await db.createAnalysisResult({
             imageId: input.imageId,
@@ -351,22 +425,27 @@ export const appRouter = router({
             modelVersion: "1.0",
             confidenceScore: Math.round(analysisData.confidence || 0),
             predictions: {
-              labels: [{ name: analysisData.severity, confidence: analysisData.confidence }]
+              labels: [
+                {
+                  name: analysisData.severity,
+                  confidence: analysisData.confidence,
+                },
+              ],
             },
             findings: analysisData.findings || [],
             recommendations: analysisData.recommendations || [],
             severity: analysisData.severity || "normal",
             processingTimeMs: processingTime,
           });
-          
+
           // Update image status
           await db.updateImage(input.imageId, { status: "analyzed" });
-          
+
           // Increment usage
           if (subscription) {
             await db.incrementAnalysisUsage(ctx.user.id);
           }
-          
+
           await createAuditLog({
             userId: ctx.user.id,
             action: "analysis.create",
@@ -374,19 +453,18 @@ export const appRouter = router({
             resourceId: analysisId,
             details: { imageId: input.imageId, modelType: input.modelType },
           });
-          
+
           return {
             id: analysisId,
             ...analysisData,
-            processingTime
+            processingTime,
           };
-          
         } catch (error) {
           await db.updateImage(input.imageId, { status: "failed" });
           throw error;
         }
       }),
-    
+
     getByImage: protectedProcedure
       .input(z.object({ imageId: z.number() }))
       .query(async ({ input, ctx }) => {
@@ -394,7 +472,7 @@ export const appRouter = router({
         if (!image || image.userId !== ctx.user.id) {
           throw new Error("Image not found");
         }
-        
+
         return db.getImageAnalysis(input.imageId);
       }),
   }),
@@ -403,7 +481,7 @@ export const appRouter = router({
   subscriptions: router({
     current: protectedProcedure.query(async ({ ctx }) => {
       const sub = await db.getUserSubscription(ctx.user.id);
-      
+
       if (!sub) {
         // Create default free subscription
         const id = await db.createSubscription({
@@ -414,28 +492,30 @@ export const appRouter = router({
           analysesUsed: 0,
           priceCents: 0,
         });
-        
+
         return db.getUserSubscription(ctx.user.id);
       }
-      
+
       return sub;
     }),
-    
+
     upgrade: protectedProcedure
-      .input(z.object({
-        planType: z.enum(["basic", "pro", "enterprise"]),
-      }))
+      .input(
+        z.object({
+          planType: z.enum(["basic", "pro", "enterprise"]),
+        })
+      )
       .mutation(async ({ input, ctx }) => {
         const currentSub = await db.getUserSubscription(ctx.user.id);
-        
+
         const planLimits = {
           basic: { limit: 100, price: 999 }, // $9.99
           pro: { limit: 1000, price: 2999 }, // $29.99
           enterprise: { limit: 10000, price: 9999 }, // $99.99
         };
-        
+
         const plan = planLimits[input.planType];
-        
+
         if (currentSub) {
           await db.updateSubscription(currentSub.id, {
             planType: input.planType,
@@ -456,14 +536,14 @@ export const appRouter = router({
             expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           });
         }
-        
+
         await createAuditLog({
           userId: ctx.user.id,
           action: "subscription.upgrade",
           resourceType: "subscription",
           details: { planType: input.planType },
         });
-        
+
         return { success: true };
       }),
   }),

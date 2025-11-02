@@ -9,6 +9,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 ## ✨ Key Features
 
 ### 🤖 AI-Powered Analysis
+
 - **5 Specialized AI Models**:
   - **FaceAnalyzer** (CNN + ResNet): Facial feature analysis and health mapping
   - **IrisScanner** (VGG + U-Net): Comprehensive iris analysis with 7-zone mapping
@@ -17,11 +18,13 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
   - **HealthPredictor** (Ensemble Models): Health prediction and risk assessment
 
 ### 🔬 Traditional Diagnostic Systems
+
 - **Face Mapping System**: Analyzes facial lines (forehead, eyebrow, crow's feet, mouth, lip) for organ health indicators
 - **Iridology System**: Independent rule-based iris analysis covering 8 body systems
 - **Palm Reading System**: Arabic knowledge-based palm analysis including lines, mounts, colors, and textures
 
 ### 💼 Professional Features
+
 - HIPAA-ready architecture with comprehensive audit logging
 - Multi-language support (English/Arabic)
 - Subscription-based business model (Freemium $9.99-$29.99/month)
@@ -31,6 +34,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 ## 🏗️ Technology Stack
 
 ### Frontend
+
 - **React 18** with TypeScript
 - **Material-UI** for professional medical interface
 - **tRPC** for type-safe API calls
@@ -38,6 +42,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 - **Vite** for fast development and building
 
 ### Backend
+
 - **Node.js 20** with Express
 - **TypeScript** for type safety
 - **tRPC 11** for end-to-end type safety
@@ -45,6 +50,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 - **PostgreSQL** for data storage
 
 ### AI/ML
+
 - **TensorFlow.js** for model inference
 - **OpenAI GPT-4 Vision** for advanced image analysis
 - **MediaPipe** for palm detection
@@ -52,6 +58,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 - Custom CNN, ResNet, VGG, and U-Net models
 
 ### Deployment
+
 - **Vercel** for serverless deployment
 - **DigitalOcean** for alternative hosting
 - **PM2** for process management
@@ -60,6 +67,7 @@ ViScan is a comprehensive medical image analysis platform that combines cutting-
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 20 or higher
 - npm or pnpm
 - PostgreSQL database
@@ -119,16 +127,19 @@ VITE_ANALYTICS_WEBSITE_ID=your_website_id
 ### Deploy to Vercel
 
 1. **Install Vercel CLI**:
+
 ```bash
 npm install -g vercel
 ```
 
 2. **Login to Vercel**:
+
 ```bash
 vercel login
 ```
 
 3. **Deploy**:
+
 ```bash
 vercel --prod
 ```
@@ -197,6 +208,7 @@ viscan-app/
 ## 📊 Business Model
 
 ### Subscription Tiers
+
 - **Free**: 5 analyses per month
 - **Basic ($9.99/month)**: 50 analyses per month
 - **Professional ($19.99/month)**: 200 analyses per month

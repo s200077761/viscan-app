@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Search, 
-  BookOpen, 
-  Pill, 
-  Leaf, 
-  Microscope, 
+import {
+  Search,
+  BookOpen,
+  Pill,
+  Leaf,
+  Microscope,
   FileText,
   ExternalLink,
   Star,
   Download,
   Filter,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -64,7 +70,7 @@ export default function MedicalLibrary() {
       description: "Used to reduce pain, fever, or inflammation",
       dosage: "325-650 mg every 4-6 hours",
       sideEffects: ["Stomach upset", "Heartburn", "Drowsiness"],
-      interactions: ["Warfarin", "Ibuprofen", "Alcohol"]
+      interactions: ["Warfarin", "Ibuprofen", "Alcohol"],
     },
     {
       id: "2",
@@ -74,7 +80,7 @@ export default function MedicalLibrary() {
       description: "Used to treat type 2 diabetes",
       dosage: "500-2000 mg daily",
       sideEffects: ["Nausea", "Diarrhea", "Stomach pain"],
-      interactions: ["Alcohol", "Contrast dye", "Insulin"]
+      interactions: ["Alcohol", "Contrast dye", "Insulin"],
     },
     {
       id: "3",
@@ -84,8 +90,8 @@ export default function MedicalLibrary() {
       description: "Used to treat high blood pressure",
       dosage: "10-40 mg once daily",
       sideEffects: ["Dizziness", "Cough", "Headache"],
-      interactions: ["Potassium supplements", "NSAIDs", "Lithium"]
-    }
+      interactions: ["Potassium supplements", "NSAIDs", "Lithium"],
+    },
   ];
 
   // Mock herb database
@@ -94,9 +100,13 @@ export default function MedicalLibrary() {
       id: "1",
       name: "Turmeric",
       scientificName: "Curcuma longa",
-      chemicalComposition: ["Curcumin", "Demethoxycurcumin", "Bisdemethoxycurcumin"],
+      chemicalComposition: [
+        "Curcumin",
+        "Demethoxycurcumin",
+        "Bisdemethoxycurcumin",
+      ],
       uses: ["Anti-inflammatory", "Antioxidant", "Pain relief"],
-      research: "Multiple studies show anti-inflammatory properties"
+      research: "Multiple studies show anti-inflammatory properties",
     },
     {
       id: "2",
@@ -104,7 +114,7 @@ export default function MedicalLibrary() {
       scientificName: "Zingiber officinale",
       chemicalComposition: ["Gingerol", "Shogaol", "Paradol"],
       uses: ["Nausea relief", "Digestive aid", "Anti-inflammatory"],
-      research: "Effective for nausea and motion sickness"
+      research: "Effective for nausea and motion sickness",
     },
     {
       id: "3",
@@ -112,8 +122,8 @@ export default function MedicalLibrary() {
       scientificName: "Panax ginseng",
       chemicalComposition: ["Ginsenosides", "Polysaccharides", "Peptides"],
       uses: ["Energy boost", "Immune support", "Cognitive function"],
-      research: "Studies suggest benefits for fatigue and cognition"
-    }
+      research: "Studies suggest benefits for fatigue and cognition",
+    },
   ];
 
   // Mock disease database
@@ -124,7 +134,7 @@ export default function MedicalLibrary() {
       category: "Metabolic",
       symptoms: ["Increased thirst", "Frequent urination", "Fatigue"],
       treatments: ["Metformin", "Lifestyle changes", "Insulin therapy"],
-      research: "Ongoing research on prevention and management"
+      research: "Ongoing research on prevention and management",
     },
     {
       id: "2",
@@ -132,15 +142,15 @@ export default function MedicalLibrary() {
       category: "Cardiovascular",
       symptoms: ["Headache", "Shortness of breath", "Nosebleeds"],
       treatments: ["ACE inhibitors", "Diet modification", "Exercise"],
-      research: "Multiple studies on lifestyle interventions"
-    }
+      research: "Multiple studies on lifestyle interventions",
+    },
   ];
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
-    
+
     setIsSearching(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       const mockResults: SearchResult[] = [
@@ -150,7 +160,7 @@ export default function MedicalLibrary() {
           description: "Latest research findings and clinical studies",
           category: "Research",
           source: "PubMed",
-          url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(searchQuery)}`
+          url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(searchQuery)}`,
         },
         {
           id: "2",
@@ -158,7 +168,7 @@ export default function MedicalLibrary() {
           description: "Evidence-based treatment guidelines",
           category: "Treatment",
           source: "MedlinePlus",
-          url: `https://medlineplus.gov/search.html?query=${encodeURIComponent(searchQuery)}`
+          url: `https://medlineplus.gov/search.html?query=${encodeURIComponent(searchQuery)}`,
         },
         {
           id: "3",
@@ -166,10 +176,10 @@ export default function MedicalLibrary() {
           description: "Ongoing clinical trials and studies",
           category: "Clinical Trials",
           source: "ClinicalTrials.gov",
-          url: `https://clinicaltrials.gov/search?term=${encodeURIComponent(searchQuery)}`
-        }
+          url: `https://clinicaltrials.gov/search?term=${encodeURIComponent(searchQuery)}`,
+        },
       ];
-      
+
       setSearchResults(mockResults);
       setIsSearching(false);
     }, 1000);
@@ -208,8 +218,8 @@ export default function MedicalLibrary() {
               <Input
                 placeholder="Search diseases, drugs, herbs, or research..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                onChange={e => setSearchQuery(e.target.value)}
+                onKeyPress={e => e.key === "Enter" && handleSearch()}
                 className="flex-1"
               />
               <Button onClick={handleSearch} disabled={isSearching}>
@@ -222,8 +232,11 @@ export default function MedicalLibrary() {
             {searchResults.length > 0 && (
               <div className="mt-6 space-y-3">
                 <h3 className="font-semibold">Search Results</h3>
-                {searchResults.map((result) => (
-                  <Card key={result.id} className="hover:shadow-md transition-shadow">
+                {searchResults.map(result => (
+                  <Card
+                    key={result.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
                     <CardContent className="pt-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -286,12 +299,17 @@ export default function MedicalLibrary() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {diseases.map((disease) => (
-                    <Card key={disease.id} className="border-l-4 border-l-red-500">
+                  {diseases.map(disease => (
+                    <Card
+                      key={disease.id}
+                      className="border-l-4 border-l-red-500"
+                    >
                       <CardContent className="pt-4">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h3 className="font-semibold text-lg">{disease.name}</h3>
+                            <h3 className="font-semibold text-lg">
+                              {disease.name}
+                            </h3>
                             <Badge variant="outline" className="mt-1">
                               {disease.category}
                             </Badge>
@@ -300,10 +318,12 @@ export default function MedicalLibrary() {
                             <Star className="h-4 w-4" />
                           </Button>
                         </div>
-                        
+
                         <div className="space-y-3">
                           <div>
-                            <p className="text-sm font-medium mb-1">Symptoms:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Symptoms:
+                            </p>
                             <div className="flex flex-wrap gap-2">
                               {disease.symptoms.map((symptom, idx) => (
                                 <Badge key={idx} variant="secondary">
@@ -314,7 +334,9 @@ export default function MedicalLibrary() {
                           </div>
 
                           <div>
-                            <p className="text-sm font-medium mb-1">Treatments:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Treatments:
+                            </p>
                             <div className="flex flex-wrap gap-2">
                               {disease.treatments.map((treatment, idx) => (
                                 <Badge key={idx} variant="outline">
@@ -325,7 +347,9 @@ export default function MedicalLibrary() {
                           </div>
 
                           <div>
-                            <p className="text-sm font-medium mb-1">Research:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Research:
+                            </p>
                             <p className="text-sm text-muted-foreground">
                               {disease.research}
                             </p>
@@ -350,12 +374,17 @@ export default function MedicalLibrary() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {drugs.map((drug) => (
-                    <Card key={drug.id} className="border-l-4 border-l-blue-500">
+                  {drugs.map(drug => (
+                    <Card
+                      key={drug.id}
+                      className="border-l-4 border-l-blue-500"
+                    >
                       <CardContent className="pt-4">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h3 className="font-semibold text-lg">{drug.name}</h3>
+                            <h3 className="font-semibold text-lg">
+                              {drug.name}
+                            </h3>
                             <p className="text-sm text-muted-foreground">
                               {drug.genericName}
                             </p>
@@ -370,7 +399,9 @@ export default function MedicalLibrary() {
 
                         <div className="space-y-3">
                           <div>
-                            <p className="text-sm font-medium mb-1">Description:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Description:
+                            </p>
                             <p className="text-sm text-muted-foreground">
                               {drug.description}
                             </p>
@@ -384,7 +415,9 @@ export default function MedicalLibrary() {
                           </div>
 
                           <div>
-                            <p className="text-sm font-medium mb-1">Side Effects:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Side Effects:
+                            </p>
                             <div className="flex flex-wrap gap-2">
                               {drug.sideEffects.map((effect, idx) => (
                                 <Badge key={idx} variant="destructive">
@@ -395,7 +428,9 @@ export default function MedicalLibrary() {
                           </div>
 
                           <div>
-                            <p className="text-sm font-medium mb-1">Drug Interactions:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Drug Interactions:
+                            </p>
                             <div className="flex flex-wrap gap-2">
                               {drug.interactions.map((interaction, idx) => (
                                 <Badge key={idx} variant="outline">
@@ -424,12 +459,17 @@ export default function MedicalLibrary() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {herbs.map((herb) => (
-                    <Card key={herb.id} className="border-l-4 border-l-green-500">
+                  {herbs.map(herb => (
+                    <Card
+                      key={herb.id}
+                      className="border-l-4 border-l-green-500"
+                    >
                       <CardContent className="pt-4">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h3 className="font-semibold text-lg">{herb.name}</h3>
+                            <h3 className="font-semibold text-lg">
+                              {herb.name}
+                            </h3>
                             <p className="text-sm italic text-muted-foreground">
                               {herb.scientificName}
                             </p>
@@ -455,7 +495,9 @@ export default function MedicalLibrary() {
                           </div>
 
                           <div>
-                            <p className="text-sm font-medium mb-1">Medicinal Uses:</p>
+                            <p className="text-sm font-medium mb-1">
+                              Medicinal Uses:
+                            </p>
                             <div className="flex flex-wrap gap-2">
                               {herb.uses.map((use, idx) => (
                                 <Badge key={idx} variant="outline">

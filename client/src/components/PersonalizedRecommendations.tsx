@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -16,7 +22,7 @@ import {
   BookmarkCheck,
   TrendingUp,
   Lightbulb,
-  Download
+  Download,
 } from "lucide-react";
 import { PDFExportService } from "@/lib/pdfExport";
 
@@ -42,26 +48,26 @@ const CATEGORY_ICONS = {
   diet: Apple,
   exercise: Activity,
   medical: Stethoscope,
-  lifestyle: Heart
+  lifestyle: Heart,
 };
 
 const CATEGORY_COLORS = {
   diet: "bg-green-500/10 text-green-700 border-green-500/20",
   exercise: "bg-blue-500/10 text-blue-700 border-blue-500/20",
   medical: "bg-red-500/10 text-red-700 border-red-500/20",
-  lifestyle: "bg-purple-500/10 text-purple-700 border-purple-500/20"
+  lifestyle: "bg-purple-500/10 text-purple-700 border-purple-500/20",
 };
 
 const PRIORITY_COLORS = {
   high: "destructive",
   medium: "default",
-  low: "secondary"
+  low: "secondary",
 } as const;
 
 export default function PersonalizedRecommendations({
   severity,
   findings,
-  affectedSystems = []
+  affectedSystems = [],
 }: PersonalizedRecommendationsProps) {
   const [recommendations, setRecommendations] = useState<Recommendation[]>(
     generateRecommendations(severity, findings, affectedSystems)
@@ -86,11 +92,17 @@ export default function PersonalizedRecommendations({
   const completedCount = recommendations.filter(r => r.completed).length;
   const completionPercentage = (completedCount / recommendations.length) * 100;
 
-  const highPriorityCount = recommendations.filter(r => r.priority === "high" && !r.completed).length;
+  const highPriorityCount = recommendations.filter(
+    r => r.priority === "high" && !r.completed
+  ).length;
 
   const handleExportPDF = async () => {
     const pdfService = new PDFExportService();
-    await pdfService.exportRecommendations(recommendations, severity, "Patient Name");
+    await pdfService.exportRecommendations(
+      recommendations,
+      severity,
+      "Patient Name"
+    );
   };
 
   return (
@@ -132,17 +144,23 @@ export default function PersonalizedRecommendations({
             </div>
             <Progress value={completionPercentage} className="h-2" />
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(CATEGORY_ICONS).map(([category, Icon]) => {
-              const count = recommendations.filter(r => r.category === category).length;
+              const count = recommendations.filter(
+                r => r.category === category
+              ).length;
               return (
                 <div key={category} className="flex items-center gap-2">
-                  <div className={`p-2 rounded-lg ${CATEGORY_COLORS[category as keyof typeof CATEGORY_COLORS]}`}>
+                  <div
+                    className={`p-2 rounded-lg ${CATEGORY_COLORS[category as keyof typeof CATEGORY_COLORS]}`}
+                  >
                     <Icon className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground capitalize">{category}</p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {category}
+                    </p>
                     <p className="text-sm font-semibold">{count}</p>
                   </div>
                 </div>
@@ -182,22 +200,29 @@ export default function PersonalizedRecommendations({
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-start gap-3 flex-1">
-                          <div className={`p-2 rounded-lg ${CATEGORY_COLORS[rec.category]}`}>
+                          <div
+                            className={`p-2 rounded-lg ${CATEGORY_COLORS[rec.category]}`}
+                          >
                             <Icon className="h-5 w-5" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className={`font-semibold ${rec.completed ? "line-through" : ""}`}>
+                              <h4
+                                className={`font-semibold ${rec.completed ? "line-through" : ""}`}
+                              >
                                 {rec.title}
                               </h4>
-                              <Badge variant={PRIORITY_COLORS[rec.priority]} className="text-xs">
+                              <Badge
+                                variant={PRIORITY_COLORS[rec.priority]}
+                                className="text-xs"
+                              >
                                 {rec.priority}
                               </Badge>
                             </div>
                             <p className="text-sm text-muted-foreground mb-3">
                               {rec.description}
                             </p>
-                            
+
                             {rec.basedOn.length > 0 && (
                               <div className="mb-3">
                                 <p className="text-xs font-medium text-muted-foreground mb-1">
@@ -205,7 +230,11 @@ export default function PersonalizedRecommendations({
                                 </p>
                                 <div className="flex flex-wrap gap-1">
                                   {rec.basedOn.map((finding, idx) => (
-                                    <Badge key={idx} variant="outline" className="text-xs">
+                                    <Badge
+                                      key={idx}
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
                                       {finding}
                                     </Badge>
                                   ))}
@@ -214,10 +243,15 @@ export default function PersonalizedRecommendations({
                             )}
 
                             <div className="space-y-2">
-                              <p className="text-xs font-medium">Action Steps:</p>
+                              <p className="text-xs font-medium">
+                                Action Steps:
+                              </p>
                               <ul className="space-y-1">
                                 {rec.actionItems.map((item, idx) => (
-                                  <li key={idx} className="flex items-start gap-2 text-sm">
+                                  <li
+                                    key={idx}
+                                    className="flex items-start gap-2 text-sm"
+                                  >
                                     <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                                     <span>{item}</span>
                                   </li>
@@ -292,7 +326,10 @@ export default function PersonalizedRecommendations({
             </li>
             <li className="flex items-start gap-2 text-sm">
               <Stethoscope className="h-4 w-4 text-primary mt-0.5" />
-              <span>Consult with healthcare professionals for medical recommendations</span>
+              <span>
+                Consult with healthcare professionals for medical
+                recommendations
+              </span>
             </li>
           </ul>
         </CardContent>
@@ -316,42 +353,54 @@ function generateRecommendations(
       category: "medical",
       priority: "high",
       title: "Schedule Immediate Medical Consultation",
-      description: "Your analysis indicates concerns that require professional medical evaluation.",
+      description:
+        "Your analysis indicates concerns that require professional medical evaluation.",
       actionItems: [
         "Contact your healthcare provider within 24-48 hours",
         "Prepare a summary of your symptoms and concerns",
         "Bring your analysis results to the appointment",
-        "Consider getting a second opinion if needed"
+        "Consider getting a second opinion if needed",
       ],
       basedOn: findings.slice(0, 2),
       completed: false,
-      bookmarked: false
+      bookmarked: false,
     });
   }
 
   // Dietary recommendations based on affected systems
-  if (affectedSystems.includes("Digestive") || findings.some(f => f.toLowerCase().includes("stomach"))) {
+  if (
+    affectedSystems.includes("Digestive") ||
+    findings.some(f => f.toLowerCase().includes("stomach"))
+  ) {
     recommendations.push({
       id: `rec-${idCounter++}`,
       category: "diet",
       priority: severity === "severe" ? "high" : "medium",
       title: "Optimize Digestive Health Through Diet",
-      description: "Support your digestive system with targeted nutritional choices.",
+      description:
+        "Support your digestive system with targeted nutritional choices.",
       actionItems: [
         "Increase fiber intake with whole grains and vegetables",
         "Stay hydrated with 8-10 glasses of water daily",
         "Avoid spicy, fried, and processed foods",
         "Consider probiotic-rich foods like yogurt and kefir",
-        "Eat smaller, more frequent meals"
+        "Eat smaller, more frequent meals",
       ],
-      basedOn: findings.filter(f => f.toLowerCase().includes("stomach") || f.toLowerCase().includes("digest")),
+      basedOn: findings.filter(
+        f =>
+          f.toLowerCase().includes("stomach") ||
+          f.toLowerCase().includes("digest")
+      ),
       completed: false,
-      bookmarked: false
+      bookmarked: false,
     });
   }
 
   // Liver/Detox recommendations
-  if (affectedSystems.includes("Liver") || findings.some(f => f.toLowerCase().includes("liver"))) {
+  if (
+    affectedSystems.includes("Liver") ||
+    findings.some(f => f.toLowerCase().includes("liver"))
+  ) {
     recommendations.push({
       id: `rec-${idCounter++}`,
       category: "diet",
@@ -363,11 +412,11 @@ function generateRecommendations(
         "Limit alcohol consumption",
         "Include cruciferous vegetables (broccoli, cauliflower)",
         "Drink green tea regularly",
-        "Avoid excessive processed foods"
+        "Avoid excessive processed foods",
       ],
       basedOn: findings.filter(f => f.toLowerCase().includes("liver")),
       completed: false,
-      bookmarked: false
+      bookmarked: false,
     });
   }
 
@@ -383,31 +432,38 @@ function generateRecommendations(
       "Include both cardio and strength training",
       "Try yoga or tai chi for stress management",
       "Take regular breaks from sitting",
-      "Start slowly and gradually increase intensity"
+      "Start slowly and gradually increase intensity",
     ],
     basedOn: ["Overall health maintenance"],
     completed: false,
-    bookmarked: false
+    bookmarked: false,
   });
 
   // Stress management
-  if (findings.some(f => f.toLowerCase().includes("stress") || f.toLowerCase().includes("anxiety"))) {
+  if (
+    findings.some(
+      f =>
+        f.toLowerCase().includes("stress") ||
+        f.toLowerCase().includes("anxiety")
+    )
+  ) {
     recommendations.push({
       id: `rec-${idCounter++}`,
       category: "lifestyle",
       priority: "high",
       title: "Implement Stress Management Techniques",
-      description: "Chronic stress can impact your health. Take steps to manage it effectively.",
+      description:
+        "Chronic stress can impact your health. Take steps to manage it effectively.",
       actionItems: [
         "Practice daily meditation or deep breathing exercises",
         "Ensure 7-8 hours of quality sleep",
         "Set boundaries between work and personal time",
         "Engage in hobbies and activities you enjoy",
-        "Consider professional counseling if needed"
+        "Consider professional counseling if needed",
       ],
       basedOn: findings.filter(f => f.toLowerCase().includes("stress")),
       completed: false,
-      bookmarked: false
+      bookmarked: false,
     });
   }
 
@@ -423,11 +479,11 @@ function generateRecommendations(
       "Create a relaxing bedtime routine",
       "Avoid screens 1 hour before bed",
       "Keep your bedroom cool and dark",
-      "Limit caffeine after 2 PM"
+      "Limit caffeine after 2 PM",
     ],
     basedOn: ["General health optimization"],
     completed: false,
-    bookmarked: false
+    bookmarked: false,
   });
 
   // Follow-up recommendation
@@ -441,11 +497,11 @@ function generateRecommendations(
       "Schedule a follow-up analysis in 3-6 months",
       "Keep a health journal to track changes",
       "Document any new symptoms or improvements",
-      "Compare results to track progress"
+      "Compare results to track progress",
     ],
     basedOn: ["Ongoing health monitoring"],
     completed: false,
-    bookmarked: false
+    bookmarked: false,
   });
 
   return recommendations;

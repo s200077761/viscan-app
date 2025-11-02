@@ -3,6 +3,7 @@
 ## ما هو PWA؟
 
 **Progressive Web App (PWA)** هو تطبيق ويب يعمل مثل التطبيق الأصلي:
+
 - ✅ قابل للتثبيت على الشاشة الرئيسية
 - ✅ يعمل بدون اتصال (offline)
 - ✅ سريع جداً
@@ -17,20 +18,21 @@
 
 ### مقارنة مع التطبيق الأصلي:
 
-| الميزة | PWA | تطبيق أصلي |
-|--------|-----|-----------|
-| التكلفة | مجاني | $99/سنة (Apple) + $25 (Google) |
-| وقت النشر | فوري | 1-7 أيام (مراجعة) |
-| التحديثات | فورية | تحتاج مراجعة |
-| التثبيت | من المتصفح | من المتجر |
-| حجم التطبيق | صغير جداً | كبير |
-| يعمل على | جميع الأجهزة | منصة واحدة |
+| الميزة      | PWA          | تطبيق أصلي                     |
+| ----------- | ------------ | ------------------------------ |
+| التكلفة     | مجاني        | $99/سنة (Apple) + $25 (Google) |
+| وقت النشر   | فوري         | 1-7 أيام (مراجعة)              |
+| التحديثات   | فورية        | تحتاج مراجعة                   |
+| التثبيت     | من المتصفح   | من المتجر                      |
+| حجم التطبيق | صغير جداً    | كبير                           |
+| يعمل على    | جميع الأجهزة | منصة واحدة                     |
 
 ---
 
 ## الخطوة 1: التحقق من الإعداد
 
 ### 1.1 ملفات PWA الموجودة
+
 ```
 ✅ vite.config.ts - تكوين PWA
 ✅ client/public/manifest.json - بيانات التطبيق
@@ -39,6 +41,7 @@
 ```
 
 ### 1.2 التحقق من البناء
+
 ```bash
 # بناء التطبيق
 pnpm build
@@ -53,6 +56,7 @@ ls dist/public/sw.js
 ## الخطوة 2: النشر على Vercel (مستحسن)
 
 ### 2.1 إنشاء حساب Vercel
+
 ```
 1. اذهب إلى: https://vercel.com
 2. سجل دخول بـ GitHub أو Google أو Email
@@ -62,6 +66,7 @@ ls dist/public/sw.js
 ### 2.2 النشر من GitHub
 
 #### الطريقة 1: من واجهة Vercel
+
 ```
 1. ارفع المشروع على GitHub
 2. في Vercel، اضغط "New Project"
@@ -79,6 +84,7 @@ ls dist/public/sw.js
 ```
 
 #### الطريقة 2: من Terminal
+
 ```bash
 # تثبيت Vercel CLI
 npm i -g vercel
@@ -99,6 +105,7 @@ vercel --prod
 ```
 
 ### 2.3 إعداد النطاق المخصص (اختياري)
+
 ```
 1. في Vercel Dashboard > Settings > Domains
 2. أضف نطاقك: viscan.app
@@ -111,6 +118,7 @@ vercel --prod
 ## الخطوة 3: النشر على Netlify (بديل)
 
 ### 3.1 من واجهة Netlify
+
 ```
 1. اذهب إلى: https://netlify.com
 2. سجل دخول
@@ -123,6 +131,7 @@ vercel --prod
 ```
 
 ### 3.2 من Terminal
+
 ```bash
 # تثبيت Netlify CLI
 npm i -g netlify-cli
@@ -142,6 +151,7 @@ netlify deploy --prod
 ## الخطوة 4: اختبار PWA
 
 ### 4.1 على Desktop (Chrome/Edge)
+
 ```
 1. افتح الموقع المنشور
 2. ستظهر أيقونة تثبيت في شريط العنوان
@@ -150,6 +160,7 @@ netlify deploy --prod
 ```
 
 ### 4.2 على iPhone/iPad
+
 ```
 1. افتح الموقع في Safari
 2. اضغط زر المشاركة 📤
@@ -159,6 +170,7 @@ netlify deploy --prod
 ```
 
 ### 4.3 على Android
+
 ```
 1. افتح الموقع في Chrome
 2. ستظهر رسالة "Add ViScan to Home screen"
@@ -171,6 +183,7 @@ netlify deploy --prod
 ## الخطوة 5: إنشاء أيقونات PWA
 
 ### 5.1 المقاسات المطلوبة
+
 ```
 - 72x72
 - 96x96
@@ -185,6 +198,7 @@ netlify deploy --prod
 ### 5.2 أدوات إنشاء الأيقونات
 
 #### أداة 1: PWA Asset Generator
+
 ```bash
 npm install -g pwa-asset-generator
 
@@ -196,6 +210,7 @@ pwa-asset-generator logo.png client/public/icons \
 ```
 
 #### أداة 2: Online (سهلة)
+
 ```
 1. اذهب إلى: https://www.pwabuilder.com/imageGenerator
 2. ارفع شعار ViScan (1024x1024)
@@ -204,6 +219,7 @@ pwa-asset-generator logo.png client/public/icons \
 ```
 
 #### أداة 3: Figma/Photoshop
+
 ```
 1. افتح شعار ViScan
 2. صدّر بالمقاسات المطلوبة
@@ -216,61 +232,68 @@ pwa-asset-generator logo.png client/public/icons \
 ## الخطوة 6: تحسين PWA
 
 ### 6.1 إضافة Splash Screen (iOS)
+
 ```html
 <!-- في client/index.html -->
 <head>
   <!-- iPhone X, XS, 11 Pro -->
-  <link rel="apple-touch-startup-image" 
-        href="/splash-1125x2436.png" 
-        media="(device-width: 375px) and (device-height: 812px)">
-  
+  <link
+    rel="apple-touch-startup-image"
+    href="/splash-1125x2436.png"
+    media="(device-width: 375px) and (device-height: 812px)"
+  />
+
   <!-- iPhone XR, 11 -->
-  <link rel="apple-touch-startup-image" 
-        href="/splash-828x1792.png" 
-        media="(device-width: 414px) and (device-height: 896px)">
+  <link
+    rel="apple-touch-startup-image"
+    href="/splash-828x1792.png"
+    media="(device-width: 414px) and (device-height: 896px)"
+  />
 </head>
 ```
 
 ### 6.2 تحسين الأداء
+
 ```typescript
 // في vite.config.ts
 workbox: {
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/api\..*/i,
-      handler: 'NetworkFirst', // جرّب الشبكة أولاً
+      handler: "NetworkFirst", // جرّب الشبكة أولاً
       options: {
-        cacheName: 'api-cache',
+        cacheName: "api-cache",
         expiration: {
           maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 // يوم واحد
-        }
-      }
+          maxAgeSeconds: 60 * 60 * 24, // يوم واحد
+        },
+      },
     },
     {
       urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
-      handler: 'CacheFirst', // استخدم الكاش أولاً
+      handler: "CacheFirst", // استخدم الكاش أولاً
       options: {
-        cacheName: 'images-cache',
+        cacheName: "images-cache",
         expiration: {
           maxEntries: 100,
-          maxAgeSeconds: 60 * 60 * 24 * 30 // شهر
-        }
-      }
-    }
-  ]
+          maxAgeSeconds: 60 * 60 * 24 * 30, // شهر
+        },
+      },
+    },
+  ];
 }
 ```
 
 ### 6.3 إضافة إشعارات Push (اختياري)
+
 ```typescript
 // طلب إذن الإشعارات
-if ('Notification' in window) {
+if ("Notification" in window) {
   Notification.requestPermission().then(permission => {
-    if (permission === 'granted') {
-      new Notification('ViScan', {
-        body: 'التطبيق جاهز للاستخدام!',
-        icon: '/icon-192x192.png'
+    if (permission === "granted") {
+      new Notification("ViScan", {
+        body: "التطبيق جاهز للاستخدام!",
+        icon: "/icon-192x192.png",
       });
     }
   });
@@ -282,6 +305,7 @@ if ('Notification' in window) {
 ## الخطوة 7: اختبار Lighthouse
 
 ### 7.1 فتح Lighthouse
+
 ```
 1. افتح الموقع في Chrome
 2. اضغط F12 (Developer Tools)
@@ -293,6 +317,7 @@ if ('Notification' in window) {
 ```
 
 ### 7.2 النتائج المستهدفة
+
 ```
 ✅ Performance: 90+
 ✅ PWA: 100
@@ -302,6 +327,7 @@ if ('Notification' in window) {
 ```
 
 ### 7.3 تحسين النتائج
+
 ```
 إذا كانت النتائج منخفضة:
 - صغّر حجم الصور
@@ -316,6 +342,7 @@ if ('Notification' in window) {
 ## الخطوة 8: التسويق والترويج
 
 ### 8.1 إضافة زر "Install App"
+
 ```
 ✅ تم بالفعل في: PWAInstallPrompt.tsx
 - يظهر تلقائياً للمستخدمين
@@ -324,6 +351,7 @@ if ('Notification' in window) {
 ```
 
 ### 8.2 إنشاء صفحة هبوط
+
 ```
 أضف في الصفحة الرئيسية:
 - "Install ViScan on your phone"
@@ -333,6 +361,7 @@ if ('Notification' in window) {
 ```
 
 ### 8.3 مشاركة الرابط
+
 ```
 شارك على:
 - WhatsApp
@@ -350,15 +379,17 @@ if ('Notification' in window) {
 ## الخطوة 9: المراقبة والتحليلات
 
 ### 9.1 Google Analytics
+
 ```typescript
 // في client/src/main.tsx
-import ReactGA from 'react-ga4';
+import ReactGA from "react-ga4";
 
-ReactGA.initialize('G-XXXXXXXXXX');
-ReactGA.send('pageview');
+ReactGA.initialize("G-XXXXXXXXXX");
+ReactGA.send("pageview");
 ```
 
 ### 9.2 Vercel Analytics
+
 ```
 1. في Vercel Dashboard > Analytics
 2. فعّل Analytics
@@ -369,15 +400,16 @@ ReactGA.send('pageview');
 ```
 
 ### 9.3 PWA Analytics
+
 ```typescript
 // تتبع التثبيت
-window.addEventListener('appinstalled', () => {
-  console.log('PWA installed!');
+window.addEventListener("appinstalled", () => {
+  console.log("PWA installed!");
   // أرسل إلى Analytics
   ReactGA.event({
-    category: 'PWA',
-    action: 'Install',
-    label: 'Success'
+    category: "PWA",
+    action: "Install",
+    label: "Success",
   });
 });
 ```
@@ -387,6 +419,7 @@ window.addEventListener('appinstalled', () => {
 ## الخطوة 10: التحديثات
 
 ### 10.1 نشر تحديث
+
 ```bash
 # عدّل الكود
 # ثم:
@@ -398,17 +431,21 @@ git push
 ```
 
 ### 10.2 إشعار المستخدمين بالتحديث
+
 ```typescript
 // في PWAInstallPrompt.tsx
 useEffect(() => {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(registration => {
-      registration.addEventListener('updatefound', () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js").then(registration => {
+      registration.addEventListener("updatefound", () => {
         const newWorker = registration.installing;
-        newWorker?.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+        newWorker?.addEventListener("statechange", () => {
+          if (
+            newWorker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ) {
             // إشعار بوجود تحديث
-            if (confirm('تحديث جديد متاح! هل تريد التحديث؟')) {
+            if (confirm("تحديث جديد متاح! هل تريد التحديث؟")) {
               window.location.reload();
             }
           }
@@ -424,6 +461,7 @@ useEffect(() => {
 ## 🚨 مشاكل شائعة وحلولها
 
 ### مشكلة: "Not installable"
+
 ```
 الأسباب:
 - manifest.json غير صحيح
@@ -437,6 +475,7 @@ useEffect(() => {
 ```
 
 ### مشكلة: "Service Worker not registered"
+
 ```
 الحل:
 - تأكد من وجود sw.js
@@ -445,6 +484,7 @@ useEffect(() => {
 ```
 
 ### مشكلة: "لا يعمل offline"
+
 ```
 الحل:
 - تحقق من workbox config
@@ -459,6 +499,7 @@ useEffect(() => {
 قبل النشر، تأكد من:
 
 ### التقني
+
 - [ ] PWA يعمل محلياً
 - [ ] Service Worker مُسجّل
 - [ ] manifest.json صحيح
@@ -467,12 +508,14 @@ useEffect(() => {
 - [ ] Lighthouse PWA: 100
 
 ### المحتوى
+
 - [ ] اسم التطبيق واضح
 - [ ] الوصف جذاب
 - [ ] الألوان متناسقة
 - [ ] الأيقونات احترافية
 
 ### الاختبار
+
 - [ ] يعمل على iPhone
 - [ ] يعمل على Android
 - [ ] يعمل على Desktop
@@ -486,6 +529,7 @@ useEffect(() => {
 الآن لديك PWA كامل يعمل على جميع الأجهزة!
 
 ### المزايا التي حصلت عليها:
+
 - ✅ تطبيق قابل للتثبيت
 - ✅ يعمل بدون App Store
 - ✅ مجاني تماماً
@@ -493,6 +537,7 @@ useEffect(() => {
 - ✅ يعمل على جميع الأجهزة
 
 ### الخطوات التالية:
+
 1. شارك الرابط مع المستخدمين
 2. راقب الأداء والتحليلات
 3. استمع لملاحظات المستخدمين

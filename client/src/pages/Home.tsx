@@ -1,7 +1,24 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, Brain, FileText, Lock, Zap, Shield, ArrowRight, CheckCircle2, Eye, Scan } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Activity,
+  Brain,
+  FileText,
+  Lock,
+  Zap,
+  Shield,
+  ArrowRight,
+  CheckCircle2,
+  Eye,
+  Scan,
+} from "lucide-react";
 import SocialLoginButtons from "@/components/SocialLoginButtons";
 import { APP_TITLE, getLoginUrl } from "@/const";
 
@@ -15,7 +32,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       {/* Floating Action Button */}
       <Link href="/analysis">
-        <button 
+        <button
           className="fixed bottom-8 right-8 z-50 group"
           aria-label="Start Iris Analysis"
         >
@@ -23,12 +40,12 @@ export default function Home() {
             {/* Pulse animation rings */}
             <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
             <div className="absolute inset-0 rounded-full bg-primary animate-pulse opacity-30" />
-            
+
             {/* Main button */}
             <div className="relative flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-full shadow-2xl hover:shadow-primary/50 transition-all duration-300 hover:scale-110 group-hover:rotate-12">
               <Eye className="h-8 w-8 text-white" />
             </div>
-            
+
             {/* Tooltip */}
             <div className="absolute right-20 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div className="bg-slate-900 text-white px-4 py-2 rounded-lg shadow-xl whitespace-nowrap text-sm font-medium">
@@ -43,20 +60,33 @@ export default function Home() {
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={VISCAN_LOGO} alt="ViScan" className="h-10 w-10 object-contain" />
+            <img
+              src={VISCAN_LOGO}
+              alt="ViScan"
+              className="h-10 w-10 object-contain"
+            />
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
               ViScan
             </span>
           </div>
-          
+
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href="#features"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Features
             </a>
-            <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href="#pricing"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               Pricing
             </a>
-            <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              href="#about"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
               About
             </a>
           </nav>
@@ -84,43 +114,47 @@ export default function Home() {
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img 
-            src="/viscan-bg.png" 
-            alt="ViScan Background" 
+          <img
+            src="/viscan-bg.png"
+            alt="ViScan Background"
             className="w-full h-full object-cover"
           />
           {/* Dark overlay for better text readability */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/85 to-blue-900/90" />
         </div>
         <div className="absolute inset-0 bg-grid-slate-200/10 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
-        
+
         <div className="container relative">
           <div className="mx-auto max-w-4xl text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-white border border-primary/30 text-sm font-medium mb-8 animate-fadeIn">
               <Brain className="h-4 w-4" />
               <span>AI-Powered Medical Image Analysis</span>
             </div>
-            
+
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 animate-fadeIn animate-stagger-1 text-white">
               Transform Medical Images into
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-teal-400 bg-clip-text text-transparent"> Actionable Insights</span>
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-teal-400 bg-clip-text text-transparent">
+                {" "}
+                Actionable Insights
+              </span>
             </h1>
-            
+
             <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto animate-fadeIn animate-stagger-2">
-              Advanced AI technology for rapid, accurate analysis of X-rays, MRIs, CT scans, and more. 
-              Trusted by healthcare professionals worldwide.
+              Advanced AI technology for rapid, accurate analysis of X-rays,
+              MRIs, CT scans, and more. Trusted by healthcare professionals
+              worldwide.
             </p>
-            
+
             {!isAuthenticated && (
               <div className="max-w-md mx-auto mb-8 animate-fadeIn animate-stagger-3">
-                <SocialLoginButtons 
+                <SocialLoginButtons
                   onSuccess={() => {
-                    window.location.href = '/dashboard';
+                    window.location.href = "/dashboard";
                   }}
                 />
               </div>
             )}
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn animate-stagger-4">
               {isAuthenticated ? (
                 <Link href="/dashboard">
@@ -131,19 +165,27 @@ export default function Home() {
                 </Link>
               ) : (
                 <a href={getLoginUrl()}>
-                  <Button size="lg" variant="outline" className="gap-2 hover-lift border-white text-white hover:bg-white/10">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="gap-2 hover-lift border-white text-white hover:bg-white/10"
+                  >
                     Or use Email
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </a>
               )}
               <a href="#features">
-                <Button size="lg" variant="outline" className="hover-lift border-white text-white hover:bg-white/10">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="hover-lift border-white text-white hover:bg-white/10"
+                >
                   Learn More
                 </Button>
               </a>
             </div>
-            
+
             <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -170,7 +212,8 @@ export default function Home() {
               Powerful Features for Modern Healthcare
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to analyze, manage, and share medical imaging data securely
+              Everything you need to analyze, manage, and share medical imaging
+              data securely
             </p>
           </div>
 
@@ -182,7 +225,8 @@ export default function Home() {
                 </div>
                 <CardTitle>AI-Powered Analysis</CardTitle>
                 <CardDescription>
-                  Advanced machine learning models trained on millions of medical images for accurate diagnostics
+                  Advanced machine learning models trained on millions of
+                  medical images for accurate diagnostics
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -194,7 +238,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Instant Results</CardTitle>
                 <CardDescription>
-                  Get comprehensive analysis reports in seconds, not hours. Speed up your diagnostic workflow
+                  Get comprehensive analysis reports in seconds, not hours.
+                  Speed up your diagnostic workflow
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -206,7 +251,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Document Management</CardTitle>
                 <CardDescription>
-                  Organize patient records, images, and reports in one secure, searchable platform
+                  Organize patient records, images, and reports in one secure,
+                  searchable platform
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -218,7 +264,8 @@ export default function Home() {
                 </div>
                 <CardTitle>HIPAA Compliant</CardTitle>
                 <CardDescription>
-                  Enterprise-grade security with end-to-end encryption and complete audit trails
+                  Enterprise-grade security with end-to-end encryption and
+                  complete audit trails
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -230,7 +277,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Multiple Modalities</CardTitle>
                 <CardDescription>
-                  Support for X-Ray, MRI, CT, Ultrasound, and other medical imaging formats
+                  Support for X-Ray, MRI, CT, Ultrasound, and other medical
+                  imaging formats
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -242,7 +290,8 @@ export default function Home() {
                 </div>
                 <CardTitle>Professional Review</CardTitle>
                 <CardDescription>
-                  AI-assisted analysis with option for expert medical professional review
+                  AI-assisted analysis with option for expert medical
+                  professional review
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -258,7 +307,8 @@ export default function Home() {
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Choose the plan that fits your practice. Upgrade or downgrade anytime.
+              Choose the plan that fits your practice. Upgrade or downgrade
+              anytime.
             </p>
           </div>
 
@@ -289,7 +339,9 @@ export default function Home() {
                   </li>
                 </ul>
                 <a href={getLoginUrl()} className="block">
-                  <Button variant="outline" className="w-full">Get Started</Button>
+                  <Button variant="outline" className="w-full">
+                    Get Started
+                  </Button>
                 </a>
               </CardContent>
             </Card>
@@ -362,7 +414,9 @@ export default function Home() {
                     <span>On-premise deployment</span>
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full">Contact Sales</Button>
+                <Button variant="outline" className="w-full">
+                  Contact Sales
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -377,7 +431,8 @@ export default function Home() {
               Ready to Transform Your Practice?
             </h2>
             <p className="text-xl mb-8 text-blue-50">
-              Join thousands of healthcare professionals using AI to deliver better patient care
+              Join thousands of healthcare professionals using AI to deliver
+              better patient care
             </p>
             <a href={getLoginUrl()}>
               <Button size="lg" variant="secondary" className="gap-2">
@@ -395,42 +450,82 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <img src={VISCAN_LOGO} alt="ViScan" className="h-8 w-8 object-contain" />
+                <img
+                  src={VISCAN_LOGO}
+                  alt="ViScan"
+                  className="h-8 w-8 object-contain"
+                />
                 <span className="font-bold">ViScan</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 AI-powered medical image analysis for healthcare professionals
               </p>
             </div>
-            
+
             <div>
               <h3 className="font-semibold mb-4">Product</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#features" className="hover:text-foreground">Features</a></li>
-                <li><a href="#pricing" className="hover:text-foreground">Pricing</a></li>
-                <li><a href="#" className="hover:text-foreground">Documentation</a></li>
+                <li>
+                  <a href="#features" className="hover:text-foreground">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#pricing" className="hover:text-foreground">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    Documentation
+                  </a>
+                </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#about" className="hover:text-foreground">About</a></li>
-                <li><a href="#" className="hover:text-foreground">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground">Contact</a></li>
+                <li>
+                  <a href="#about" className="hover:text-foreground">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    Contact
+                  </a>
+                </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-foreground">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-foreground">HIPAA Compliance</a></li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-foreground">
+                    HIPAA Compliance
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
             <p>&copy; 2025 {APP_TITLE}. All rights reserved.</p>
           </div>

@@ -6,16 +6,16 @@ interface LoadingSpinnerProps {
   fullScreen?: boolean;
 }
 
-export function LoadingSpinner({ 
-  size = "md", 
+export function LoadingSpinner({
+  size = "md",
   text = "جاري التحميل...",
-  fullScreen = false 
+  fullScreen = false,
 }: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: "w-8 h-8",
     md: "w-16 h-16",
     lg: "w-24 h-24",
-    xl: "w-32 h-32"
+    xl: "w-32 h-32",
   };
 
   const containerClasses = fullScreen
@@ -29,19 +29,19 @@ export function LoadingSpinner({
         <div className={`${sizeClasses[size]} animate-spin`}>
           <div className="h-full w-full rounded-full border-4 border-primary/30 border-t-primary"></div>
         </div>
-        
+
         {/* Inner pulsing circle with logo */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="animate-pulse">
-            <img 
-              src={APP_LOGO} 
-              alt="ViScan" 
-              className={`${size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-8 h-8' : size === 'lg' ? 'w-12 h-12' : 'w-16 h-16'} object-contain`}
+            <img
+              src={APP_LOGO}
+              alt="ViScan"
+              className={`${size === "sm" ? "w-4 h-4" : size === "md" ? "w-8 h-8" : size === "lg" ? "w-12 h-12" : "w-16 h-16"} object-contain`}
             />
           </div>
         </div>
       </div>
-      
+
       {text && (
         <p className="mt-4 text-sm text-muted-foreground animate-pulse">
           {text}
@@ -59,25 +59,25 @@ export function DNALoader({ text = "تحليل البيانات..." }: { text?: 
         {/* DNA Helix Animation */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative w-full h-full">
-            {[0, 1, 2, 3, 4].map((i) => (
+            {[0, 1, 2, 3, 4].map(i => (
               <div
                 key={i}
                 className="absolute w-3 h-3 bg-primary rounded-full animate-dna-helix"
                 style={{
-                  left: '25%',
+                  left: "25%",
                   top: `${i * 20}%`,
-                  animationDelay: `${i * 0.2}s`
+                  animationDelay: `${i * 0.2}s`,
                 }}
               />
             ))}
-            {[0, 1, 2, 3, 4].map((i) => (
+            {[0, 1, 2, 3, 4].map(i => (
               <div
                 key={`r-${i}`}
                 className="absolute w-3 h-3 bg-blue-500 rounded-full animate-dna-helix-reverse"
                 style={{
-                  right: '25%',
+                  right: "25%",
                   top: `${i * 20}%`,
-                  animationDelay: `${i * 0.2}s`
+                  animationDelay: `${i * 0.2}s`,
                 }}
               />
             ))}
@@ -138,11 +138,11 @@ export function SkeletonLoader() {
 }
 
 // Progress bar loader
-export function ProgressLoader({ 
-  progress = 0, 
-  text = "جاري التحميل..." 
-}: { 
-  progress?: number; 
+export function ProgressLoader({
+  progress = 0,
+  text = "جاري التحميل...",
+}: {
+  progress?: number;
   text?: string;
 }) {
   return (
@@ -170,23 +170,23 @@ export function ScanningLoader({ text = "مسح الصورة..." }: { text?: str
       <div className="relative w-48 h-48 border-2 border-primary/30 rounded-lg overflow-hidden">
         {/* Scanning line */}
         <div className="absolute inset-x-0 h-1 bg-primary shadow-lg shadow-primary/50 animate-scan" />
-        
+
         {/* Corner markers */}
         <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary" />
         <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary" />
         <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary" />
         <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary" />
-        
+
         {/* Center icon */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <img 
-            src={APP_LOGO} 
-            alt="ViScan" 
+          <img
+            src={APP_LOGO}
+            alt="ViScan"
             className="w-16 h-16 object-contain opacity-50"
           />
         </div>
       </div>
-      
+
       {text && (
         <p className="mt-4 text-sm text-muted-foreground animate-pulse">
           {text}

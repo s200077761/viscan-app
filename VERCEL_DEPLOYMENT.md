@@ -11,6 +11,7 @@ This guide will walk you through deploying ViScan to Vercel.
 ## Step 1: Prepare Your Repository
 
 1. **Initialize Git Repository** (if not already done):
+
 ```bash
 cd /path/to/viscan-app
 git init
@@ -26,6 +27,7 @@ git commit -m "Initial commit: ViScan medical image analysis platform"
    - Click "Create repository"
 
 3. **Push to GitHub**:
+
 ```bash
 git remote add origin https://github.com/YOUR_USERNAME/viscan-app.git
 git branch -M main
@@ -59,27 +61,27 @@ git push -u origin main
    ```env
    # Database
    DATABASE_URL=your_postgresql_connection_string
-   
+
    # Authentication
    JWT_SECRET=your_jwt_secret_here
    OAUTH_SERVER_URL=https://api.manus.im
    OWNER_OPEN_ID=your_owner_openid
    OWNER_NAME=Your Name
-   
+
    # Application
    VITE_APP_ID=your_app_id
    VITE_APP_TITLE=ViScan
    VITE_APP_LOGO=https://i.imgur.com/CKmuNYI.png
    VITE_OAUTH_PORTAL_URL=https://portal.manus.im
-   
+
    # AI Services
    BUILT_IN_FORGE_API_URL=https://api.manus.im
    BUILT_IN_FORGE_API_KEY=your_ai_api_key
-   
+
    # Analytics (Optional)
    VITE_ANALYTICS_ENDPOINT=your_analytics_endpoint
    VITE_ANALYTICS_WEBSITE_ID=your_website_id
-   
+
    # Node Environment
    NODE_ENV=production
    ```
@@ -92,16 +94,19 @@ git push -u origin main
 ### Option B: Deploy via Vercel CLI
 
 1. **Install Vercel CLI**:
+
 ```bash
 npm install -g vercel
 ```
 
 2. **Login to Vercel**:
+
 ```bash
 vercel login
 ```
 
 3. **Deploy**:
+
 ```bash
 cd /path/to/viscan-app
 vercel
@@ -116,6 +121,7 @@ vercel
    - Want to override the settings? `N`
 
 5. **Deploy to Production**:
+
 ```bash
 vercel --prod
 ```
@@ -140,6 +146,7 @@ If you're using an external PostgreSQL database (like Supabase, Railway, or your
 1. Make sure your database is accessible from the internet
 2. Update the `DATABASE_URL` environment variable with your connection string
 3. Run migrations:
+
 ```bash
 npm run db:push
 ```
@@ -155,15 +162,17 @@ npm run db:push
 
 3. **Configure DNS**:
    - Add the following DNS records at your domain registrar:
-   
+
    **For root domain (viscan.app)**:
+
    ```
    Type: A
    Name: @
    Value: 76.76.21.21
    ```
-   
+
    **For www subdomain**:
+
    ```
    Type: CNAME
    Name: www
@@ -204,16 +213,19 @@ Vercel automatically deploys when you push to your GitHub repository:
 ## Step 7: Environment-Specific Configuration
 
 ### Development
+
 ```bash
 vercel env add VARIABLE_NAME development
 ```
 
 ### Preview
+
 ```bash
 vercel env add VARIABLE_NAME preview
 ```
 
 ### Production
+
 ```bash
 vercel env add VARIABLE_NAME production
 ```
@@ -253,6 +265,7 @@ vercel env add VARIABLE_NAME production
 ### Custom Build Settings
 
 Edit `vercel.json`:
+
 ```json
 {
   "buildCommand": "npm run build",
@@ -311,6 +324,7 @@ vercel rollback [deployment-url]
    - Code backups (GitHub)
 
 3. **Update dependencies**:
+
 ```bash
 npm update
 npm audit fix

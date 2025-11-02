@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +23,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 import {
   Calendar,
@@ -27,7 +33,7 @@ import {
   TrendingUp,
   FileText,
   Eye,
-  Activity
+  Activity,
 } from "lucide-react";
 import { format } from "date-fns";
 import { PDFExportService } from "@/lib/pdfExport";
@@ -51,7 +57,7 @@ const SEVERITY_COLORS = {
   mild: "#3b82f6",
   moderate: "#f59e0b",
   severe: "#ef4444",
-  critical: "#dc2626"
+  critical: "#dc2626",
 };
 
 const SEVERITY_LABELS = {
@@ -59,7 +65,7 @@ const SEVERITY_LABELS = {
   mild: "Mild",
   moderate: "Moderate",
   severe: "Severe",
-  critical: "Critical"
+  critical: "Critical",
 };
 
 export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
@@ -69,44 +75,52 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
 
   // Filter analyses
   const filteredAnalyses = analyses.filter(analysis => {
-    const matchesSearch = searchTerm === "" || 
+    const matchesSearch =
+      searchTerm === "" ||
       analysis.modelName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      analysis.findings.some(f => f.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesSeverity = !filterSeverity || analysis.severity === filterSeverity;
+      analysis.findings.some(f =>
+        f.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+    const matchesSeverity =
+      !filterSeverity || analysis.severity === filterSeverity;
     const matchesType = !filterType || analysis.type === filterType;
-    
+
     return matchesSearch && matchesSeverity && matchesType;
   });
 
   // Prepare chart data
   const severityData = Object.entries(
-    analyses.reduce((acc, a) => {
-      acc[a.severity] = (acc[a.severity] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>)
+    analyses.reduce(
+      (acc, a) => {
+        acc[a.severity] = (acc[a.severity] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    )
   ).map(([name, value]) => ({
     name: SEVERITY_LABELS[name as keyof typeof SEVERITY_LABELS],
     value,
-    color: SEVERITY_COLORS[name as keyof typeof SEVERITY_COLORS]
+    color: SEVERITY_COLORS[name as keyof typeof SEVERITY_COLORS],
   }));
 
   const typeData = Object.entries(
-    analyses.reduce((acc, a) => {
-      const type = a.modelName.split(" ")[0];
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>)
+    analyses.reduce(
+      (acc, a) => {
+        const type = a.modelName.split(" ")[0];
+        acc[type] = (acc[type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    )
   ).map(([name, value]) => ({ name, value }));
 
   // Trend data (last 7 analyses)
-  const trendData = analyses
-    .slice(-7)
-    .map((a, i) => ({
-      index: i + 1,
-      confidence: a.confidence,
-      date: format(new Date(a.date), "MMM dd")
-    }));
+  const trendData = analyses.slice(-7).map((a, i) => ({
+    index: i + 1,
+    confidence: a.confidence,
+    date: format(new Date(a.date), "MMM dd"),
+  }));
 
   const handleExportPDF = async () => {
     const pdfService = new PDFExportService();
@@ -122,9 +136,11 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
         a.modelName,
         a.severity,
         a.confidence.toString(),
-        a.findings.join("; ")
-      ])
-    ].map(row => row.join(",")).join("\n");
+        a.findings.join("; "),
+      ]),
+    ]
+      .map(row => row.join(","))
+      .join("\n");
 
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
@@ -144,7 +160,7 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
             {filteredAnalyses.length} of {analyses.length} analyses
           </p>
         </div>
-        
+
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={handleExportCSV}>
             <Download className="h-4 w-4 mr-2" />
@@ -164,11 +180,11 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
           <Input
             placeholder="Search analyses..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             className="pl-10"
           />
         </div>
-        
+
         <div className="flex gap-2">
           <Button
             variant={filterSeverity ? "default" : "outline"}
@@ -205,7 +221,9 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) =>
+                    `${name} ${(percent * 100).toFixed(0)}%`
+                  }
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
@@ -252,7 +270,12 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                 <XAxis dataKey="date" />
                 <YAxis domain={[0, 100]} />
                 <Tooltip />
-                <Line type="monotone" dataKey="confidence" stroke="#10b981" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="confidence"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -274,8 +297,11 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                   <p>No analyses found matching your filters</p>
                 </div>
               ) : (
-                filteredAnalyses.map((analysis) => (
-                  <Card key={analysis.id} className="hover:bg-accent transition-colors">
+                filteredAnalyses.map(analysis => (
+                  <Card
+                    key={analysis.id}
+                    className="hover:bg-accent transition-colors"
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-3">
@@ -283,19 +309,24 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                             <Eye className="h-5 w-5 text-primary" />
                           </div>
                           <div>
-                            <h4 className="font-semibold">{analysis.modelName}</h4>
+                            <h4 className="font-semibold">
+                              {analysis.modelName}
+                            </h4>
                             <p className="text-sm text-muted-foreground">
-                              {format(new Date(analysis.date), "MMM dd, yyyy 'at' HH:mm")}
+                              {format(
+                                new Date(analysis.date),
+                                "MMM dd, yyyy 'at' HH:mm"
+                              )}
                             </p>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center gap-2">
                           <Badge
                             variant="outline"
                             style={{
                               borderColor: SEVERITY_COLORS[analysis.severity],
-                              color: SEVERITY_COLORS[analysis.severity]
+                              color: SEVERITY_COLORS[analysis.severity],
                             }}
                           >
                             {SEVERITY_LABELS[analysis.severity]}
@@ -305,7 +336,7 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                           </Badge>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <p className="text-sm font-medium">Key Findings:</p>
                         <ul className="text-sm text-muted-foreground space-y-1">
@@ -317,7 +348,11 @@ export default function AnalysisHistory({ analyses }: AnalysisHistoryProps) {
                           ))}
                         </ul>
                         {analysis.findings.length > 3 && (
-                          <Button variant="link" size="sm" className="p-0 h-auto">
+                          <Button
+                            variant="link"
+                            size="sm"
+                            className="p-0 h-auto"
+                          >
                             View {analysis.findings.length - 3} more findings
                           </Button>
                         )}
