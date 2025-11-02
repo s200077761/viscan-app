@@ -1,0 +1,7 @@
+name: "Viscan-Orchestrator-Agent"
+description: >
+  Multi-Stage Code Repair & Project Refactor Agent.
+  Automatically analyzes project structure, detects dead code,
+  fixes issues, optimizes performance, enforces style consistency,
+  removes unneeded files, and reorganizes architecture.
+
