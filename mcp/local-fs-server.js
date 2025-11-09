@@ -1,7 +1,6 @@
 // local-fs-server.js
 // Simple MCP local filesystem tool server (Node.js, minimal)
 import { readFile, writeFile } from "fs/promises";
-import path from "path";
 import http from "http";
 
 // NOTE: This is a tiny illustrative server — replace with your ModelContextProtocol SDK server in production.

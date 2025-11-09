@@ -484,7 +484,7 @@ export const appRouter = router({
 
       if (!sub) {
         // Create default free subscription
-        const id = await db.createSubscription({
+        await db.createSubscription({
           userId: ctx.user.id,
           planType: "free",
           status: "active",

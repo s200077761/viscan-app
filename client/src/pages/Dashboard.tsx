@@ -16,7 +16,7 @@ import {
   Brain,
   MessageSquare,
 } from "lucide-react";
-import { LoadingSpinner, SkeletonLoader } from "@/components/LoadingSpinner";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 
