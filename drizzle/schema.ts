@@ -87,7 +87,7 @@ export const documents = mysqlTable(
       tags?: string[];
       notes?: string;
       referringPhysician?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     }>(),
 
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -145,7 +145,7 @@ export const images = mysqlTable(
     metadata: json("metadata").$type<{
       orientation?: string;
       compression?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     }>(),
 
     uploadedAt: timestamp("uploadedAt").defaultNow().notNull(),
@@ -186,7 +186,7 @@ export const analysisResults = mysqlTable(
           label: string;
           confidence: number;
         }>;
-        [key: string]: any;
+        [key: string]: unknown;
       }>()
       .notNull(),
 
@@ -211,9 +211,9 @@ export const analysisResults = mysqlTable(
     analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
 
     metadata: json("metadata").$type<{
-      rawResponse?: any;
+      rawResponse?: Record<string, unknown>;
       errors?: string[];
-      [key: string]: any;
+      [key: string]: unknown;
     }>(),
   },
   table => ({
@@ -242,9 +242,9 @@ export const auditLogs = mysqlTable(
     userAgent: text("userAgent"),
 
     details: json("details").$type<{
-      before?: any;
-      after?: any;
-      [key: string]: any;
+      before?: Record<string, unknown>;
+      after?: Record<string, unknown>;
+      [key: string]: unknown;
     }>(),
 
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -294,7 +294,7 @@ export const subscriptions = mysqlTable(
     metadata: json("metadata").$type<{
       paymentMethod?: string;
       lastPaymentDate?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     }>(),
   },
   table => ({

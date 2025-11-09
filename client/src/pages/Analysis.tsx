@@ -35,7 +35,7 @@ export default function Analysis() {
   const { user } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [imageType, setImageType] = useState<string>("xray");
+  const [imageType, setImageType] = useState<"xray" | "mri" | "ct" | "ultrasound" | "photo" | "document" | "other">("xray");
   const [bodyPart, setBodyPart] = useState<string>("");
   const [modelType, setModelType] = useState<AIModelType>("basic");
   const [autoSelectModel, setAutoSelectModel] = useState(true);
@@ -116,7 +116,7 @@ export default function Analysis() {
           originalName: selectedFile.name,
           fileData: base64Data,
           mimeType: selectedFile.type,
-          imageType: imageType as any,
+          imageType: imageType,
           bodyPart: bodyPart || undefined,
         });
 
@@ -241,7 +241,7 @@ export default function Analysis() {
                 <div className="grid gap-4">
                   <div className="space-y-2">
                     <Label>Image Type</Label>
-                    <Select value={imageType} onValueChange={setImageType}>
+                    <Select value={imageType} onValueChange={(value) => setImageType(value as typeof imageType)}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>

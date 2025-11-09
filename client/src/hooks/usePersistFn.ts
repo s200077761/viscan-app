@@ -1,17 +1,18 @@
 import { useRef } from "react";
 
-type noop = (...args: any[]) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyFunction = (...args: any[]) => any;
 
 /**
  * usePersistFn 可以替代 useCallback 以降低心智负担
  */
-export function usePersistFn<T extends noop>(fn: T) {
+export function usePersistFn<T extends AnyFunction>(fn: T) {
   const fnRef = useRef<T>(fn);
   fnRef.current = fn;
 
-  const persistFn = useRef<T>(null);
+  const persistFn = useRef<T | null>(null);
   if (!persistFn.current) {
-    persistFn.current = function (this: unknown, ...args) {
+    persistFn.current = function (this: unknown, ...args: Parameters<T>) {
       return fnRef.current!.apply(this, args);
     } as T;
   }

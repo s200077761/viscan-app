@@ -24,6 +24,20 @@ import {
 } from "./advanced-iris-analysis";
 import { analyzePalmSigns, PalmSign } from "./palm-reading-system";
 
+interface DetectedIrisSign {
+  type: "crypt" | "furrow" | "spot" | "ring" | "arcus" | "pigment";
+  color?: "light" | "brown" | "black" | "white" | "yellow";
+  zone: number;
+  position: string;
+  severity: "mild" | "moderate" | "severe";
+}
+
+interface IrisDetectionResponse {
+  signs: DetectedIrisSign[];
+  irisColor: string;
+  confidence: number;
+}
+
 /**
  * Main analysis function that routes to appropriate model
  */
@@ -359,10 +373,10 @@ async function analyzeIrisOld(
   });
 
   const content = response.choices[0].message.content;
-  const detection = JSON.parse(typeof content === "string" ? content : "{}");
+  const detection: IrisDetectionResponse = JSON.parse(typeof content === "string" ? content : "{}");
 
   // Convert detected signs to IrisSign format
-  const irisSigns: IrisSign[] = detection.signs.map((s: any) => ({
+  const irisSigns: IrisSign[] = detection.signs.map((s) => ({
     type: s.type,
     color: s.color,
     location: { zone: s.zone, position: s.position },

@@ -11,6 +11,23 @@
 
 import { invokeLLM } from "./_core/llm";
 
+interface DetectedSign {
+  signType: "crypts" | "furrows" | "spots" | "rings" | "lacunae" | "pigmentation";
+  zoneNumber: number;
+  clockPosition: number;
+  severity: "mild" | "moderate" | "severe";
+  description: string;
+}
+
+interface AdvancedIrisDetection {
+  irisColor: "blue" | "brown" | "mixed" | "green" | "gray" | "hazel";
+  pupilSize: "small" | "normal" | "large" | "irregular";
+  textureQuality: "fine" | "medium" | "coarse";
+  detectedSigns: DetectedSign[];
+  overallQuality: "excellent" | "good" | "fair" | "poor";
+  confidence: number;
+}
+
 // Iris zones based on iridology
 export const IRIS_ZONES = {
   zone1: {
@@ -293,16 +310,16 @@ Provide detailed analysis for each of the 7 iris zones (0-51°, 52-103°, 104-15
   });
 
   const content = detectionResponse.choices[0].message.content;
-  const detection = JSON.parse(typeof content === "string" ? content : "{}");
+  const detection: AdvancedIrisDetection = JSON.parse(typeof content === "string" ? content : "{}");
 
   // Step 2: Map detected signs to iris zones and organs
   const zoneAnalysis = Object.entries(IRIS_ZONES).map(([zoneKey, zoneInfo]) => {
     const zoneNumber = parseInt(zoneKey.replace("zone", ""));
     const signsInZone = detection.detectedSigns.filter(
-      (sign: any) => sign.zoneNumber === zoneNumber
+      (sign) => sign.zoneNumber === zoneNumber
     );
 
-    const features: IrisFeature[] = signsInZone.map((sign: any) => ({
+    const features: IrisFeature[] = signsInZone.map((sign) => ({
       type: sign.signType,
       zone: zoneKey,
       location: { x: sign.clockPosition, y: 0 }, // Simplified location
