@@ -1,0 +1,15 @@
+steps:
+  - name: 'node:18'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cd backend
+        npm install
+        npm run build
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/viscan-backend:latest', '.']
+
+images:
+  - 'gcr.io/$PROJECT_ID/viscan-backend:latest'
