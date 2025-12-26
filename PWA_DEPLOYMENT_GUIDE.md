@@ -370,7 +370,7 @@ if ("Notification" in window) {
 - LinkedIn
 - Instagram (في Bio)
 
-الرابط: [Your Vercel deployment URL]
+الرابط: [Your Vercel deployment URL will appear here]
 (أو نطاقك المخصص)
 ```
 
