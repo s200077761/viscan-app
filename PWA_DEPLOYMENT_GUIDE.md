@@ -370,7 +370,7 @@ if ("Notification" in window) {
 - LinkedIn
 - Instagram (في Bio)
 
-الرابط: https://viscan-app.vercel.app
+الرابط: [Your Vercel deployment URL]
 (أو نطاقك المخصص)
 ```
 

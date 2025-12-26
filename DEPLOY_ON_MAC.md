@@ -145,7 +145,7 @@ vercel --prod
 بعد **3-5 دقائق** سيظهر:
 
 ```
-✅ Production: https://viscan-app-xxx.vercel.app
+✅ Production: [Your Vercel deployment URL will appear here]
 ```
 
 ---
