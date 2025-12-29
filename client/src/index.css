@@ -43,75 +43,76 @@
 }
 
 :root {
-  /* Medical Blue Theme */
-  --primary: var(--color-blue-600);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
+  /* ChatGPT-inspired Light Theme with ViScan Medical Branding */
+  --primary: #0ea5e9; /* ViScan Medical Blue */
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #ffffff;
   --chart-1: var(--color-blue-300);
   --chart-2: var(--color-blue-500);
   --chart-3: var(--color-blue-600);
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: var(--color-teal-500);
-  --secondary-foreground: var(--color-white);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: var(--color-amber-500);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --radius: 0.5rem;
+  --background: #ffffff; /* Clean white background */
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --secondary: #10a37f; /* ChatGPT green accent */
+  --secondary-foreground: #ffffff;
+  --muted: #f7f7f8; /* ChatGPT light gray */
+  --muted-foreground: #6b6b6b;
+  --accent: #f7f7f8;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0ea5e9;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #000000;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #0ea5e9;
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
+  /* ChatGPT-inspired Dark Theme with ViScan Medical Branding */
+  --primary: #0ea5e9; /* ViScan Medical Blue */
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #ffffff;
+  --background: #212121; /* ChatGPT dark background */
+  --foreground: #ececec;
+  --card: #343541; /* ChatGPT chat area */
+  --card-foreground: #ececec;
+  --popover: #343541;
+  --popover-foreground: #ececec;
+  --secondary: #10a37f; /* ChatGPT green accent */
+  --secondary-foreground: #ffffff;
+  --muted: #40414f; /* ChatGPT input area */
+  --muted-foreground: #9b9b9b;
+  --accent: #40414f;
+  --accent-foreground: #ececec;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #4d4d4d;
+  --input: #40414f;
+  --ring: #0ea5e9;
   --chart-1: var(--color-blue-300);
   --chart-2: var(--color-blue-500);
   --chart-3: var(--color-blue-600);
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --sidebar: #202123; /* Slightly darker sidebar */
+  --sidebar-foreground: #ececec;
+  --sidebar-accent: #343541;
+  --sidebar-accent-foreground: #ececec;
+  --sidebar-border: #4d4d4d;
+  --sidebar-ring: #0ea5e9;
 }
 
 @layer base {
