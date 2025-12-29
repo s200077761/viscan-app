@@ -30,6 +30,8 @@ interface SidebarProps {
   onClose: () => void;
 }
 
+const PREVIEW_LENGTH = 40;
+
 export function Sidebar({
   conversations,
   currentConversationId,
@@ -124,7 +126,7 @@ export function Sidebar({
                     <p className="text-sm font-medium truncate">{conv.title}</p>
                     <p className="text-xs text-sidebar-foreground/60 truncate">
                       {conv.messages.length > 0
-                        ? conv.messages[conv.messages.length - 1].content.substring(0, 40)
+                        ? conv.messages[conv.messages.length - 1].content.substring(0, PREVIEW_LENGTH)
                         : "No messages"}
                     </p>
                   </div>

@@ -186,7 +186,7 @@ class MCPClientService {
     ];
 
     for (const tool of mockTools) {
-      this.tools.set(`${serverId}:${tool.name}`, tool);
+      this.tools.set(`${serverId}__${tool.name}`, tool);
     }
   }
 
@@ -206,7 +206,7 @@ class MCPClientService {
     ];
 
     for (const resource of mockResources) {
-      this.resources.set(`${serverId}:${resource.uri}`, resource);
+      this.resources.set(`${serverId}__${resource.uri}`, resource);
     }
   }
 
@@ -227,7 +227,7 @@ class MCPClientService {
     ];
 
     for (const prompt of mockPrompts) {
-      this.prompts.set(`${serverId}:${prompt.name}`, prompt);
+      this.prompts.set(`${serverId}__${prompt.name}`, prompt);
     }
   }
 }

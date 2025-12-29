@@ -63,14 +63,12 @@ export function useChat(conversationId?: string) {
   }, [currentConversation]);
 
   const sendMessage = useCallback(async (content: string, attachments?: any[]) => {
-    if (!currentConversation) {
-      // Create a new conversation if none exists
+    // Create a new conversation if none exists
+    let convId = currentConversation?.id;
+    if (!convId) {
       const newConv = createNewConversation();
-      setCurrentConversation(newConv);
+      convId = newConv.id;
     }
-
-    const convId = currentConversation?.id || chatService.getConversations()[0]?.id;
-    if (!convId) return;
 
     const userMessage: ChatMessage = {
       id: `msg_${Date.now()}_user`,

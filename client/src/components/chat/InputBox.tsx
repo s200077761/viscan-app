@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import type { ChatAttachment } from "@/types/chat";
 
+const INPUT_MIN_HEIGHT = "44px";
+const INPUT_MAX_HEIGHT = "200px";
+
 interface InputBoxProps {
   onSend: (content: string, attachments?: ChatAttachment[]) => void;
   isDisabled?: boolean;
@@ -136,7 +139,11 @@ export function InputBox({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isDisabled}
-              className="min-h-[44px] max-h-[200px] resize-none pr-12 py-3"
+              style={{
+                minHeight: INPUT_MIN_HEIGHT,
+                maxHeight: INPUT_MAX_HEIGHT,
+              }}
+              className="resize-none pr-12 py-3"
               rows={1}
             />
             
