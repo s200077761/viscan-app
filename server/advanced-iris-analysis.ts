@@ -356,7 +356,7 @@ Provide detailed analysis for each of the 7 iris zones (0-51°, 52-103°, 104-15
         ", "
       );
       overallFindings.push(
-        `${zone.zoneName}: ${zone.signs.length} sign(s) detected (${signTypes}) - ${zone.healthStatus.replace("_", " ")}`
+        `${zone.zoneName}: ${zone.signs.length} sign(s) detected (${signTypes}) - ${zone.healthStatus.replace(/_/g, " ")}`
       );
     }
   });
@@ -373,7 +373,7 @@ Provide detailed analysis for each of the 7 iris zones (0-51°, 52-103°, 104-15
     if (zone.healthStatus !== "normal") {
       zone.affectedOrgans.forEach(organ => {
         recommendations.push(
-          `Support ${organ.replace("_", " ")} health through appropriate diet and lifestyle`
+          `Support ${organ.replace(/_/g, " ")} health through appropriate diet and lifestyle`
         );
       });
     }

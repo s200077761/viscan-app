@@ -97,6 +97,12 @@ export const documents = mysqlTable(
     userIdIdx: index("userId_idx").on(table.userId),
     statusIdx: index("status_idx").on(table.status),
     createdAtIdx: index("createdAt_idx").on(table.createdAt),
+    // Composite index for common query: user's documents by status and creation date
+    userStatusCreatedIdx: index("user_status_created_idx").on(
+      table.userId,
+      table.status,
+      table.createdAt
+    ),
   })
 );
 
@@ -154,6 +160,12 @@ export const images = mysqlTable(
     documentIdIdx: index("documentId_idx").on(table.documentId),
     userIdIdx: index("userId_idx").on(table.userId),
     statusIdx: index("status_idx").on(table.status),
+    // Composite index for common query: user's images by status and upload date
+    userStatusUploadedIdx: index("user_status_uploaded_idx").on(
+      table.userId,
+      table.status,
+      table.uploadedAt
+    ),
   })
 );
 
@@ -219,6 +231,11 @@ export const analysisResults = mysqlTable(
   table => ({
     imageIdIdx: index("imageId_idx").on(table.imageId),
     analyzedAtIdx: index("analyzedAt_idx").on(table.analyzedAt),
+    // Composite index for common query: filtering by severity and analysis date
+    severityAnalyzedIdx: index("severity_analyzed_idx").on(
+      table.severity,
+      table.analyzedAt
+    ),
   })
 );
 

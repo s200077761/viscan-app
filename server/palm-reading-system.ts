@@ -392,7 +392,7 @@ function analyzePalmMount(
 ) {
   const mount = PALM_MOUNTS.find(m =>
     sign.location.includes(
-      m.nameEn.toLowerCase().replace(" ", "_").replace("/", "_")
+      m.nameEn.toLowerCase().replace(/[\s/]/g, "_")
     )
   );
 
