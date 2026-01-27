@@ -27,8 +27,11 @@ export const appRouter = router({
   // Dashboard statistics
   dashboard: router({
     stats: protectedProcedure.query(async ({ ctx }) => {
-      const stats = await db.getUserStats(ctx.user.id);
-      const subscription = await db.getUserSubscription(ctx.user.id);
+      // Fetch stats and subscription in parallel to reduce latency
+      const [stats, subscription] = await Promise.all([
+        db.getUserStats(ctx.user.id),
+        db.getUserSubscription(ctx.user.id)
+      ]);
 
       return {
         ...stats,
@@ -285,14 +288,17 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input, ctx }) => {
-        const image = await db.getImageById(input.imageId);
+        // Fetch image and subscription in parallel
+        const [image, subscription] = await Promise.all([
+          db.getImageById(input.imageId),
+          db.getUserSubscription(ctx.user.id)
+        ]);
 
         if (!image || image.userId !== ctx.user.id) {
           throw new Error("Image not found");
         }
 
         // Check subscription limits
-        const subscription = await db.getUserSubscription(ctx.user.id);
         if (subscription) {
           if (subscription.analysesUsed >= subscription.analysesLimit) {
             throw new Error(
