@@ -126,7 +126,7 @@ export async function getUserById(id: number) {
 }
 
 // Document queries
-export async function getUserDocuments(userId: number) {
+export async function getUserDocuments(userId: number, limit: number = 100) {
   const db = await getDb();
   if (!db) return [];
 
@@ -134,7 +134,8 @@ export async function getUserDocuments(userId: number) {
     .select()
     .from(documents)
     .where(eq(documents.userId, userId))
-    .orderBy(desc(documents.createdAt));
+    .orderBy(desc(documents.createdAt))
+    .limit(limit);
 }
 
 export async function getDocumentById(id: number) {
@@ -186,7 +187,7 @@ export async function getDocumentImages(documentId: number) {
     .orderBy(desc(images.uploadedAt));
 }
 
-export async function getUserImages(userId: number) {
+export async function getUserImages(userId: number, limit: number = 100) {
   const db = await getDb();
   if (!db) return [];
 
@@ -194,7 +195,8 @@ export async function getUserImages(userId: number) {
     .select()
     .from(images)
     .where(eq(images.userId, userId))
-    .orderBy(desc(images.uploadedAt));
+    .orderBy(desc(images.uploadedAt))
+    .limit(limit);
 }
 
 export async function getImageById(id: number) {
@@ -338,26 +340,31 @@ export async function getUserStats(userId: number) {
       pendingAnalyses: 0,
     };
 
-  const [docsCount] = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(documents)
-    .where(eq(documents.userId, userId));
-
-  const [imagesCount] = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(images)
-    .where(eq(images.userId, userId));
-
-  const [analysesCount] = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(analysisResults)
-    .innerJoin(images, eq(analysisResults.imageId, images.id))
-    .where(eq(images.userId, userId));
-
-  const [pendingCount] = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(images)
-    .where(and(eq(images.userId, userId), eq(images.status, "pending")));
+  // Execute all count queries in parallel to reduce latency
+  const [
+    [docsCount],
+    [imagesCount],
+    [analysesCount],
+    [pendingCount]
+  ] = await Promise.all([
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(documents)
+      .where(eq(documents.userId, userId)),
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(images)
+      .where(eq(images.userId, userId)),
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(analysisResults)
+      .innerJoin(images, eq(analysisResults.imageId, images.id))
+      .where(eq(images.userId, userId)),
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(images)
+      .where(and(eq(images.userId, userId), eq(images.status, "pending")))
+  ]);
 
   return {
     totalDocuments: Number(docsCount?.count || 0),

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Card,
   CardContent,
@@ -96,6 +96,14 @@ export default function PersonalizedRecommendations({
     r => r.priority === "high" && !r.completed
   ).length;
 
+  // Memoize category counts to avoid repeated filtering on every render
+  const categoryCounts = useMemo(() => {
+    return recommendations.reduce((acc, r) => {
+      acc[r.category] = (acc[r.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }, [recommendations]);
+
   const handleExportPDF = async () => {
     const pdfService = new PDFExportService();
     await pdfService.exportRecommendations(
@@ -147,9 +155,7 @@ export default function PersonalizedRecommendations({
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(CATEGORY_ICONS).map(([category, Icon]) => {
-              const count = recommendations.filter(
-                r => r.category === category
-              ).length;
+              const count = categoryCounts[category as keyof typeof CATEGORY_ICONS] || 0;
               return (
                 <div key={category} className="flex items-center gap-2">
                   <div
