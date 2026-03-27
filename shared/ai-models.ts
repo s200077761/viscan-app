@@ -206,6 +206,12 @@ export interface ModelAnalysisInput {
   additionalContext?: string;
 }
 
+export type DetailedMetrics = Record<string, string | number | boolean | null | undefined | string[] | number[] | Record<string, unknown> | Record<string, unknown>[]>;
+
+export interface VisualizationData {
+  [key: string]: string | number | boolean | null | undefined | VisualizationData | VisualizationData[];
+}
+
 export interface ModelAnalysisOutput {
   modelId: AIModelType;
   modelName: string;
@@ -213,15 +219,13 @@ export interface ModelAnalysisOutput {
   severity?: "normal" | "mild" | "moderate" | "severe" | "critical";
   confidence: number;
   processingTime: number;
-  detailedMetrics?: {
-    [key: string]: any;
-  };
+  detailedMetrics?: DetailedMetrics;
   visualizations?: {
     type: string;
-    data: any;
+    data: VisualizationData;
   }[];
   recommendations: string[];
-  rawResponse?: any;
+  rawResponse?: Record<string, unknown>;
 }
 
 export function getModelById(modelId: AIModelType): AIModel | undefined {

@@ -17,7 +17,7 @@ export interface PalmFinding {
   location: string;
   healthIndicators: string[];
   symptoms: string[];
-  severity: "mild" | "moderate" | "severe";
+  severity: "normal" | "mild" | "moderate" | "severe";
   recommendations: string[];
 }
 
@@ -360,7 +360,7 @@ function analyzePalmLine(
   if (!line) return;
 
   const characteristic = sign.characteristics[0] || "normal";
-  const indicators = (line.healthIndicators as any)[characteristic] || [];
+  const indicators = (line.healthIndicators as Record<string, string[] | undefined>)[characteristic] || [];
 
   if (indicators.length > 0) {
     findings.push({
@@ -399,7 +399,7 @@ function analyzePalmMount(
   if (!mount) return;
 
   const characteristic = sign.characteristics[0] || "well_developed";
-  const indicators = (mount.healthIndicators as any)[characteristic] || [];
+  const indicators = (mount.healthIndicators as Record<string, string[] | undefined>)[characteristic] || [];
 
   if (indicators.length > 0) {
     findings.push({
@@ -430,7 +430,8 @@ function analyzePalmColor(
   recommendations: string[]
 ) {
   const color = sign.color?.toLowerCase() || "pink";
-  const colorInfo = (PALM_COLORS as any)[color];
+  type PalmColorInfo = { health: string; meaning: string; severity: string };
+  const colorInfo = (PALM_COLORS as Record<string, PalmColorInfo>)[color];
 
   if (colorInfo) {
     findings.push({
@@ -438,7 +439,7 @@ function analyzePalmColor(
       location: "Overall palm",
       healthIndicators: [colorInfo.health, colorInfo.meaning],
       symptoms: [colorInfo.health],
-      severity: colorInfo.severity as any,
+      severity: colorInfo.severity as "normal" | "mild" | "moderate" | "severe",
       recommendations: getRecommendationsForColor(color),
     });
 
@@ -460,7 +461,8 @@ function analyzePalmTexture(
   recommendations: string[]
 ) {
   const texture = sign.characteristics[0] || "firm";
-  const textureInfo = (PALM_TEXTURES as any)[texture];
+  type PalmTextureInfo = { health: string; meaning: string; severity: string };
+  const textureInfo = (PALM_TEXTURES as Record<string, PalmTextureInfo>)[texture];
 
   if (textureInfo) {
     findings.push({
@@ -468,7 +470,7 @@ function analyzePalmTexture(
       location: "Overall palm",
       healthIndicators: [textureInfo.health, textureInfo.meaning],
       symptoms: [textureInfo.health],
-      severity: textureInfo.severity as any,
+      severity: textureInfo.severity as "normal" | "mild" | "moderate" | "severe",
       recommendations: getRecommendationsForTexture(texture),
     });
 

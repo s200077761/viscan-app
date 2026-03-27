@@ -14,7 +14,9 @@ import {
   subscriptions,
   InsertSubscription,
 } from "../drizzle/schema";
+import type { User } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { logger } from "./_core/logger";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -24,7 +26,7 @@ export async function getDb() {
     try {
       _db = drizzle(process.env.DATABASE_URL);
     } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
+      logger.warn("[Database] Failed to connect", {}, error instanceof Error ? error : new Error(String(error)));
       _db = null;
     }
   }
@@ -38,7 +40,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 
   const db = await getDb();
   if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
+    logger.warn("[Database] Cannot upsert user: database not available");
     return;
   }
 
@@ -96,7 +98,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       set: updateSet,
     });
   } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
+    logger.error("[Database] Failed to upsert user", {}, error instanceof Error ? error : new Error(String(error)));
     throw error;
   }
 }
@@ -104,7 +106,7 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 export async function getUserByOpenId(openId: string) {
   const db = await getDb();
   if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
+    logger.warn("[Database] Cannot get user: database not available");
     return undefined;
   }
 
@@ -267,7 +269,7 @@ export async function createAuditLog(log: InsertAuditLog) {
   try {
     await db.insert(auditLogs).values(log);
   } catch (error) {
-    console.error("[Database] Failed to create audit log:", error);
+    logger.error("[Database] Failed to create audit log", {}, error instanceof Error ? error : new Error(String(error)));
   }
 }
 

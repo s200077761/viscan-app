@@ -7,7 +7,7 @@ import * as db from "./db";
 import { storagePut } from "./storage";
 import { invokeLLM } from "./_core/llm";
 import { analyzeWithModel } from "./ai-service";
-import { AIModelType, getRecommendedModel } from "@shared/ai-models";
+import { AIModelType, getRecommendedModel, ModelAnalysisOutput } from "@shared/ai-models";
 import { createAuditLog } from "./db";
 
 export const appRouter = router({
@@ -324,7 +324,7 @@ export const appRouter = router({
         const startTime = Date.now();
 
         try {
-          let analysisData: any;
+          let analysisData: ModelAnalysisOutput;
 
           // Use new AI service for specialized models
           if (
@@ -417,12 +417,14 @@ export const appRouter = router({
               severity: "normal",
               recommendations: ["Please consult with a medical professional"],
               confidence: 50,
+              processingTime: 0, // Will be set below
               modelId: "basic",
               modelName: "Basic Analysis",
             };
           }
 
           const processingTime = Date.now() - startTime;
+          analysisData.processingTime = processingTime;
 
           // Save analysis result
           const analysisId = await db.createAnalysisResult({
@@ -433,7 +435,7 @@ export const appRouter = router({
             predictions: {
               labels: [
                 {
-                  name: analysisData.severity,
+                  name: analysisData.severity || "unknown",
                   confidence: analysisData.confidence,
                 },
               ],

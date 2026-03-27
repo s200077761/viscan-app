@@ -684,11 +684,14 @@ function generateOrganFinding(
     SYSTEM_SYMPTOMS[organ.system as keyof typeof SYSTEM_SYMPTOMS];
 
   if (systemSymptoms && typeof systemSymptoms === "object") {
+    type SeverityLevel = "normal" | "mild" | "moderate" | "severe";
+    type OrganSymptoms = Record<SeverityLevel, string[]>;
+    
     const organSymptoms = Object.values(systemSymptoms).find(
-      (s: any) => s[maxSeverity]
+      (s): s is OrganSymptoms => typeof s === "object" && maxSeverity in s
     );
-    if (organSymptoms) {
-      symptoms.push(...(organSymptoms as any)[maxSeverity]);
+    if (organSymptoms && maxSeverity in organSymptoms) {
+      symptoms.push(...organSymptoms[maxSeverity as SeverityLevel]);
     }
   }
 
