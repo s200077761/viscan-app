@@ -1,5 +1,4 @@
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { format } from "date-fns";
 
 interface Analysis {
@@ -138,7 +137,7 @@ export class PDFExportService {
       text,
       this.pageWidth - 2 * this.margin - 15
     );
-    lines.forEach((line: string, index: number) => {
+    lines.forEach((line: string, _index: number) => {
       this.checkPageBreak();
       this.pdf.text(line, this.margin + 12, this.currentY);
       this.currentY += this.lineHeight;

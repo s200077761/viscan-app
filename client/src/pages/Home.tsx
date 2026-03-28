@@ -17,7 +17,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Eye,
-  Scan,
 } from "lucide-react";
 import SocialLoginButtons from "@/components/SocialLoginButtons";
 import { APP_TITLE, getLoginUrl } from "@/const";
@@ -26,7 +25,7 @@ const VISCAN_LOGO = "/viscan-logo.jpg";
 import { Link } from "wouter";
 
 export default function Home() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen flex flex-col">

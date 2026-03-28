@@ -7,7 +7,6 @@ import {
   varchar,
   boolean,
   json,
-  decimal,
   index,
 } from "drizzle-orm/mysql-core";
 

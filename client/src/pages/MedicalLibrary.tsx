@@ -19,8 +19,6 @@ import {
   FileText,
   ExternalLink,
   Star,
-  Download,
-  Filter,
   AlertCircle,
 } from "lucide-react";
 import { Link } from "wouter";

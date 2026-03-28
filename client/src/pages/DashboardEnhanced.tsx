@@ -18,7 +18,6 @@ import {
   MessageSquare,
   History,
   Download,
-  User,
   BookOpen,
 } from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";

@@ -16,13 +16,11 @@ import {
   IrisSign,
   IridologyAnalysis,
   IRIS_ZONES,
-  ORGAN_POSITIONS,
 } from "./iridology-system";
 import {
   analyzeIrisAdvanced,
   formatIrisAnalysis,
 } from "./advanced-iris-analysis";
-import { analyzePalmSigns, PalmSign } from "./palm-reading-system";
 
 /**
  * Main analysis function that routes to appropriate model
@@ -184,7 +182,8 @@ async function analyzeIris(
 /**
  * Legacy iris analysis (kept for reference)
  */
-async function analyzeIrisLegacy(
+// Legacy iris analysis implementation - kept for reference
+async function _analyzeIrisLegacy(
   input: ModelAnalysisInput
 ): Promise<
   Omit<ModelAnalysisOutput, "modelId" | "modelName" | "processingTime">
@@ -286,7 +285,8 @@ async function analyzeIrisLegacy(
  * Legacy IrisScanner - Independent iridology system (AI-free) - DEPRECATED
  * Replaced by analyzeIris() which uses advanced-iris-analysis.ts
  */
-async function analyzeIrisOld(
+// Old iris analysis implementation - kept for reference
+async function _analyzeIrisOld(
   input: ModelAnalysisInput
 ): Promise<
   Omit<ModelAnalysisOutput, "modelId" | "modelName" | "processingTime">
@@ -668,7 +668,7 @@ async function analyzeWithGPT4Vision(
  * Basic Analysis - Quick preliminary check
  */
 async function basicAnalysis(
-  input: ModelAnalysisInput
+  _input: ModelAnalysisInput
 ): Promise<
   Omit<ModelAnalysisOutput, "modelId" | "modelName" | "processingTime">
 > {

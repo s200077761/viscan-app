@@ -32,7 +32,7 @@ import { Link } from "wouter";
 import { AI_MODELS, AIModelType, getRecommendedModel } from "@shared/ai-models";
 
 export default function Analysis() {
-  const { user } = useAuth();
+  const { user: _user } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [imageType, setImageType] = useState<string>("xray");

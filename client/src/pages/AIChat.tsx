@@ -10,15 +10,11 @@ import {
   Paperclip,
   Image as ImageIcon,
   FileText,
-  Trash2,
   Menu,
   X,
   Bot,
   User as UserIcon,
-  Download,
 } from "lucide-react";
-import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
 import { APP_LOGO } from "@/const";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -49,7 +45,7 @@ export default function AIChat() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [conversations, _setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<
     string | null
   >(null);

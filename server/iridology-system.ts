@@ -659,7 +659,7 @@ export function analyzeIrisSigns(signs: IrisSign[]): IridologyAnalysis {
 
 function findOrganByPosition(
   zone: number,
-  position: string
+  _position: string
 ): OrganMapping | undefined {
   // Simplified position matching - in real implementation, use precise angle calculations
   return ORGAN_POSITIONS.find(
@@ -679,7 +679,7 @@ function generateOrganFinding(
       : "mild";
 
   const symptoms: string[] = [];
-  const organKey = organ.organ.toLowerCase().replace(/\s+/g, "");
+  const _organKey = organ.organ.toLowerCase().replace(/\s+/g, "");
   const systemSymptoms =
     SYSTEM_SYMPTOMS[organ.system as keyof typeof SYSTEM_SYMPTOMS];
 

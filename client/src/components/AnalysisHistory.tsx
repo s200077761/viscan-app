@@ -22,15 +22,12 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import {
-  Calendar,
   Download,
   Filter,
   Search,
-  TrendingUp,
   FileText,
   Eye,
   Activity,

@@ -359,8 +359,8 @@ export function generateFacialDiagnosis(
     ...analyzeMouthArea(facialDescription),
   ];
 
-  // Collect all health indicators
-  const allHealthIndicators = allFeatures.flatMap(f => f.healthIndicators);
+  // Collect all health indicators (kept for potential future use)
+  const _allHealthIndicators = allFeatures.flatMap(f => f.healthIndicators);
 
   // Identify primary concerns (moderate or severe)
   const primaryConcerns = allFeatures
