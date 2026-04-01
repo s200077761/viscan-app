@@ -85,7 +85,7 @@ vercel --prod
 ```
 Building...
 Deploying...
-✅ Production: https://viscan-app-xxx.vercel.app
+✅ Production: [Your Vercel deployment URL will appear here]
 ```
 
 ---
@@ -95,9 +95,6 @@ Deploying...
 ### 1. اختبر التطبيق
 
 ```
-افتح الرابط الذي ظهر:
-https://viscan-app-xxx.vercel.app
-
 تحقق من:
 ✅ الصفحة الرئيسية تعمل
 ✅ التحليل يعمل
@@ -197,8 +194,6 @@ vercel --prod
 ## 🎉 تهانينا!
 
 تطبيق ViScan الآن منشور ومتاح للجميع!
-
-**الرابط**: https://viscan-app-xxx.vercel.app
 
 شاركه مع:
 
